@@ -79,9 +79,13 @@ export default function ContactSection() {
                   </div>
                   <div className="truncate">
                     <div className="text-[10px] text-zinc-500">工作室官方邮箱</div>
-                    <div className="text-xs sm:text-sm font-mono text-zinc-200 truncate">
+                    <a
+                      href={`mailto:${studioInfo.socials.email}`}
+                      className="text-xs sm:text-sm font-mono text-zinc-200 hover:text-indigo-300 transition-colors truncate block"
+                      title="点击直接发送邮件"
+                    >
                       {studioInfo.socials.email}
-                    </div>
+                    </a>
                   </div>
                 </div>
 

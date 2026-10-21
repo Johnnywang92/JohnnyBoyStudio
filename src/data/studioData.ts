@@ -53,7 +53,7 @@ export const studioInfo: StudioInfo = {
   socials: {
     github: "https://github.com/Johnnywang92",
     twitter: "https://x.com",
-    email: "johnnyboystudio@gmail.com",
+    email: "johnny.boy.1km@gmail.com",
   },
   stats: [
     { label: "活跃项目", value: "4+" },
