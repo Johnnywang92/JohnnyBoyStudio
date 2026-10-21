@@ -1,12 +1,20 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { studioInfo } from "@/data/studioData";
 import { ArrowUp, Heart, Terminal } from "lucide-react";
 
 export default function Footer() {
+  const pathname = usePathname();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const getResolvedHref = (hash: string) => {
+    return pathname === "/" ? hash : `/${hash}`;
   };
 
   return (
@@ -33,16 +41,19 @@ export default function Footer() {
           </div>
 
           {/* Center Links */}
-          <div className="flex items-center gap-6">
-            <a href="#products" className="hover:text-zinc-300 transition-colors">
+          <div className="flex flex-wrap items-center justify-center gap-6">
+            <Link href={getResolvedHref("#products")} className="hover:text-zinc-300 transition-colors">
               精选作品
-            </a>
-            <a href="#philosophy" className="hover:text-zinc-300 transition-colors">
+            </Link>
+            <Link href={getResolvedHref("#philosophy")} className="hover:text-zinc-300 transition-colors">
               开发理念
-            </a>
-            <a href="#tech-stack" className="hover:text-zinc-300 transition-colors">
+            </Link>
+            <Link href="/blog" className="hover:text-white text-zinc-400 font-medium transition-colors">
+              工坊手记
+            </Link>
+            <Link href={getResolvedHref("#tech-stack")} className="hover:text-zinc-300 transition-colors">
               技术栈
-            </a>
+            </Link>
             <a
               href={studioInfo.socials.github}
               target="_blank"
@@ -82,7 +93,7 @@ export default function Footer() {
         <div className="mt-8 pt-6 border-t border-white/[0.03] text-center text-[11px] text-zinc-600 flex flex-col sm:flex-row items-center justify-between gap-2">
           <div>© {new Date().getFullYear()} JohnnyBoyStudio. All rights reserved.</div>
           <div className="font-mono">
-            Quickpick · assistan01 · Ferry · wedding web
+            QuickPick · assistan01 · Ferry · Wedding
           </div>
         </div>
       </div>
