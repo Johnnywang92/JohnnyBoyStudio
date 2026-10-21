@@ -336,6 +336,7 @@ export function Assistan01Mockup() {
 
 export function FerryMockup() {
   const [syncing, setSyncing] = useState(false);
+  const [viewMode, setViewMode] = useState<"dual" | "diff">("dual");
 
   return (
     <div className="w-full bg-zinc-950/90 rounded-2xl border border-white/10 p-3.5 shadow-2xl backdrop-blur-xl select-none font-sans">
@@ -343,77 +344,128 @@ export function FerryMockup() {
       <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/5 text-xs text-zinc-400">
         <div className="flex items-center gap-1.5">
           <Server className="w-3.5 h-3.5 text-cyan-400" />
-          <span className="font-semibold text-zinc-200">Ferry · SFTP 双栏文件传输</span>
+          <span className="font-semibold text-zinc-200">Ferry · macOS 现代化 SFTP/FTP 客户端</span>
         </div>
         <span className="text-[10px] text-cyan-400 bg-cyan-950/60 border border-cyan-800/40 px-2 py-0.5 rounded-full font-mono">
-          Swift 6 严格并发 · TOFU 验证
+          Swift 6 严格并发 · 零数据丢失
         </span>
       </div>
 
-      {/* Dual Pane Interface Simulator */}
-      <div className="grid grid-cols-2 gap-2 my-2 text-xs">
-        {/* Left Pane: Local Mac */}
-        <div className="p-2.5 rounded-xl bg-zinc-900/80 border border-white/5">
-          <div className="flex items-center justify-between text-[10px] text-zinc-400 mb-1.5 pb-1 border-b border-white/5">
-            <span className="font-mono text-zinc-300 flex items-center gap-1">
-              <Laptop className="w-3 h-3 text-cyan-400" /> 本地 Mac
-            </span>
-            <span className="text-zinc-500">~/workspace/build</span>
-          </div>
-          <div className="space-y-1 font-mono text-[10px]">
-            <div className="flex items-center justify-between text-zinc-300 bg-white/5 px-1.5 py-0.5 rounded">
-              <span className="flex items-center gap-1">
-                <FileCode className="w-2.5 h-2.5 text-orange-400" /> App.pkg
-              </span>
-              <span className="text-zinc-500">142MB</span>
-            </div>
-            <div className="flex items-center justify-between text-zinc-400 px-1.5 py-0.5">
-              <span className="flex items-center gap-1">
-                <Folder className="w-2.5 h-2.5 text-amber-400" /> Assets/
-              </span>
-              <span className="text-zinc-500">12项</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Pane: Remote SFTP Server */}
-        <div className="p-2.5 rounded-xl bg-zinc-900/80 border border-white/5">
-          <div className="flex items-center justify-between text-[10px] text-zinc-400 mb-1.5 pb-1 border-b border-white/5">
-            <span className="font-mono text-cyan-300 flex items-center gap-1">
-              <Server className="w-3 h-3" /> 远端 Linux (SFTP)
-            </span>
-            <span className="text-zinc-500">/var/www/prod</span>
-          </div>
-          <div className="space-y-1 font-mono text-[10px]">
-            <div className="flex items-center justify-between text-cyan-200 bg-cyan-950/40 border border-cyan-800/30 px-1.5 py-0.5 rounded">
-              <span className="flex items-center gap-1">
-                <CheckCircle2 className="w-2.5 h-2.5 text-emerald-400" /> release_v1.tar
-              </span>
-              <span className="text-emerald-400">已就绪</span>
-            </div>
-            <div className="flex items-center justify-between text-zinc-400 px-1.5 py-0.5">
-              <span className="flex items-center gap-1">
-                <Folder className="w-2.5 h-2.5 text-blue-400" /> logs/
-              </span>
-              <span className="text-zinc-500">8.4MB</span>
-            </div>
-          </div>
-        </div>
+      {/* Tabs */}
+      <div className="flex items-center gap-1 mb-2">
+        <button
+          onClick={() => setViewMode("dual")}
+          className={`px-2.5 py-1 rounded-md text-[10px] font-medium transition-all ${
+            viewMode === "dual"
+              ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-semibold"
+              : "text-zinc-500 hover:text-zinc-300"
+          }`}
+        >
+          AppKit 原生双栏文件树
+        </button>
+        <button
+          onClick={() => setViewMode("diff")}
+          className={`px-2.5 py-1 rounded-md text-[10px] font-medium transition-all ${
+            viewMode === "diff"
+              ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-semibold"
+              : "text-zinc-500 hover:text-zinc-300"
+          }`}
+        >
+          3-Way 同步与 DiffPlan 决策
+        </button>
       </div>
 
-      {/* Concurrent Transfer Progress Bar */}
-      <div className="p-2 rounded-xl bg-white/[0.02] border border-white/5">
-        <div className="flex items-center justify-between text-[10px] text-zinc-400 mb-1 font-mono">
-          <span className="flex items-center gap-1 text-cyan-300">
-            <Radio className="w-3 h-3 text-cyan-400 animate-pulse" />
-            <span>并发队列 (3/3) · 48.6 MB/s</span>
-          </span>
-          <span className="text-emerald-400 font-semibold">Keychain 密钥已解锁</span>
+      {viewMode === "dual" ? (
+        <>
+          {/* Dual Pane Interface Simulator */}
+          <div className="grid grid-cols-2 gap-2 my-2 text-xs">
+            {/* Left Pane: Local Mac */}
+            <div className="p-2.5 rounded-xl bg-zinc-900/80 border border-white/5">
+              <div className="flex items-center justify-between text-[10px] text-zinc-400 mb-1.5 pb-1 border-b border-white/5">
+                <span className="font-mono text-zinc-300 flex items-center gap-1">
+                  <Laptop className="w-3 h-3 text-cyan-400" /> 本地 Mac (AppKit)
+                </span>
+                <span className="text-zinc-500 font-mono">~/workspace</span>
+              </div>
+              <div className="space-y-1 font-mono text-[10px]">
+                <div className="flex items-center justify-between text-zinc-300 bg-white/5 px-1.5 py-0.5 rounded">
+                  <span className="flex items-center gap-1">
+                    <FileCode className="w-2.5 h-2.5 text-orange-400" /> App.pkg
+                  </span>
+                  <span className="text-zinc-500">142MB</span>
+                </div>
+                <div className="flex items-center justify-between text-zinc-400 px-1.5 py-0.5">
+                  <span className="flex items-center gap-1">
+                    <Folder className="w-2.5 h-2.5 text-amber-400" /> Assets/
+                  </span>
+                  <span className="text-zinc-500">12项</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Pane: Remote SFTP Server */}
+            <div className="p-2.5 rounded-xl bg-zinc-900/80 border border-white/5">
+              <div className="flex items-center justify-between text-[10px] text-zinc-400 mb-1.5 pb-1 border-b border-white/5">
+                <span className="font-mono text-cyan-300 flex items-center gap-1">
+                  <Server className="w-3 h-3" /> 远端 Linux (SFTP)
+                </span>
+                <span className="text-zinc-500 font-mono">/var/www/prod</span>
+              </div>
+              <div className="space-y-1 font-mono text-[10px]">
+                <div className="flex items-center justify-between text-cyan-200 bg-cyan-950/40 border border-cyan-800/30 px-1.5 py-0.5 rounded">
+                  <span className="flex items-center gap-1">
+                    <CheckCircle2 className="w-2.5 h-2.5 text-emerald-400" /> release_v1.tar
+                  </span>
+                  <span className="text-emerald-400">已就绪</span>
+                </div>
+                <div className="flex items-center justify-between text-zinc-400 px-1.5 py-0.5">
+                  <span className="flex items-center gap-1">
+                    <Folder className="w-2.5 h-2.5 text-blue-400" /> logs/
+                  </span>
+                  <span className="text-zinc-500">8.4MB</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Concurrent Transfer Progress Bar */}
+          <div className="p-2 rounded-xl bg-white/[0.02] border border-white/5">
+            <div className="flex items-center justify-between text-[10px] text-zinc-400 mb-1 font-mono">
+              <span className="flex items-center gap-1 text-cyan-300">
+                <Radio className="w-3 h-3 text-cyan-400 animate-pulse" />
+                <span>并发传输队列 (3/3) · 48.6 MB/s</span>
+              </span>
+              <span className="text-emerald-400 font-semibold">Keychain 钥匙串已解密</span>
+            </div>
+            <div className="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+              <div className="bg-gradient-to-r from-cyan-400 to-blue-500 h-full w-4/5 rounded-full animate-pulse" />
+            </div>
+          </div>
+        </>
+      ) : (
+        /* DiffPlan Preview Simulator */
+        <div className="p-2.5 rounded-xl bg-zinc-900/90 border border-white/10 my-2 text-xs font-mono">
+          <div className="text-[10px] text-cyan-300 font-bold mb-2 flex items-center justify-between border-b border-white/5 pb-1">
+            <span>DiffPlan 审计快照 · 绝不静默覆盖</span>
+            <span className="text-zinc-500 font-normal">真值表判定已就绪</span>
+          </div>
+
+          <div className="space-y-1.5 text-[10px]">
+            <div className="flex items-center justify-between p-1 rounded bg-emerald-950/30 border border-emerald-500/20 text-emerald-300">
+              <span>⬆️ 上行同步: config.json (本地较新)</span>
+              <span className="px-1.5 py-0.2 rounded bg-emerald-500/20">覆盖远端</span>
+            </div>
+            <div className="flex items-center justify-between p-1 rounded bg-blue-950/30 border border-blue-500/20 text-blue-300">
+              <span>⬇️ 下行拉取: server_report.csv (远端新增)</span>
+              <span className="px-1.5 py-0.2 rounded bg-blue-500/20">下载入本地</span>
+            </div>
+            <div className="flex items-center justify-between p-1 rounded bg-amber-950/30 border border-amber-500/20 text-amber-300">
+              <span>⚠️ 冲突拦截: index.html (双端同时被修改)</span>
+              <span className="px-1.5 py-0.2 rounded bg-amber-500/20 font-bold">保留双份</span>
+            </div>
+          </div>
         </div>
-        <div className="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
-          <div className="bg-gradient-to-r from-cyan-400 to-blue-500 h-full w-4/5 rounded-full animate-pulse" />
-        </div>
-      </div>
+      )}
 
       {/* Button */}
       <button
