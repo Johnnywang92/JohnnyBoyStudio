@@ -5,17 +5,25 @@ import {
   Sparkles,
   Smartphone,
   Laptop,
-  ArrowRightLeft,
   Heart,
-  Volume2,
   Calendar,
   Camera,
   Sliders,
   CheckCircle2,
-  Maximize2,
   Film,
   Layers,
   ShieldCheck,
+  Package,
+  Mic,
+  Lock,
+  Wallet,
+  Server,
+  Folder,
+  ArrowRight,
+  Ticket,
+  QrCode,
+  Radio,
+  FileCode,
 } from "lucide-react";
 
 export function QuickpickMockup() {
@@ -62,9 +70,7 @@ export function QuickpickMockup() {
             : "bg-zinc-900"
         }`}
       >
-        {/* Inner photo mock */}
         <div className="relative w-full h-full flex flex-col justify-between p-3 z-10">
-          {/* Top Exif / Mode Pills */}
           <div className="flex items-center justify-between">
             <span
               className={`text-[10px] font-mono px-2 py-0.5 rounded-md backdrop-blur-md ${
@@ -90,7 +96,6 @@ export function QuickpickMockup() {
             </div>
           </div>
 
-          {/* Composition Grid Lines Overlay (Pixi.js simulator) */}
           {gridMode === "thirds" && !frameMode && (
             <div className="absolute inset-0 pointer-events-none grid grid-cols-3 grid-rows-3 border border-amber-400/20">
               <div className="border-r border-b border-amber-400/30 relative">
@@ -127,7 +132,6 @@ export function QuickpickMockup() {
             </div>
           )}
 
-          {/* Center Artistic Subject Indicator */}
           <div className="my-auto text-center pointer-events-none">
             <span
               className={`text-xs font-serif tracking-widest uppercase ${
@@ -145,7 +149,6 @@ export function QuickpickMockup() {
             </div>
           </div>
 
-          {/* Bottom EXIF Frame Signature if Frame Mode is on */}
           {frameMode && (
             <div className="flex items-end justify-between pt-1 border-t border-stone-300/80 text-[9px] text-stone-600 font-serif">
               <span>LEICA / SONY MISTERIO</span>
@@ -155,7 +158,6 @@ export function QuickpickMockup() {
         </div>
       </div>
 
-      {/* Interactive Toolbar (Quick Controls) */}
       <div className="mt-2.5 flex items-center justify-between gap-1.5 flex-wrap">
         <div className="flex items-center gap-1.5">
           <button
@@ -223,144 +225,213 @@ export function QuickpickMockup() {
 
 export function Assistan01Mockup() {
   const [islandExpanded, setIslandExpanded] = useState(false);
+  const [packagePicked, setPackagePicked] = useState(false);
 
   return (
     <div className="w-full bg-zinc-950/90 rounded-2xl border border-white/10 p-3.5 shadow-2xl backdrop-blur-xl select-none">
       {/* Dynamic Island Container */}
       <div
         onClick={() => setIslandExpanded(!islandExpanded)}
-        className="cursor-pointer transition-all duration-300 mx-auto bg-black rounded-full border border-zinc-800 px-3.5 py-1.5 max-w-[280px] hover:border-indigo-500/40"
+        className="cursor-pointer transition-all duration-300 mx-auto bg-black rounded-full border border-zinc-800 px-3.5 py-2 max-w-[310px] hover:border-indigo-500/50 shadow-lg"
       >
         <div className="flex items-center justify-between text-xs">
           <div className="flex items-center gap-2">
-            <div className="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-ping" />
-            <span className="text-indigo-200 font-medium text-[11px]">assistan01</span>
+            <div className="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-pulse" />
+            <span className="text-indigo-200 font-medium text-[11px] font-mono">小助 · Live Activity</span>
           </div>
 
-          <div className="flex items-center gap-1.5">
-            <div className="flex items-end gap-0.5 h-3">
-              <span className="w-0.5 h-2 bg-indigo-400 rounded-full animate-pulse" />
-              <span className="w-0.5 h-3 bg-purple-400 rounded-full animate-pulse delay-75" />
-              <span className="w-0.5 h-1.5 bg-pink-400 rounded-full animate-pulse delay-150" />
-            </div>
-            <Volume2 className="w-3 h-3 text-zinc-500" />
+          <div className="flex items-center gap-2">
+            {!packagePicked ? (
+              <span className="text-[10px] font-mono bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/30 flex items-center gap-1">
+                <Package className="w-2.5 h-2.5" /> 取件码 4-2-3088
+              </span>
+            ) : (
+              <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1">
+                <CheckCircle2 className="w-2.5 h-2.5" /> 已取件销号
+              </span>
+            )}
           </div>
         </div>
       </div>
 
       <div className="text-center mt-1 text-[10px] text-zinc-500">
-        轻触模拟灵动岛展开 / 折叠
+        轻触展开 / 折叠灵动岛（全场景免掏手机闭环）
       </div>
 
-      {/* Expanded Context Card */}
+      {/* Expanded Modules Grid */}
       <div
-        className={`mt-3 p-3 rounded-xl bg-indigo-950/20 border border-indigo-500/20 transition-all duration-300 ${
-          islandExpanded ? "scale-100 opacity-100" : "scale-98 opacity-90"
+        className={`mt-2.5 space-y-2 transition-all duration-300 ${
+          islandExpanded ? "scale-100 opacity-100" : "scale-98 opacity-95"
         }`}
       >
-        <div className="flex items-start gap-2.5">
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center shrink-0">
-            <Sparkles className="w-3.5 h-3.5 text-white" />
+        {/* Module 1: Package Live Activity */}
+        <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+              <Package className="w-4 h-4" />
+            </div>
+            <div>
+              <div className="text-xs font-semibold text-zinc-200 flex items-center gap-1.5">
+                <span>菜鸟驿站地理围栏到达</span>
+                <span className="text-[9px] text-zinc-500 bg-white/5 px-1 rounded">实时活动</span>
+              </div>
+              <div className="text-[10px] text-zinc-400 font-mono mt-0.5">
+                丰巢/驿站取件码: <span className="text-amber-300 font-bold">4-2-3088</span> (顺丰速运)
+              </div>
+            </div>
           </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-zinc-200">智能上下文提醒</span>
-              <span className="text-[10px] text-indigo-400 flex items-center gap-1">
-                <Calendar className="w-2.5 h-2.5" /> 15:00
+
+          <button
+            onClick={() => setPackagePicked(!packagePicked)}
+            className={`px-2 py-1 rounded-md text-[10px] font-medium transition-all ${
+              packagePicked
+                ? "bg-zinc-800 text-zinc-400"
+                : "bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold"
+            }`}
+          >
+            {packagePicked ? "撤销" : "抬腕已取"}
+          </button>
+        </div>
+
+        {/* Module 2: Budget & Voice Assistant */}
+        <div className="grid grid-cols-2 gap-2">
+          {/* Wallet */}
+          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+            <div className="flex items-center justify-between text-zinc-400 text-[10px]">
+              <span className="flex items-center gap-1 font-medium">
+                <Wallet className="w-3 h-3 text-emerald-400" /> 今日安心花
               </span>
+              <span className="text-emerald-400 font-mono font-semibold">充裕</span>
             </div>
-            <p className="text-[11px] text-zinc-300 mt-1 leading-relaxed">
-              Johnny，检测到 Swift 构建已通过。需要同步唤起 TestFlight 并通知测试组吗？
-            </p>
-            <div className="mt-2 flex items-center gap-2">
-              <button className="px-2.5 py-1 rounded-md bg-indigo-600 hover:bg-indigo-500 text-[10px] font-medium text-white transition-colors">
-                一键自动化流转
-              </button>
-              <button className="px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 text-[10px] text-zinc-400 transition-colors">
-                稍后提醒
-              </button>
+            <div className="text-sm font-bold text-zinc-100 font-mono mt-1">¥ 186.50</div>
+            <div className="text-[9px] text-zinc-500 mt-0.5">口语一句话记账自动扣减</div>
+          </div>
+
+          {/* Offline ASR & Privacy Vault */}
+          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+            <div className="flex items-center justify-between text-zinc-400 text-[10px]">
+              <span className="flex items-center gap-1 font-medium">
+                <Lock className="w-3 h-3 text-indigo-400" /> Face ID 保险箱
+              </span>
+              <span className="text-indigo-400 font-mono">已锁定</span>
             </div>
+            <div className="text-[11px] font-semibold text-zinc-200 mt-1 flex items-center gap-1">
+              <Mic className="w-3 h-3 text-pink-400" /> 悬浮离线语音球
+            </div>
+            <div className="text-[9px] text-zinc-500 mt-0.5">端侧 LlamaSwift 推理</div>
           </div>
         </div>
       </div>
 
-      {/* Status Footer */}
-      <div className="mt-2.5 flex items-center justify-between text-[10px] text-zinc-500 px-1">
+      {/* Footer Info */}
+      <div className="mt-2.5 flex items-center justify-between text-[10px] text-zinc-500 px-1 font-mono">
         <span className="flex items-center gap-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> CoreML 离线端侧引擎
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> iOS 18+ · 纯离线无网络依赖
         </span>
-        <span>隐私零回传</span>
+        <span>SwiftData 零泄漏</span>
       </div>
     </div>
   );
 }
 
 export function FerryMockup() {
-  const [transferring, setTransferring] = useState(false);
+  const [syncing, setSyncing] = useState(false);
 
   return (
-    <div className="w-full bg-zinc-950/90 rounded-2xl border border-white/10 p-3.5 shadow-2xl backdrop-blur-xl select-none">
+    <div className="w-full bg-zinc-950/90 rounded-2xl border border-white/10 p-3.5 shadow-2xl backdrop-blur-xl select-none font-sans">
+      {/* Title */}
       <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/5 text-xs text-zinc-400">
         <div className="flex items-center gap-1.5">
-          <ArrowRightLeft className="w-3.5 h-3.5 text-cyan-400" />
-          <span className="font-medium text-zinc-200">Ferry 局域渡口</span>
+          <Server className="w-3.5 h-3.5 text-cyan-400" />
+          <span className="font-semibold text-zinc-200">Ferry · SFTP 双栏文件传输</span>
         </div>
-        <span className="text-[10px] text-cyan-400 bg-cyan-950/60 border border-cyan-800/40 px-2 py-0.5 rounded-full">
-          千兆局域 P2P 直连
+        <span className="text-[10px] text-cyan-400 bg-cyan-950/60 border border-cyan-800/40 px-2 py-0.5 rounded-full font-mono">
+          Swift 6 严格并发 · TOFU 验证
         </span>
       </div>
 
-      {/* Device connection diagram */}
-      <div className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-cyan-950/20 via-zinc-900/60 to-blue-950/20 border border-white/5 flex items-center justify-between">
-        {/* Device 1: Mac */}
-        <div className="flex flex-col items-center gap-1 text-center">
-          <div className="w-9 h-9 rounded-xl bg-zinc-900 border border-white/10 flex items-center justify-center text-cyan-400 shadow-inner">
-            <Laptop className="w-5 h-5" />
+      {/* Dual Pane Interface Simulator */}
+      <div className="grid grid-cols-2 gap-2 my-2 text-xs">
+        {/* Left Pane: Local Mac */}
+        <div className="p-2.5 rounded-xl bg-zinc-900/80 border border-white/5">
+          <div className="flex items-center justify-between text-[10px] text-zinc-400 mb-1.5 pb-1 border-b border-white/5">
+            <span className="font-mono text-zinc-300 flex items-center gap-1">
+              <Laptop className="w-3 h-3 text-cyan-400" /> 本地 Mac
+            </span>
+            <span className="text-zinc-500">~/workspace/build</span>
           </div>
-          <span className="text-[11px] font-medium text-zinc-200">MacBook M3</span>
-          <span className="text-[9px] text-zinc-500">局域网主机</span>
+          <div className="space-y-1 font-mono text-[10px]">
+            <div className="flex items-center justify-between text-zinc-300 bg-white/5 px-1.5 py-0.5 rounded">
+              <span className="flex items-center gap-1">
+                <FileCode className="w-2.5 h-2.5 text-orange-400" /> App.pkg
+              </span>
+              <span className="text-zinc-500">142MB</span>
+            </div>
+            <div className="flex items-center justify-between text-zinc-400 px-1.5 py-0.5">
+              <span className="flex items-center gap-1">
+                <Folder className="w-2.5 h-2.5 text-amber-400" /> Assets/
+              </span>
+              <span className="text-zinc-500">12项</span>
+            </div>
+          </div>
         </div>
 
-        {/* Transfer animation bridge */}
-        <div className="flex-1 px-3 flex flex-col items-center">
-          <div className="text-[10px] font-mono text-cyan-300 mb-1 flex items-center gap-1">
-            <span>92.4 MB/s</span>
-            <span className="text-zinc-600">·</span>
-            <span className="text-emerald-400">极速</span>
+        {/* Right Pane: Remote SFTP Server */}
+        <div className="p-2.5 rounded-xl bg-zinc-900/80 border border-white/5">
+          <div className="flex items-center justify-between text-[10px] text-zinc-400 mb-1.5 pb-1 border-b border-white/5">
+            <span className="font-mono text-cyan-300 flex items-center gap-1">
+              <Server className="w-3 h-3" /> 远端 Linux (SFTP)
+            </span>
+            <span className="text-zinc-500">/var/www/prod</span>
           </div>
-          <div className="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
-            <div className="bg-gradient-to-r from-cyan-400 to-blue-500 h-full w-3/4 rounded-full animate-pulse" />
+          <div className="space-y-1 font-mono text-[10px]">
+            <div className="flex items-center justify-between text-cyan-200 bg-cyan-950/40 border border-cyan-800/30 px-1.5 py-0.5 rounded">
+              <span className="flex items-center gap-1">
+                <CheckCircle2 className="w-2.5 h-2.5 text-emerald-400" /> release_v1.tar
+              </span>
+              <span className="text-emerald-400">已就绪</span>
+            </div>
+            <div className="flex items-center justify-between text-zinc-400 px-1.5 py-0.5">
+              <span className="flex items-center gap-1">
+                <Folder className="w-2.5 h-2.5 text-blue-400" /> logs/
+              </span>
+              <span className="text-zinc-500">8.4MB</span>
+            </div>
           </div>
-          <div className="text-[9px] text-zinc-500 mt-1">Design_Tokens.swift</div>
-        </div>
-
-        {/* Device 2: iPhone */}
-        <div className="flex flex-col items-center gap-1 text-center">
-          <div className="w-9 h-9 rounded-xl bg-zinc-900 border border-white/10 flex items-center justify-center text-blue-400 shadow-inner">
-            <Smartphone className="w-5 h-5" />
-          </div>
-          <span className="text-[11px] font-medium text-zinc-200">iPhone 16 Pro</span>
-          <span className="text-[9px] text-zinc-500">已就绪</span>
         </div>
       </div>
 
-      {/* Action button */}
+      {/* Concurrent Transfer Progress Bar */}
+      <div className="p-2 rounded-xl bg-white/[0.02] border border-white/5">
+        <div className="flex items-center justify-between text-[10px] text-zinc-400 mb-1 font-mono">
+          <span className="flex items-center gap-1 text-cyan-300">
+            <Radio className="w-3 h-3 text-cyan-400 animate-pulse" />
+            <span>并发队列 (3/3) · 48.6 MB/s</span>
+          </span>
+          <span className="text-emerald-400 font-semibold">Keychain 密钥已解锁</span>
+        </div>
+        <div className="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+          <div className="bg-gradient-to-r from-cyan-400 to-blue-500 h-full w-4/5 rounded-full animate-pulse" />
+        </div>
+      </div>
+
+      {/* Button */}
       <button
         onClick={() => {
-          setTransferring(true);
-          setTimeout(() => setTransferring(false), 1200);
+          setSyncing(true);
+          setTimeout(() => setSyncing(false), 1200);
         }}
-        className="mt-2.5 w-full py-1.5 rounded-lg bg-cyan-600/20 hover:bg-cyan-600/30 border border-cyan-500/30 text-cyan-300 text-xs font-medium flex items-center justify-center gap-1.5 transition-colors"
+        className="mt-2 w-full py-1.5 rounded-lg bg-cyan-600/20 hover:bg-cyan-600/30 border border-cyan-500/30 text-cyan-300 text-xs font-medium flex items-center justify-center gap-1.5 transition-colors"
       >
-        <span>{transferring ? "正在渡运数据包..." : "模拟拖放文件直传"}</span>
-        <ArrowRightLeft className={`w-3 h-3 ${transferring ? "animate-spin" : ""}`} />
+        <span>{syncing ? "严格防御传输中..." : "模拟并发传输 App.pkg 到远端"}</span>
+        <ArrowRight className={`w-3 h-3 ${syncing ? "translate-x-1" : ""}`} />
       </button>
     </div>
   );
 }
 
 export function WeddingMockup() {
-  const [hearts, setHearts] = useState(28);
+  const [hearts, setHearts] = useState(36);
   const [liked, setLiked] = useState(false);
 
   const toggleHeart = () => {
@@ -374,44 +445,49 @@ export function WeddingMockup() {
   };
 
   return (
-    <div className="w-full bg-gradient-to-b from-rose-950/30 via-zinc-950 to-zinc-950 rounded-2xl border border-rose-500/20 p-3.5 shadow-2xl backdrop-blur-xl select-none">
+    <div className="w-full bg-gradient-to-b from-rose-950/40 via-zinc-950 to-zinc-950 rounded-2xl border border-rose-500/20 p-3.5 shadow-2xl backdrop-blur-xl select-none font-sans">
       {/* Wedding Header Tag */}
-      <div className="text-center pb-2 border-b border-rose-500/10">
-        <span className="text-[10px] tracking-widest uppercase text-rose-300/80 font-serif">
-          Save the Date · 专属婚礼请柬空间
+      <div className="flex items-center justify-between pb-2 border-b border-rose-500/10 text-xs">
+        <span className="text-[10px] tracking-widest uppercase text-rose-300/90 font-serif flex items-center gap-1">
+          <Ticket className="w-3 h-3 text-rose-400" />
+          <span>电影首映礼主题 RSVP 系统</span>
+        </span>
+        <span className="text-[10px] text-amber-300 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-full font-mono">
+          Vue 3 + Flask + PWA
         </span>
       </div>
 
-      {/* Main Invitation Card Content */}
-      <div className="my-2.5 p-3 rounded-xl bg-rose-500/[0.04] border border-rose-500/15 text-center">
-        <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-rose-500/10 text-rose-400 mb-1.5">
-          <Heart className="w-4 h-4 fill-rose-500/40" />
+      {/* Cinema Ticket Card Simulator */}
+      <div className="my-2.5 p-3 rounded-xl bg-rose-500/[0.04] border border-rose-500/20 flex items-center justify-between gap-3">
+        <div>
+          <div className="text-[10px] text-rose-300/80 font-serif">
+            PREMIERE TICKET · 专属电子票根
+          </div>
+          <h4 className="text-sm font-serif font-bold text-rose-100 tracking-wide mt-0.5">
+            Johnny &amp; Grace · 浪漫首映礼
+          </h4>
+          <p className="text-[10px] text-zinc-400 mt-1">
+            三幕自动轮播故事画廊 · 专属 QR 凭证
+          </p>
         </div>
-        <h4 className="text-sm font-serif font-medium text-rose-100 tracking-wide">
-          Johnny &amp; Grace
-        </h4>
-        <p className="text-[10px] text-zinc-400 mt-1">
-          两颗星轨的相遇，邀请您共赴浪漫誓约
-        </p>
 
-        <div className="mt-2.5 flex items-center justify-center gap-2 text-[10px] text-rose-300/90 font-mono">
-          <span className="px-2 py-0.5 rounded bg-rose-500/10 border border-rose-500/20">
-            视差画卷故事
-          </span>
-          <span className="px-2 py-0.5 rounded bg-rose-500/10 border border-rose-500/20">
-            实时祝福弹幕
-          </span>
+        {/* QR Code Simulation */}
+        <div className="w-14 h-14 rounded-lg bg-white p-1 flex items-center justify-center shrink-0 shadow-md">
+          <QrCode className="w-full h-full text-zinc-900" />
         </div>
       </div>
 
-      {/* Guest interaction preview */}
+      {/* Cloud Wishes & Offline status */}
       <div className="flex items-center justify-between pt-1 text-xs">
-        <span className="text-[11px] text-zinc-400">“愿所爱长相伴，岁岁常欢愉”</span>
+        <div className="text-[10px] text-zinc-400 flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+          <span>时空胶囊云祝福墙 · Service Worker 离线守护</span>
+        </div>
         <button
           onClick={toggleHeart}
           className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium border transition-all ${
             liked
-              ? "bg-rose-500 text-white border-rose-400 scale-105"
+              ? "bg-rose-500 text-white border-rose-400 scale-105 shadow-md"
               : "bg-white/5 text-rose-300 border-rose-500/20 hover:bg-rose-500/10"
           }`}
         >
