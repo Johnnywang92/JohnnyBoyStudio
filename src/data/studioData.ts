@@ -52,7 +52,7 @@ export const studioInfo: StudioInfo = {
   availableForHire: false,
   socials: {
     github: "https://github.com/Johnnywang92",
-    twitter: "https://x.com",
+    twitter: "https://x.com/yifanwang08",
     email: "johnny.boy.1km@gmail.com",
   },
   stats: [

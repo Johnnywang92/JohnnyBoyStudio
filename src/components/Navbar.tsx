@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { studioInfo } from "@/data/studioData";
-import { GithubIcon } from "./SocialIcons";
+import { GithubIcon, TwitterXIcon } from "./SocialIcons";
 import { Menu, X, Sparkles, Command } from "lucide-react";
 
 export default function Navbar() {
@@ -62,7 +62,7 @@ export default function Navbar() {
         </div>
 
         {/* Right Actions */}
-        <div className="hidden sm:flex items-center gap-2.5">
+        <div className="hidden sm:flex items-center gap-1.5">
           <a
             href={studioInfo.socials.github}
             target="_blank"
@@ -74,8 +74,18 @@ export default function Navbar() {
           </a>
 
           <a
+            href={studioInfo.socials.twitter}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Twitter / X"
+            className="p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-colors"
+          >
+            <TwitterXIcon className="w-4 h-4" />
+          </a>
+
+          <a
             href="#contact"
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-semibold text-white transition-all shadow-sm active:scale-95"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-semibold text-white transition-all shadow-sm active:scale-95 ml-1"
           >
             <Sparkles className="w-3.5 h-3.5 text-amber-300" />
             <span>交流合作</span>

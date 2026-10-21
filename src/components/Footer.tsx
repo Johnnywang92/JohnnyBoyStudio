@@ -46,6 +46,14 @@ export default function Footer() {
             >
               GitHub
             </a>
+            <a
+              href={studioInfo.socials.twitter}
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-zinc-300 transition-colors"
+            >
+              Twitter / X
+            </a>
           </div>
 
           {/* Right Back to Top & Time */}
