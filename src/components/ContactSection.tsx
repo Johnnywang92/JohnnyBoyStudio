@@ -10,11 +10,14 @@ import {
   Send,
   MessageSquare,
   Sparkles,
+  Loader2,
 } from "lucide-react";
 
 export default function ContactSection() {
   const [copied, setCopied] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [messageSent, setMessageSent] = useState(false);
+  const [feedbackText, setFeedbackText] = useState("");
   const [userMsg, setUserMsg] = useState("");
   const [userEmail, setUserEmail] = useState("");
 
@@ -24,15 +27,44 @@ export default function ContactSection() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleSendMessage = (e: React.FormEvent) => {
+  const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!userMsg.trim()) return;
-    setMessageSent(true);
-    setTimeout(() => {
-      setMessageSent(false);
-      setUserMsg("");
-      setUserEmail("");
-    }, 3000);
+    if (!userMsg.trim() || !userEmail.trim()) return;
+
+    setLoading(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: userEmail.trim(),
+          message: userMsg.trim(),
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setMessageSent(true);
+        setFeedbackText(
+          data.mock
+            ? "留言已成功送达后端处理队列！"
+            : "留言已成功投递至 Johnny 的 Gmail 邮箱！"
+        );
+        setUserMsg("");
+        setUserEmail("");
+        setTimeout(() => {
+          setMessageSent(false);
+          setFeedbackText("");
+        }, 5000);
+      } else {
+        alert(data.error || "发送失败，请稍后重试");
+      }
+    } catch {
+      alert("网络连接异常，请直接点击左侧邮箱复制发送。");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -176,18 +208,23 @@ export default function ContactSection() {
 
                 <button
                   type="submit"
-                  disabled={messageSent}
-                  className="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 active:scale-98 text-white font-semibold text-xs flex items-center justify-center gap-2 transition-all shadow-lg shadow-indigo-600/20 disabled:opacity-70"
+                  disabled={loading || messageSent}
+                  className="w-full py-2.5 rounded-xl bg-[#FF5A1F] hover:bg-[#ff6e38] active:scale-98 text-white font-semibold text-xs flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#FF5A1F]/20 disabled:opacity-70 cursor-pointer"
                 >
-                  {messageSent ? (
+                  {loading ? (
+                    <>
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      <span>正在投递到 Johnny 的邮箱...</span>
+                    </>
+                  ) : messageSent ? (
                     <>
                       <Check className="w-4 h-4 text-emerald-300" />
-                      <span>已收到，Johnny 会尽快查看！</span>
+                      <span>{feedbackText || "已成功发送！"}</span>
                     </>
                   ) : (
                     <>
                       <Send className="w-3.5 h-3.5" />
-                      <span>发送即时留言</span>
+                      <span>发送即时留言至 Gmail</span>
                     </>
                   )}
                 </button>
