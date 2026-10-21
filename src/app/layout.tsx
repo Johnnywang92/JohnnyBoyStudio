@@ -3,8 +3,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://johnnyboystudio.com"),
-  title: "JohnnyBoyStudio | Mac & iOS App Studio",
-  description: "Crafting delightful native macOS and iOS experiences with vibecoding magic.",
+  title: "JohnnyBoyStudio | 因自身所需而造的专属应用工坊",
+  description: "不为迎合市场，只为解决自己的高频痛点。以现代 Vibecoding 与极客动手精神，定制利落顺手的 Mac 与 iOS 原生好工具。",
   keywords: ["macOS", "iOS", "App Developer", "Indie Hacker", "JohnnyBoyStudio", "QuickPick", "assistan01", "Ferry"],
   icons: {
     icon: [

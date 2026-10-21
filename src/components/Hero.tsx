@@ -75,10 +75,10 @@ export default function Hero() {
         {/* Hero Title */}
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-6 leading-[1.1]">
           <span>JohnnyBoy</span>
-          <span className="text-vibe-gradient">Studio</span>
+          <span className="text-[#FF5A1F]">Studio</span>
           <br />
           <span className="text-apple-gradient text-3xl sm:text-5xl lg:text-6xl font-bold mt-2 block">
-            为苹果生态，雕琢有灵魂的原生应用
+            因自身所需而造，做真正顺手的专属应用
           </span>
         </h1>
 

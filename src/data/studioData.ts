@@ -44,10 +44,10 @@ export interface StudioInfo {
 
 export const studioInfo: StudioInfo = {
   name: "JohnnyBoyStudio",
-  badge: "Vibecoding Studio · Mac & iOS Indie Lab",
-  tagline: "为苹果生态雕琢有温度的原生体验。",
-  subTagline: "以现代 Vibecoding 灵感与极客匠心，将系统级交互与 AI 智力融合，打造高审美、无负担的独立产品。",
-  bio: "我是 JohnnyBoy，一名专注于 Mac 与 iOS 生态的独立开发者。热衷于研究人机交互的微动效、极简的原生系统整合，以及通过 Vibecoding 敏捷将各种天马行空的灵感以高质感工程化落地。",
+  badge: "Vibecoding · 自造自用的个人数字工坊",
+  tagline: "因自身所需而造，定制真正顺手的专属应用。",
+  subTagline: "不为迎合市场，只为解决自己的高频痛点。以现代 Vibecoding 与极客动手精神，为自己的 Mac 与 iPhone 量身打造利落、趁手、不将就的自用好工具。",
+  bio: "我是 JohnnyBoy。这里的每一个 App（不管是选片调色、生活助理，还是文件流转与浪漫纪念），最初都源于我自己的真实需求与强迫症痛点。借助 AI 结对与 Vibecoding，我把想法亲手实现为自己每天都在高频使用的专属原生工具。",
   location: "China · Remote Worldwide",
   availableForHire: false,
   socials: {
@@ -56,10 +56,10 @@ export const studioInfo: StudioInfo = {
     email: "johnny.boy.1km@gmail.com",
   },
   stats: [
-    { label: "活跃项目", value: "4+" },
-    { label: "原生支持", value: "macOS / iOS" },
+    { label: "活跃自用项目", value: "4+" },
+    { label: "日常主力机", value: "Mac & iPhone" },
     { label: "开发哲学", value: "Vibecoding" },
-    { label: "设计原则", value: "Apple HIG" },
+    { label: "核心原则", value: "自己先用爽" },
   ],
 };
 
@@ -195,31 +195,31 @@ export const products: Product[] = [
 
 export const philosophyList = [
   {
-    title: "Vibecoding 灵动实践",
-    subtitle: "AI Pair-Programming with Soul",
+    title: "真实自用驱动 (Eat My Own Dog Food)",
+    subtitle: "Scratch My Own Itch",
     description:
-      "不再深陷重复轮子的泥潭，而是将 AI 作为随行极客架构师。让直觉引领创意，用现代工具链将灵感以天为单位迅速演进为可用原型。",
+      "不为编造伪需求，每一个 App 都源于我自己在日常生活与工作流中不愿妥协的真实痛点。我自己就是第一号核心用户，只有自己每天用着爽，产品才有真正的生命力。",
     icon: "Flame",
   },
   {
-    title: "Apple 原生美学沉浸",
-    subtitle: "Native HIG & Tactile Feedback",
+    title: "Vibecoding 极速自造",
+    subtitle: "Idea to Everyday Tool with AI",
     description:
-      "推崇苹果人机交互指南（HIG），精心调校每一个圆角比例、磨砂毛玻璃透光率、触觉震动反馈与物理弹性曲线，让软件如实体般顺手。",
+      "有了痛点与灵感，今晚就搭出原型，明天就跑在自己的 Mac 或 iPhone 上。将 AI 作为随行架构师，让直觉与创意快速落地，省去繁冗流程，专注实现心中所想。",
     icon: "Apple",
   },
   {
-    title: "克制与极致性能",
-    subtitle: "Lightweight & Zero Bloat",
+    title: "量身定制的极致顺手",
+    subtitle: "Tailored for Natural Intuition",
     description:
-      "对常驻内存和后台 CPU 消耗有严苛的洁癖。应用启动无需等待，不绑架系统资源，做桌面和手机里安静、可靠、召之即来的得力工具。",
+      "为自己的高频操作度身剪裁快捷键、手势与微动效。毫秒级唤起、键盘流盲打、极轻资源占用，绝不容忍冗余流程与卡顿，做最得心应手的私人数字工具。",
     icon: "Gauge",
   },
   {
-    title: "数据与隐私主权",
-    subtitle: "Local First & Privacy by Design",
+    title: "100% 本地与隐私主权",
+    subtitle: "Local First & Zero Bloat",
     description:
-      "坚守 Local-first 本地优先设计。用户的剪贴记录、日程、文件流转绝不上报或用于无关商业追踪，安全与安心是第一位。",
+      "做干净纯粹的自用软件。底片绝不篡改、账目密码全存本机、数据绝不静默上报商业追踪。安全、可控、安心，完全掌控在自己手中。",
     icon: "ShieldCheck",
   },
 ];

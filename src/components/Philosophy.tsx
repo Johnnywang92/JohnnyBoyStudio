@@ -24,15 +24,15 @@ export default function Philosophy() {
     <section id="philosophy" className="py-20 relative border-t border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-mono mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF5A1F]/10 border border-[#FF5A1F]/20 text-[#FF5A1F] text-xs font-mono mb-3">
             <Flame className="w-3.5 h-3.5" />
-            <span>DEV PHILOSOPHY &amp; CRAFTSMANSHIP</span>
+            <span>BUILT FOR MYSELF · VIBECODING CRAFT</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-            什么是 JohnnyBoyStudio 的 Vibecoding？
+            为什么而造？自用驱动的开发哲学
           </h2>
           <p className="text-sm sm:text-base text-zinc-400 mt-3 leading-relaxed">
-            不仅是 AI 时代的快节奏编码，更是在追求极致 Apple 原生细节与交互触感时的灵感共振。
+            从自己日常使用最真实的痛点出发，用 Vibecoding 把灵感亲手打造成每天都想用的趁手工具。
           </p>
         </div>
 
