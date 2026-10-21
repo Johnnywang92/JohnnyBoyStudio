@@ -19,6 +19,7 @@ import {
   Zap,
   Compass,
   Heart,
+  Camera,
 } from "lucide-react";
 
 interface ProductCardProps {
@@ -29,6 +30,7 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const renderMockup = () => {
     switch (product.mockupType) {
+      case "quickpick-workbench":
       case "mac-menubar":
         return <QuickpickMockup />;
       case "ios-island":
@@ -57,6 +59,8 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   const getProductIcon = (name: string) => {
     switch (name) {
+      case "Camera":
+        return <Camera className="w-5 h-5 text-amber-400" />;
       case "Zap":
         return <Zap className="w-5 h-5 text-amber-400" />;
       case "Sparkles":

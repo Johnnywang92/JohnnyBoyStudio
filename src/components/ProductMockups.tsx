@@ -2,8 +2,6 @@
 
 import React, { useState } from "react";
 import {
-  Copy,
-  Check,
   Sparkles,
   Smartphone,
   Laptop,
@@ -11,92 +9,213 @@ import {
   Heart,
   Volume2,
   Calendar,
+  Camera,
+  Sliders,
+  CheckCircle2,
+  Maximize2,
+  Film,
+  Layers,
+  ShieldCheck,
 } from "lucide-react";
 
 export function QuickpickMockup() {
-  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  const [gridMode, setGridMode] = useState<"thirds" | "spiral" | "none">("thirds");
+  const [lutEnabled, setLutEnabled] = useState(true);
+  const [frameMode, setFrameMode] = useState(false);
+  const [selected, setSelected] = useState(true);
 
-  const items = [
-    { type: "color", label: "#6366F1", detail: "Indigo Accent", badge: "Color" },
-    { type: "code", label: "struct Studio: App", detail: "SwiftUI Entry", badge: "Swift" },
-    { type: "link", label: "johnnyboy.studio", detail: "Studio URL", badge: "Link" },
-  ];
-
-  const handleCopy = (index: number) => {
-    setCopiedIndex(index);
-    setTimeout(() => setCopiedIndex(null), 1500);
+  const cycleGrid = () => {
+    if (gridMode === "thirds") setGridMode("spiral");
+    else if (gridMode === "spiral") setGridMode("none");
+    else setGridMode("thirds");
   };
 
   return (
-    <div className="w-full bg-zinc-950/90 rounded-2xl border border-white/10 p-3.5 shadow-2xl backdrop-blur-xl font-mono text-xs select-none">
-      {/* Menubar Header */}
-      <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-white/5">
+    <div className="w-full bg-zinc-950/95 rounded-2xl border border-white/10 p-3 shadow-2xl backdrop-blur-xl font-sans text-xs select-none">
+      {/* macOS Window Title Bar */}
+      <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/5">
         <div className="flex items-center gap-1.5">
           <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
           <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+          <span className="text-[11px] text-zinc-400 ml-2 font-mono flex items-center gap-1">
+            <Camera className="w-3 h-3 text-amber-400" />
+            <span>QuickPick 极选 · DSC04892.ARW</span>
+          </span>
         </div>
-        <div className="flex items-center gap-1.5 text-[11px] text-zinc-400 font-sans">
-          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-          <span>Quickpick 快捷坞 · ⌘⌥V</span>
+
+        <div className="flex items-center gap-1.5 text-[10px]">
+          <span className="inline-flex items-center gap-1 text-emerald-400 bg-emerald-950/50 border border-emerald-500/20 px-2 py-0.5 rounded-full font-mono">
+            <ShieldCheck className="w-3 h-3" />
+            <span>100% 只读安全</span>
+          </span>
         </div>
-        <div className="text-[10px] text-zinc-500 px-1.5 py-0.5 rounded bg-white/5">14MB</div>
       </div>
 
-      {/* Search Input Bar */}
-      <div className="flex items-center gap-2 px-3 py-1.5 mb-2.5 rounded-lg bg-zinc-900 border border-white/5 text-zinc-400">
-        <span className="text-zinc-500">🔍</span>
-        <span className="text-zinc-300 font-sans text-xs">搜索或一键粘贴...</span>
-        <span className="ml-auto text-[10px] text-zinc-600 bg-white/5 px-1 rounded">↵</span>
-      </div>
+      {/* Main Viewport / Canvas Simulator */}
+      <div
+        className={`relative w-full h-44 rounded-xl overflow-hidden border border-white/10 flex items-center justify-center transition-all duration-300 ${
+          frameMode
+            ? "bg-stone-100 text-stone-900 p-3 shadow-inner"
+            : lutEnabled
+            ? "bg-gradient-to-tr from-amber-950/80 via-zinc-900 to-indigo-950/80"
+            : "bg-zinc-900"
+        }`}
+      >
+        {/* Inner photo mock */}
+        <div className="relative w-full h-full flex flex-col justify-between p-3 z-10">
+          {/* Top Exif / Mode Pills */}
+          <div className="flex items-center justify-between">
+            <span
+              className={`text-[10px] font-mono px-2 py-0.5 rounded-md backdrop-blur-md ${
+                frameMode
+                  ? "bg-stone-900/10 text-stone-700 font-semibold"
+                  : "bg-black/60 text-zinc-300 border border-white/10"
+              }`}
+            >
+              Sony A7R V · 35mm F1.4 GM · 1/800s ƒ/1.4 ISO 100
+            </span>
 
-      {/* Snippet List */}
-      <div className="space-y-1.5">
-        {items.map((item, idx) => (
-          <div
-            key={idx}
-            onClick={() => handleCopy(idx)}
-            className="flex items-center justify-between p-2 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] transition-colors cursor-pointer group"
-          >
-            <div className="flex items-center gap-2.5">
-              {item.type === "color" && (
-                <div className="w-4 h-4 rounded bg-[#6366f1] ring-1 ring-white/20" />
+            <div className="flex items-center gap-1">
+              {lutEnabled && (
+                <span className="text-[9px] font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30 px-1.5 py-0.5 rounded backdrop-blur-md">
+                  LUT: Portra 400
+                </span>
               )}
-              {item.type === "code" && (
-                <div className="w-4 h-4 rounded bg-orange-500/20 text-orange-400 flex items-center justify-center text-[10px]">
-                  &lt;&gt;
-                </div>
+              {selected && (
+                <span className="flex items-center gap-0.5 text-[9px] font-semibold bg-emerald-500 text-white px-1.5 py-0.5 rounded shadow">
+                  <CheckCircle2 className="w-2.5 h-2.5" /> 已选入
+                </span>
               )}
-              {item.type === "link" && (
-                <div className="w-4 h-4 rounded bg-blue-500/20 text-blue-400 flex items-center justify-center text-[10px]">
-                  ↗
-                </div>
-              )}
-              <div>
-                <div className="text-zinc-200 group-hover:text-amber-300 transition-colors font-medium">
-                  {item.label}
-                </div>
-                <div className="text-[10px] text-zinc-500 font-sans">{item.detail}</div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-1.5">
-              <span className="text-[10px] text-zinc-500 px-1.5 py-0.5 rounded bg-zinc-800/80">
-                {item.badge}
-              </span>
-              <button
-                className="p-1 rounded text-zinc-400 group-hover:text-zinc-200"
-                title="点击复制"
-              >
-                {copiedIndex === idx ? (
-                  <Check className="w-3.5 h-3.5 text-emerald-400 animate-bounce" />
-                ) : (
-                  <Copy className="w-3.5 h-3.5" />
-                )}
-              </button>
             </div>
           </div>
-        ))}
+
+          {/* Composition Grid Lines Overlay (Pixi.js simulator) */}
+          {gridMode === "thirds" && !frameMode && (
+            <div className="absolute inset-0 pointer-events-none grid grid-cols-3 grid-rows-3 border border-amber-400/20">
+              <div className="border-r border-b border-amber-400/30 relative">
+                <span className="absolute -bottom-1 -right-1 w-2 h-2 rounded-full bg-amber-400 ring-2 ring-black" />
+              </div>
+              <div className="border-r border-b border-amber-400/30 relative">
+                <span className="absolute -bottom-1 -left-1 w-2 h-2 rounded-full bg-amber-400 ring-2 ring-black" />
+              </div>
+              <div className="border-b border-amber-400/30" />
+              <div className="border-r border-b border-amber-400/30 relative">
+                <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-amber-400 ring-2 ring-black" />
+              </div>
+              <div className="border-r border-b border-amber-400/30 relative">
+                <span className="absolute -top-1 -left-1 w-2 h-2 rounded-full bg-amber-400 ring-2 ring-black" />
+              </div>
+              <div className="border-b border-amber-400/30" />
+              <div className="border-r border-amber-400/30" />
+              <div className="border-r border-amber-400/30" />
+              <div />
+            </div>
+          )}
+
+          {gridMode === "spiral" && !frameMode && (
+            <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+              <svg className="w-full h-full text-amber-400/50" viewBox="0 0 100 100">
+                <path
+                  d="M 10 90 A 80 80 0 0 1 90 10 A 50 50 0 0 1 40 60 A 30 30 0 0 1 70 30 A 18 18 0 0 1 52 48"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.2"
+                  strokeDasharray="2,2"
+                />
+              </svg>
+            </div>
+          )}
+
+          {/* Center Artistic Subject Indicator */}
+          <div className="my-auto text-center pointer-events-none">
+            <span
+              className={`text-xs font-serif tracking-widest uppercase ${
+                frameMode ? "text-stone-800" : "text-white/80"
+              }`}
+            >
+              {frameMode ? "JohnnyBoy Studio · Fine Art Frame" : "6100 万全画幅 RAW 细节无损预览"}
+            </span>
+            <div
+              className={`text-[10px] mt-0.5 ${
+                frameMode ? "text-stone-500" : "text-zinc-400"
+              }`}
+            >
+              闭眼检测 0 · 锐度方差 98.4 (精准合焦)
+            </div>
+          </div>
+
+          {/* Bottom EXIF Frame Signature if Frame Mode is on */}
+          {frameMode && (
+            <div className="flex items-end justify-between pt-1 border-t border-stone-300/80 text-[9px] text-stone-600 font-serif">
+              <span>LEICA / SONY MISTERIO</span>
+              <span className="font-mono">F1.4 · 1/800s · ISO 100</span>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Interactive Toolbar (Quick Controls) */}
+      <div className="mt-2.5 flex items-center justify-between gap-1.5 flex-wrap">
+        <div className="flex items-center gap-1.5">
+          <button
+            onClick={cycleGrid}
+            className={`px-2.5 py-1 rounded-lg text-[11px] font-medium border flex items-center gap-1 transition-all ${
+              gridMode !== "none"
+                ? "bg-amber-500/20 text-amber-300 border-amber-500/40"
+                : "bg-white/5 text-zinc-400 border-white/5 hover:bg-white/10"
+            }`}
+            title="按 O 切换构图参考线"
+          >
+            <Layers className="w-3 h-3" />
+            <span>
+              构图线: {gridMode === "thirds" ? "三分法" : gridMode === "spiral" ? "黄金螺旋" : "关"}
+            </span>
+          </button>
+
+          <button
+            onClick={() => setFrameMode(!frameMode)}
+            className={`px-2.5 py-1 rounded-lg text-[11px] font-medium border flex items-center gap-1 transition-all ${
+              frameMode
+                ? "bg-white text-zinc-950 border-white font-semibold"
+                : "bg-white/5 text-zinc-400 border-white/5 hover:bg-white/10"
+            }`}
+            title="按 E 切换艺术相框"
+          >
+            <Sliders className="w-3 h-3" />
+            <span>EXIF 相框</span>
+          </button>
+
+          <button
+            onClick={() => setLutEnabled(!lutEnabled)}
+            className={`px-2.5 py-1 rounded-lg text-[11px] font-medium border flex items-center gap-1 transition-all ${
+              lutEnabled
+                ? "bg-purple-500/20 text-purple-300 border-purple-500/40"
+                : "bg-white/5 text-zinc-400 border-white/5 hover:bg-white/10"
+            }`}
+            title="按 L 开关 3D LUT"
+          >
+            <Film className="w-3 h-3" />
+            <span>3D LUT</span>
+          </button>
+        </div>
+
+        <button
+          onClick={() => setSelected(!selected)}
+          className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all ${
+            selected
+              ? "bg-emerald-600 text-white hover:bg-emerald-500"
+              : "bg-zinc-800 text-zinc-400 hover:text-white"
+          }`}
+          title="按 Space 选入或剔除"
+        >
+          {selected ? "已保留 [Space]" : "剔除 [Space]"}
+        </button>
+      </div>
+
+      <div className="mt-2 text-[10px] text-zinc-500 flex items-center justify-between font-mono px-0.5">
+        <span>快捷键: [O] 构图 [E] 相框 [L] 调色 [Space] 挑选</span>
+        <span className="text-amber-400/80">Tauri + Rust + Pixi.js</span>
       </div>
     </div>
   );

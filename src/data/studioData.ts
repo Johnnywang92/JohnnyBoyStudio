@@ -19,7 +19,7 @@ export interface Product {
     demo?: string;
     github?: string;
   };
-  mockupType: "mac-menubar" | "ios-island" | "transfer-radar" | "wedding-card";
+  mockupType: "mac-menubar" | "ios-island" | "transfer-radar" | "wedding-card" | "quickpick-workbench";
 }
 
 export interface StudioInfo {
@@ -51,7 +51,7 @@ export const studioInfo: StudioInfo = {
   location: "China · Remote Worldwide",
   availableForHire: false,
   socials: {
-    github: "https://github.com",
+    github: "https://github.com/Johnnywang92",
     twitter: "https://x.com",
     email: "johnnyboystudio@gmail.com",
   },
@@ -66,34 +66,35 @@ export const studioInfo: StudioInfo = {
 export const products: Product[] = [
   {
     id: "quickpick",
-    name: "Quickpick",
-    tagline: "全局轻量极速拾取与随行剪贴坞",
-    enTagline: "Instant capture & clipboard dock for macOS power users",
+    name: "QuickPick（极选）",
+    tagline: "专业摄影师本地极速选片与构图调色工作台",
+    enTagline: "High-speed local photo curation, composition & grading studio",
     description:
-      "一键呼出、即刻拾取、无感流转。为键盘流与创作者打造的高性能 macOS 原生剪贴板与临时工作台，内存占用极低，毫秒级唤起。",
+      "专为摄影师、修图师与影像爱好者打造的 macOS 极速选片与交付工具。零上传、100% 原片只读安全，毫秒级 RAW 原生解码，集智能闭眼/虚焦筛查漏斗、5 大摄影构图线、相机 EXIF 艺术相框与 3D LUT 胶片影调于一体。",
     platforms: ["macOS"],
-    category: "Mac 生产力工具",
+    category: "macOS 影像生产力",
     status: "Featured",
     statusColor: "emerald",
     accentColor: "from-amber-400 via-orange-500 to-rose-500",
-    bgGlow: "rgba(249, 115, 22, 0.15)",
-    iconName: "Zap",
+    bgGlow: "rgba(249, 115, 22, 0.18)",
+    iconName: "Camera",
     features: [
-      "⌘⌥V 全局毫秒级无延迟呼出",
-      "智能类型识别（色值拾取、代码格式化、链接嗅探）",
-      "原生 Swift & AppKit 架构，内存常驻 < 18MB",
-      "纯本地沙盒加密存储，零网络回传保证隐私",
+      "⚡ 废片一键粉碎漏斗：闭眼检测、严重脱焦与连拍冗余劣选 AI 智能筛查",
+      "📐 5 大摄影构图线：三分法 / 黄金螺旋 / 动态对称（Pixi.js v8 硬件加速）",
+      "🎨 相机 EXIF 艺术相框：6 大高审美模板、原创摄影徽标与一键智能调光",
+      "🎞️ 3D LUT 胶片电影级调色：内置柯达/富士/莱卡黑白，支持自定义 .cube 导入",
+      "🔒 100% 原片只读安全：本地 SQLite 记录，绝不修改、覆盖或破坏原始底片",
     ],
     metrics: [
-      { label: "唤起延迟", value: "< 16ms" },
-      { label: "常驻内存", value: "14 MB" },
-      { label: "架构", value: "Swift / AppKit" },
+      { label: "架构", value: "Tauri + Rust" },
+      { label: "渲染引擎", value: "Pixi.js v8 / GPU" },
+      { label: "底片安全", value: "100% 只读" },
     ],
     links: {
-      github: "https://github.com",
-      demo: "#",
+      github: "https://github.com/Johnnywang92/QuickPick",
+      demo: "https://github.com/Johnnywang92/QuickPick/releases",
     },
-    mockupType: "mac-menubar",
+    mockupType: "quickpick-workbench",
   },
   {
     id: "assistan01",
@@ -225,27 +226,27 @@ export const techStackCategories = [
   {
     category: "Apple 生态系统",
     items: [
-      { name: "Swift 6", desc: "现代高安全系统级语言" },
-      { name: "SwiftUI", desc: "声明式流畅 UI 构建" },
-      { name: "AppKit & UIKit", desc: "深度掌控系统底层事件" },
-      { name: "CoreML", desc: "设备端端侧智能与推理" },
+      { name: "Swift 6 & SwiftUI", desc: "声明式流畅 UI 与原生性能" },
+      { name: "Rust & Tauri", desc: "高安全极速原生系统级底层" },
+      { name: "AppKit & UIKit", desc: "深度掌控系统窗口与底层事件" },
+      { name: "CoreML", desc: "设备端端侧智能与推理引擎" },
     ],
   },
   {
-    category: "现代全栈与 Web",
+    category: "图形与前沿渲染",
     items: [
+      { name: "Pixi.js v8", desc: "硬件加速与超高清构图参考线" },
+      { name: "3D LUT & WebGPU", desc: "胶片调色实时高帧率映射" },
       { name: "Next.js & React 19", desc: "极速响应式 Web 架构" },
-      { name: "TypeScript", desc: "严谨类型安全与工程架构" },
-      { name: "Tailwind CSS", desc: "高质感设计系统落地" },
-      { name: "Framer Motion", desc: "丝滑自然的物理微动效" },
+      { name: "Framer Motion", desc: "物理弹簧与丝滑微动效" },
     ],
   },
   {
     category: "工程与网络底层",
     items: [
-      { name: "P2P & WebSocket", desc: "近场与局域低延迟通信" },
-      { name: "Local-First Storage", desc: "SQLite / CoreData 本地沙盒" },
-      { name: "Shortcuts & IPC", desc: "跨 App 管道与无感联动" },
+      { name: "Local-First Storage", desc: "100% 只读安全与 SQLite 本地沙盒" },
+      { name: "P2P & WebSocket", desc: "近场与局域低延迟设备通信" },
+      { name: "Shortcuts & IPC", desc: "跨 App 管道与系统级联动" },
     ],
   },
 ];

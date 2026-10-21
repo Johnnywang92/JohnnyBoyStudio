@@ -7,7 +7,7 @@ import { GithubIcon } from "./SocialIcons";
 import {
   ArrowDown,
   Sparkles,
-  Zap,
+  Camera,
   Compass,
   Heart,
   Terminal,
@@ -19,9 +19,9 @@ export default function Hero() {
   const dockApps = [
     {
       id: "quickpick",
-      name: "Quickpick",
-      tag: "全局随行剪贴坞",
-      icon: <Zap className="w-5 h-5 text-amber-400" />,
+      name: "QuickPick（极选）",
+      tag: "专业摄影极速选片",
+      icon: <Camera className="w-5 h-5 text-amber-400" />,
       color: "from-amber-500/20 to-orange-500/20",
     },
     {
