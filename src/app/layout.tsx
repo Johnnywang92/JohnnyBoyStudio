@@ -2,9 +2,33 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://johnnyboystudio.com"),
   title: "JohnnyBoyStudio | Mac & iOS App Studio",
   description: "Crafting delightful native macOS and iOS experiences with vibecoding magic.",
-  keywords: ["macOS", "iOS", "App Developer", "Indie Hacker", "JohnnyBoyStudio", "Quickpick", "assistan01", "Ferry"],
+  keywords: ["macOS", "iOS", "App Developer", "Indie Hacker", "JohnnyBoyStudio", "QuickPick", "assistan01", "Ferry"],
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
+  openGraph: {
+    title: "JohnnyBoyStudio | Mac & iOS App Studio",
+    description: "Crafting delightful native macOS and iOS experiences with vibecoding magic.",
+    url: "https://johnnyboystudio.com",
+    siteName: "JohnnyBoyStudio",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "JohnnyBoyStudio - Mac & iOS App Studio",
+      },
+    ],
+    locale: "zh_CN",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -14,7 +38,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN" className="scroll-smooth dark">
-      <body className="min-h-screen bg-[#08080a] text-zinc-100 antialiased selection:bg-indigo-500/30 selection:text-indigo-200">
+      <head>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <meta name="theme-color" content="#FF5A1F" />
+      </head>
+      <body className="min-h-screen bg-[#08080a] text-zinc-100 antialiased selection:bg-[#FF5A1F]/30 selection:text-[#FF5A1F]">
         {children}
       </body>
     </html>

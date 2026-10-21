@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { studioInfo } from "@/data/studioData";
 import { GithubIcon, TwitterXIcon } from "./SocialIcons";
-import { Menu, X, Sparkles, Command } from "lucide-react";
+import { Menu, X, Sparkles } from "lucide-react";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -35,14 +35,16 @@ export default function Navbar() {
       >
         {/* Logo */}
         <a href="#" className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
-            <Command className="w-4 h-4" />
-          </div>
+          <img
+            src="/brand/logo/logo-mark.svg"
+            alt="JohnnyBoyStudio Logo"
+            className="w-8 h-8 rounded-xl shadow-md group-hover:scale-105 transition-transform"
+          />
           <div className="flex flex-col">
-            <span className="font-extrabold text-sm tracking-tight text-white group-hover:text-indigo-200 transition-colors">
-              JohnnyBoy<span className="text-indigo-400">Studio</span>
+            <span className="font-extrabold text-sm tracking-tight text-[#F6F4EF] group-hover:text-white transition-colors">
+              JohnnyBoy<span className="text-[#FF5A1F]">Studio</span>
             </span>
-            <span className="text-[9px] font-mono text-zinc-500 -mt-0.5">
+            <span className="text-[9px] font-mono text-zinc-400 -mt-0.5">
               Mac &amp; iOS Indie Lab
             </span>
           </div>

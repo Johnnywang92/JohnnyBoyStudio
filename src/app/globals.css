@@ -1,7 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #09090b;
+  --brand-orange: #FF5A1F;
+  --brand-ink: #14161B;
+  --brand-paper: #F6F4EF;
+  --bg-primary: #08080c;
   --bg-secondary: #111116;
 }
 

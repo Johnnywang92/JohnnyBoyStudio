@@ -16,6 +16,11 @@ export default function Footer() {
           {/* Brand Info */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <div className="flex items-center gap-2 text-zinc-300 font-bold text-sm">
+              <img
+                src="/brand/logo/logo-mark.svg"
+                alt="JohnnyBoyStudio"
+                className="w-5 h-5 rounded-md"
+              />
               <span>{studioInfo.name}</span>
               <span className="text-zinc-600">/</span>
               <span className="text-[11px] font-mono text-zinc-500 font-normal">

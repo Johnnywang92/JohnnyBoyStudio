@@ -47,10 +47,10 @@ export default function Hero() {
     },
     {
       id: "vibecoding",
-      name: "Vibecoding",
-      tag: "灵感即代码",
-      icon: <Terminal className="w-5 h-5 text-emerald-400" />,
-      color: "from-emerald-500/20 to-teal-500/20",
+      name: "JohnnyBoyStudio",
+      tag: "品牌核心工坊",
+      icon: <img src="/brand/logo/logo-mark.svg" alt="JohnnyBoyStudio" className="w-5 h-5 rounded" />,
+      color: "from-orange-500/20 to-amber-500/20",
     },
   ];
 
