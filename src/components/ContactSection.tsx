@@ -68,29 +68,33 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-20 relative border-t border-white/5">
+    <section id="contact" className="py-14 sm:py-20 relative border-t border-white/5 content-auto">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-xl mx-auto mb-14">
+        <div className="text-center max-w-xl mx-auto mb-10 sm:mb-14">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-mono mb-3">
             <MessageSquare className="w-3.5 h-3.5" />
             <span>LET&apos;S CONNECT &amp; COLLABORATE</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+          <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
             联络与交流
           </h2>
-          <p className="text-sm sm:text-base text-zinc-400 mt-2">
-            无论是关于 Quickpick、assistan01、Ferry 的体验反馈，还是探讨 Vibecoding 灵感碰撞，随时欢迎畅聊。
+          <p className="text-xs sm:text-base text-zinc-400 mt-2 px-2">
+            无论是关于 QuickPick、assistan01、Ferry 的体验反馈，还是探讨 Vibecoding 灵感碰撞，随时欢迎畅聊。
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-stretch">
           {/* Left: About JohnnyBoy & Direct Email Card */}
-          <div className="p-7 sm:p-8 rounded-3xl glass-card flex flex-col justify-between">
+          <div className="p-6 sm:p-8 rounded-3xl glass-card flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-3.5 mb-5">
                 <img
                   src="/brand/logo/logo-mark.svg"
                   alt="JohnnyBoyStudio Logo"
+                  width={48}
+                  height={48}
+                  loading="lazy"
+                  decoding="async"
                   className="w-12 h-12 rounded-2xl shadow-xl border border-white/10"
                 />
                 <div>
@@ -188,7 +192,7 @@ export default function ContactSection() {
                     value={userEmail}
                     onChange={(e) => setUserEmail(e.target.value)}
                     placeholder="e.g. yourname@example.com"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900/90 border border-white/10 text-zinc-200 placeholder-zinc-600 text-xs focus:outline-none focus:border-indigo-500/50 transition-colors"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900/90 border border-white/10 text-zinc-200 placeholder-zinc-600 text-base sm:text-xs focus:outline-none focus:border-indigo-500/50 transition-colors"
                   />
                 </div>
 
@@ -201,15 +205,15 @@ export default function ContactSection() {
                     required
                     value={userMsg}
                     onChange={(e) => setUserMsg(e.target.value)}
-                    placeholder="分享你对 Quickpick、assistan01、Ferry 的体验期待或合作想法..."
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900/90 border border-white/10 text-zinc-200 placeholder-zinc-600 text-xs focus:outline-none focus:border-indigo-500/50 transition-colors resize-none"
+                    placeholder="分享你对 QuickPick、assistan01、Ferry 的体验期待或合作想法..."
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900/90 border border-white/10 text-zinc-200 placeholder-zinc-600 text-base sm:text-xs focus:outline-none focus:border-indigo-500/50 transition-colors resize-none"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={loading || messageSent}
-                  className="w-full py-2.5 rounded-xl bg-[#FF5A1F] hover:bg-[#ff6e38] active:scale-98 text-white font-semibold text-xs flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#FF5A1F]/20 disabled:opacity-70 cursor-pointer"
+                  className="w-full py-3 rounded-xl bg-[#FF5A1F] hover:bg-[#ff6e38] active:scale-98 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#FF5A1F]/20 disabled:opacity-70 cursor-pointer min-h-[44px] touch-manipulation"
                 >
                   {loading ? (
                     <>

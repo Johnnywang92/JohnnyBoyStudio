@@ -29,7 +29,7 @@ function CodeBlock({ code, language }: { code: string; language: string }) {
 
         <button
           onClick={handleCopy}
-          className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-zinc-300 hover:text-white transition-all text-xs"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 active:bg-white/15 text-zinc-300 hover:text-white transition-all text-xs touch-manipulation min-h-[32px]"
           title="复制全部代码"
           aria-label="复制代码"
         >
@@ -48,7 +48,7 @@ function CodeBlock({ code, language }: { code: string; language: string }) {
       </div>
 
       {/* Code Area */}
-      <div className="p-4 overflow-x-auto text-sm font-mono text-zinc-200 leading-relaxed selection:bg-[#FF5A1F]/30 selection:text-white">
+      <div className="p-3 sm:p-4 overflow-x-auto text-xs sm:text-sm font-mono text-zinc-200 leading-relaxed selection:bg-[#FF5A1F]/30 selection:text-white">
         <pre className="!bg-transparent !p-0 !m-0">
           <code>{code}</code>
         </pre>
@@ -393,7 +393,13 @@ export default function MarkdownRenderer({ content }: { content: string }) {
       blocks.push(
         <figure key={`block-${blockKey++}`} className="my-8">
           <div className="rounded-2xl overflow-hidden border border-white/10 bg-black/40 shadow-2xl">
-            <img src={src} alt={alt} className="w-full h-auto object-cover max-h-[500px]" />
+            <img
+              src={src}
+              alt={alt}
+              loading="lazy"
+              decoding="async"
+              className="w-full h-auto object-cover max-h-[500px]"
+            />
           </div>
           {alt && (
             <figcaption className="text-center text-xs text-zinc-500 mt-2 font-mono">

@@ -18,7 +18,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="py-12 border-t border-white/5 bg-zinc-950/40 text-xs text-zinc-500">
+    <footer className="py-10 sm:py-12 border-t border-white/5 bg-zinc-950/40 text-xs text-zinc-500 pb-[max(2rem,calc(env(safe-area-inset-bottom)+1rem))]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Brand Info */}
@@ -27,6 +27,10 @@ export default function Footer() {
               <img
                 src="/brand/logo/logo-mark.svg"
                 alt="JohnnyBoyStudio"
+                width={20}
+                height={20}
+                loading="lazy"
+                decoding="async"
                 className="w-5 h-5 rounded-md"
               />
               <span>{studioInfo.name}</span>
@@ -41,24 +45,36 @@ export default function Footer() {
           </div>
 
           {/* Center Links */}
-          <div className="flex flex-wrap items-center justify-center gap-6">
-            <Link href={getResolvedHref("#products")} className="hover:text-zinc-300 transition-colors">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+            <Link
+              href={getResolvedHref("#products")}
+              className="py-1 px-1.5 hover:text-zinc-300 transition-colors touch-manipulation min-h-[36px] flex items-center"
+            >
               精选作品
             </Link>
-            <Link href={getResolvedHref("#philosophy")} className="hover:text-zinc-300 transition-colors">
+            <Link
+              href={getResolvedHref("#philosophy")}
+              className="py-1 px-1.5 hover:text-zinc-300 transition-colors touch-manipulation min-h-[36px] flex items-center"
+            >
               开发理念
             </Link>
-            <Link href="/blog" className="hover:text-white text-zinc-400 font-medium transition-colors">
+            <Link
+              href="/blog"
+              className="py-1 px-1.5 hover:text-white text-zinc-400 font-medium transition-colors touch-manipulation min-h-[36px] flex items-center"
+            >
               工坊手记
             </Link>
-            <Link href={getResolvedHref("#tech-stack")} className="hover:text-zinc-300 transition-colors">
+            <Link
+              href={getResolvedHref("#tech-stack")}
+              className="py-1 px-1.5 hover:text-zinc-300 transition-colors touch-manipulation min-h-[36px] flex items-center"
+            >
               技术栈
             </Link>
             <a
               href={studioInfo.socials.github}
               target="_blank"
               rel="noreferrer"
-              className="hover:text-zinc-300 transition-colors"
+              className="py-1 px-1.5 hover:text-zinc-300 transition-colors touch-manipulation min-h-[36px] flex items-center"
             >
               GitHub
             </a>
@@ -66,7 +82,7 @@ export default function Footer() {
               href={studioInfo.socials.twitter}
               target="_blank"
               rel="noreferrer"
-              className="hover:text-zinc-300 transition-colors"
+              className="py-1 px-1.5 hover:text-zinc-300 transition-colors touch-manipulation min-h-[36px] flex items-center"
             >
               Twitter / X
             </a>
@@ -81,7 +97,7 @@ export default function Footer() {
 
             <button
               onClick={scrollToTop}
-              className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white transition-colors"
+              className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 active:bg-white/15 text-zinc-400 hover:text-white flex items-center justify-center transition-colors touch-manipulation"
               title="返回顶部"
               aria-label="Back to top"
             >

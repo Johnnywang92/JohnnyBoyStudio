@@ -46,9 +46,9 @@ export function QuickpickMockup() {
           <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
           <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
-          <span className="text-[11px] text-zinc-400 ml-2 font-mono flex items-center gap-1">
-            <Camera className="w-3 h-3 text-amber-400" />
-            <span>QuickPick 极选 · DSC04892.ARW</span>
+          <span className="text-[11px] text-zinc-400 ml-2 font-mono flex items-center gap-1 truncate max-w-[140px] sm:max-w-none">
+            <Camera className="w-3 h-3 text-amber-400 shrink-0" />
+            <span className="truncate">QuickPick 极选 · DSC04892.ARW</span>
           </span>
         </div>
 
@@ -73,7 +73,7 @@ export function QuickpickMockup() {
         <div className="relative w-full h-full flex flex-col justify-between p-3 z-10">
           <div className="flex items-center justify-between">
             <span
-              className={`text-[10px] font-mono px-2 py-0.5 rounded-md backdrop-blur-md ${
+              className={`text-[9px] sm:text-[10px] font-mono px-2 py-0.5 rounded-md backdrop-blur-md truncate max-w-[150px] sm:max-w-none ${
                 frameMode
                   ? "bg-stone-900/10 text-stone-700 font-semibold"
                   : "bg-black/60 text-zinc-300 border border-white/10"
@@ -341,12 +341,12 @@ export function FerryMockup() {
   return (
     <div className="w-full bg-zinc-950/90 rounded-2xl border border-white/10 p-3.5 shadow-2xl backdrop-blur-xl select-none font-sans">
       {/* Title */}
-      <div className="flex items-center justify-between pb-2 mb-2 border-b border-white/5 text-xs text-zinc-400">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-2 mb-2 border-b border-white/5 text-xs text-zinc-400 gap-1.5">
         <div className="flex items-center gap-1.5">
-          <Server className="w-3.5 h-3.5 text-cyan-400" />
-          <span className="font-semibold text-zinc-200">Ferry · macOS 现代化 SFTP/FTP 客户端</span>
+          <Server className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+          <span className="font-semibold text-zinc-200">Ferry · macOS SFTP/FTP 客户端</span>
         </div>
-        <span className="text-[10px] text-cyan-400 bg-cyan-950/60 border border-cyan-800/40 px-2 py-0.5 rounded-full font-mono">
+        <span className="text-[10px] text-cyan-400 bg-cyan-950/60 border border-cyan-800/40 px-2 py-0.5 rounded-full font-mono self-start sm:self-auto">
           Swift 6 严格并发 · 零数据丢失
         </span>
       </div>

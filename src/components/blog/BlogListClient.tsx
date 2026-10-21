@@ -86,7 +86,7 @@ export default function BlogListClient({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="搜索文章标题、标签或关键字（如：Vibecoding、QuickPick、macOS）..."
-            className="w-full pl-11 pr-10 py-3 rounded-2xl bg-white/[0.04] border border-white/10 text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-[#FF5A1F]/50 focus:ring-1 focus:ring-[#FF5A1F]/50 transition-all"
+            className="w-full pl-11 pr-10 py-3 rounded-2xl bg-white/[0.04] border border-white/10 text-base sm:text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-[#FF5A1F]/50 focus:ring-1 focus:ring-[#FF5A1F]/50 transition-all"
           />
           {searchQuery && (
             <button
@@ -99,14 +99,14 @@ export default function BlogListClient({
           )}
         </div>
 
-        {/* Filter Pills: Categories & Tags */}
-        <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-white/5">
+        {/* Filter Pills: Categories & Tags (Horizontal scroll on mobile) */}
+        <div className="flex items-center gap-2 pt-1 border-t border-white/5 overflow-x-auto no-scrollbar pb-0.5">
           <button
             onClick={() => {
               setSelectedCategory(null);
               setSelectedTag(null);
             }}
-            className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all touch-manipulation min-h-[34px] flex items-center shrink-0 ${
               !selectedCategory && !selectedTag
                 ? "bg-[#FF5A1F] text-white shadow-lg shadow-[#FF5A1F]/20"
                 : "bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10 border border-white/5"
@@ -122,7 +122,7 @@ export default function BlogListClient({
               onClick={() => {
                 setSelectedCategory(selectedCategory === cat ? null : cat);
               }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap shrink-0 transition-all touch-manipulation min-h-[34px] flex items-center ${
                 selectedCategory === cat
                   ? "bg-white text-zinc-950 font-bold shadow-md"
                   : "bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10 border border-white/5"
@@ -139,7 +139,7 @@ export default function BlogListClient({
               onClick={() => {
                 setSelectedTag(selectedTag === name ? null : name);
               }}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-all ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap shrink-0 transition-all touch-manipulation min-h-[34px] ${
                 selectedTag === name
                   ? "bg-[#FF5A1F]/20 text-[#FF5A1F] border border-[#FF5A1F]/40"
                   : "bg-white/[0.02] text-zinc-400 hover:text-zinc-200 hover:bg-white/5 border border-white/5"

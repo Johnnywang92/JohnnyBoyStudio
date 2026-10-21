@@ -8,32 +8,60 @@
   --bg-secondary: #111116;
 }
 
+html {
+  -webkit-tap-highlight-color: transparent;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   background-color: #08080c;
   color: #f4f4f5;
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
+  /* Faster tap response on mobile */
+  touch-action: manipulation;
+}
+
+/* Safe area support for iOS home indicator and notch */
+.pt-safe {
+  padding-top: max(1rem, env(safe-area-inset-top));
+}
+.pb-safe {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
 }
 
 /* Custom Apple Glassmorphism and Ambient Glow */
 .glass-panel {
-  background: rgba(17, 17, 24, 0.65);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  background: rgba(17, 17, 24, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .glass-card {
   background: linear-gradient(145deg, rgba(26, 26, 36, 0.6) 0%, rgba(15, 15, 22, 0.4) 100%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+@media (min-width: 768px) {
+  .glass-panel {
+    background: rgba(17, 17, 24, 0.65);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+  .glass-card {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+}
+
 .glass-card:hover {
   border-color: rgba(255, 255, 255, 0.18);
-  box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.5), 0 0 24px 0 rgba(99, 102, 241, 0.12);
+  box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.5), 0 0 24px 0 rgba(255, 90, 31, 0.12);
 }
 
 /* Apple-style gradient text */
@@ -51,18 +79,40 @@ body {
 
 /* Subtle grid background */
 .bg-grid-pattern {
-  background-size: 40px 40px;
+  background-size: 32px 32px;
   background-image: 
     linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
 
-/* Custom scrollbar */
+@media (min-width: 768px) {
+  .bg-grid-pattern {
+    background-size: 40px 40px;
+  }
+}
+
+/* Performance: Render optimization for below-the-fold content */
+.content-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
+/* Hide scrollbar utility for clean mobile horizontal scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom scrollbar for desktop */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #09090b;
+  background: #08080c;
 }
 ::-webkit-scrollbar-thumb {
   background: #27272a;

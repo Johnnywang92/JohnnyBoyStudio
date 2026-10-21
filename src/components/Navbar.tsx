@@ -5,7 +5,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { studioInfo } from "@/data/studioData";
 import { GithubIcon, TwitterXIcon } from "./SocialIcons";
-import { Menu, X, Sparkles } from "lucide-react";
+import {
+  Menu,
+  X,
+  Sparkles,
+  LayoutGrid,
+  Flame,
+  BookOpen,
+  Cpu,
+  Mail,
+} from "lucide-react";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -14,18 +23,35 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 15);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
   const navLinks = [
-    { label: "作品库", href: "#products" },
-    { label: "Vibecoding 理念", href: "#philosophy" },
-    { label: "工坊手记", href: "/blog" },
-    { label: "技术栈", href: "#tech-stack" },
-    { label: "关于与联络", href: "#contact" },
+    { label: "作品库", href: "#products", icon: <LayoutGrid className="w-4 h-4 text-amber-400" /> },
+    { label: "Vibecoding 理念", href: "#philosophy", icon: <Flame className="w-4 h-4 text-orange-400" /> },
+    { label: "工坊手记", href: "/blog", icon: <BookOpen className="w-4 h-4 text-indigo-400" /> },
+    { label: "技术栈", href: "#tech-stack", icon: <Cpu className="w-4 h-4 text-cyan-400" /> },
+    { label: "关于与联络", href: "#contact", icon: <Mail className="w-4 h-4 text-emerald-400" /> },
   ];
 
   const getResolvedHref = (href: string) => {
@@ -36,136 +62,179 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center p-4">
-      <nav
-        className={`w-full max-w-5xl px-4 sm:px-6 py-3 rounded-2xl transition-all duration-300 flex items-center justify-between ${
-          scrolled
-            ? "glass-panel shadow-2xl border-white/10 bg-zinc-950/85 backdrop-blur-xl"
-            : "bg-white/[0.02] border border-white/5 backdrop-blur-md"
-        }`}
-      >
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <img
-            src="/brand/logo/logo-mark.svg"
-            alt="JohnnyBoyStudio Logo"
-            className="w-8 h-8 rounded-xl shadow-md group-hover:scale-105 transition-transform"
-          />
-          <div className="flex flex-col">
-            <span className="font-extrabold text-sm tracking-tight text-[#F6F4EF] group-hover:text-white transition-colors">
-              JohnnyBoy<span className="text-[#FF5A1F]">Studio</span>
-            </span>
-            <span className="text-[9px] font-mono text-zinc-400 -mt-0.5">
-              Mac &amp; iOS Indie Lab
-            </span>
-          </div>
-        </Link>
-
-        {/* Desktop Nav Items */}
-        <div className="hidden md:flex items-center gap-1 p-1 rounded-xl bg-white/[0.03] border border-white/5">
-          {navLinks.map((link) => {
-            const resolvedHref = getResolvedHref(link.href);
-            const isActive = link.href === "/blog" && pathname.startsWith("/blog");
-            return (
-              <Link
-                key={link.label}
-                href={resolvedHref}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                  isActive
-                    ? "text-white bg-[#FF5A1F]/20 text-[#FF5A1F] border border-[#FF5A1F]/30"
-                    : "text-zinc-400 hover:text-white hover:bg-white/5"
-                }`}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
-        </div>
-
-        {/* Right Actions */}
-        <div className="hidden sm:flex items-center gap-1.5">
-          <a
-            href={studioInfo.socials.github}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="GitHub"
-            className="p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-colors"
-          >
-            <GithubIcon className="w-4 h-4" />
-          </a>
-
-          <a
-            href={studioInfo.socials.twitter}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Twitter / X"
-            className="p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-colors"
-          >
-            <TwitterXIcon className="w-4 h-4" />
-          </a>
-
-          <Link
-            href={pathname === "/" ? "#contact" : "/#contact"}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-semibold text-white transition-all shadow-sm active:scale-95 ml-1"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-            <span>交流合作</span>
+    <>
+      <header className="fixed top-0 left-0 right-0 z-50 flex justify-center p-2.5 sm:p-4 pt-[max(0.6rem,env(safe-area-inset-top))]">
+        <nav
+          className={`w-full max-w-5xl px-3.5 sm:px-6 py-2.5 sm:py-3 rounded-2xl transition-all duration-300 flex items-center justify-between ${
+            scrolled
+              ? "glass-panel shadow-2xl border-white/10 bg-zinc-950/90 backdrop-blur-xl"
+              : "bg-white/[0.03] border border-white/10 backdrop-blur-md"
+          }`}
+        >
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2.5 group touch-manipulation">
+            <img
+              src="/brand/logo/logo-mark.svg"
+              alt="JohnnyBoyStudio Logo"
+              width={32}
+              height={32}
+              fetchPriority="high"
+              decoding="async"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl shadow-md group-hover:scale-105 transition-transform"
+            />
+            <div className="flex flex-col">
+              <span className="font-extrabold text-xs sm:text-sm tracking-tight text-[#F6F4EF] group-hover:text-white transition-colors">
+                JohnnyBoy<span className="text-[#FF5A1F]">Studio</span>
+              </span>
+              <span className="text-[8px] sm:text-[9px] font-mono text-zinc-400 -mt-0.5">
+                Mac &amp; iOS Indie Lab
+              </span>
+            </div>
           </Link>
-        </div>
 
-        {/* Mobile Menu Button */}
-        <div className="flex sm:hidden items-center gap-2">
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl text-zinc-400 hover:text-white bg-white/5"
-            aria-label="Toggle Menu"
-          >
-            {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-          </button>
-        </div>
-      </nav>
+          {/* Desktop Nav Items */}
+          <div className="hidden md:flex items-center gap-1 p-1 rounded-xl bg-white/[0.03] border border-white/5">
+            {navLinks.map((link) => {
+              const resolvedHref = getResolvedHref(link.href);
+              const isActive = link.href === "/blog" && pathname.startsWith("/blog");
+              return (
+                <Link
+                  key={link.label}
+                  href={resolvedHref}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                    isActive
+                      ? "text-white bg-[#FF5A1F]/20 text-[#FF5A1F] border border-[#FF5A1F]/30"
+                      : "text-zinc-400 hover:text-white hover:bg-white/5"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </div>
 
-      {/* Mobile Dropdown */}
-      {mobileMenuOpen && (
-        <div className="absolute top-20 left-4 right-4 p-4 rounded-2xl glass-panel bg-zinc-950/95 border-white/10 shadow-2xl flex flex-col gap-2 md:hidden">
-          {navLinks.map((link) => {
-            const resolvedHref = getResolvedHref(link.href);
-            const isActive = link.href === "/blog" && pathname.startsWith("/blog");
-            return (
-              <Link
-                key={link.label}
-                href={resolvedHref}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-                  isActive
-                    ? "bg-[#FF5A1F]/20 text-[#FF5A1F]"
-                    : "text-zinc-300 hover:text-white hover:bg-white/5"
-                }`}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
-          <div className="pt-2 border-t border-white/5 flex items-center justify-between">
+          {/* Desktop Right Actions */}
+          <div className="hidden sm:flex items-center gap-1.5">
             <a
               href={studioInfo.socials.github}
               target="_blank"
               rel="noreferrer"
-              className="text-xs text-zinc-400 flex items-center gap-1.5 p-2"
+              aria-label="GitHub"
+              className="p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-colors"
             >
               <GithubIcon className="w-4 h-4" />
-              <span>GitHub</span>
             </a>
+
+            <a
+              href={studioInfo.socials.twitter}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Twitter / X"
+              className="p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 transition-colors"
+            >
+              <TwitterXIcon className="w-4 h-4" />
+            </a>
+
+            <Link
+              href={pathname === "/" ? "#contact" : "/#contact"}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-semibold text-white transition-all shadow-sm active:scale-95 ml-1"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+              <span>交流合作</span>
+            </Link>
+          </div>
+
+          {/* Mobile Right Controls: Fast Contact & Hamburger */}
+          <div className="flex sm:hidden items-center gap-1.5">
+            <Link
+              href={pathname === "/" ? "#contact" : "/#contact"}
+              className="px-2.5 py-1.5 rounded-xl bg-white/10 text-[11px] font-semibold text-white border border-white/10 active:scale-95 transition-transform"
+            >
+              合作
+            </Link>
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="w-10 h-10 flex items-center justify-center rounded-xl text-zinc-300 hover:text-white active:bg-white/10 bg-white/5 border border-white/10 transition-all touch-manipulation"
+              aria-label="切换菜单"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5 text-[#FF5A1F]" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
+        </nav>
+      </header>
+
+      {/* Mobile Drawer Overlay */}
+      {mobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/75 backdrop-blur-md z-40 md:hidden animate-fade-in"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Mobile Drawer Content */}
+      {mobileMenuOpen && (
+        <div className="fixed top-[max(4.5rem,calc(env(safe-area-inset-top)+3.5rem))] left-3 right-3 p-4 rounded-3xl glass-panel bg-zinc-950/98 border border-white/15 shadow-2xl flex flex-col gap-2 z-50 md:hidden animate-in fade-in slide-in-from-top-4 duration-200">
+          <div className="text-[10px] font-mono uppercase tracking-wider text-zinc-500 px-3 pb-1 border-b border-white/5">
+            导航菜单 · NAVIGATION
+          </div>
+
+          <div className="space-y-1 mt-1">
+            {navLinks.map((link) => {
+              const resolvedHref = getResolvedHref(link.href);
+              const isActive = link.href === "/blog" && pathname.startsWith("/blog");
+              return (
+                <Link
+                  key={link.label}
+                  href={resolvedHref}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center gap-3 px-3.5 py-3 rounded-2xl text-sm font-medium transition-all active:scale-[0.98] ${
+                    isActive
+                      ? "bg-[#FF5A1F]/20 text-[#FF5A1F] border border-[#FF5A1F]/30 font-semibold"
+                      : "text-zinc-200 hover:text-white hover:bg-white/5"
+                  }`}
+                >
+                  <div className="w-8 h-8 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center shrink-0">
+                    {link.icon}
+                  </div>
+                  <span>{link.label}</span>
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className="pt-3 mt-2 border-t border-white/10 flex items-center justify-between px-1">
+            <div className="flex items-center gap-1.5">
+              <a
+                href={studioInfo.socials.github}
+                target="_blank"
+                rel="noreferrer"
+                className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-zinc-400 hover:text-white flex items-center justify-center active:scale-95 transition-transform"
+                aria-label="GitHub"
+              >
+                <GithubIcon className="w-4 h-4" />
+              </a>
+              <a
+                href={studioInfo.socials.twitter}
+                target="_blank"
+                rel="noreferrer"
+                className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-zinc-400 hover:text-white flex items-center justify-center active:scale-95 transition-transform"
+                aria-label="Twitter / X"
+              >
+                <TwitterXIcon className="w-4 h-4" />
+              </a>
+            </div>
+
             <Link
               href={pathname === "/" ? "#contact" : "/#contact"}
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3.5 py-1.5 rounded-xl bg-[#FF5A1F] text-xs font-semibold text-white"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#FF5A1F] text-xs font-bold text-white shadow-lg shadow-[#FF5A1F]/30 active:scale-95 transition-all"
             >
-              交流合作
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>交流合作</span>
             </Link>
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 }

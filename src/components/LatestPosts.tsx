@@ -11,26 +11,26 @@ export default function LatestPosts() {
   }
 
   return (
-    <section id="blog" className="py-20 relative border-t border-white/5">
+    <section id="blog" className="py-14 sm:py-20 relative border-t border-white/5 content-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-5 sm:gap-6">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF5A1F]/10 border border-[#FF5A1F]/20 text-[#FF5A1F] text-xs font-mono mb-3">
               <BookOpen className="w-3.5 h-3.5" />
               <span>LOGS &amp; INSIGHTS · 思考与手记</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
               工坊手记 · 思考与实践
             </h2>
-            <p className="text-sm sm:text-base text-zinc-400 mt-2 max-w-xl">
+            <p className="text-xs sm:text-base text-zinc-400 mt-2 max-w-xl">
               记录从高频痛点出发的真实工具诞生历程、Vibecoding 结对心得与原生技术思考。
             </p>
           </div>
 
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-white transition-all self-start md:self-auto group"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 active:bg-white/15 border border-white/10 text-xs font-semibold text-white transition-all self-start md:self-auto group touch-manipulation min-h-[40px]"
           >
             <span>查看全部文章</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -38,12 +38,12 @@ export default function LatestPosts() {
         </div>
 
         {/* Posts Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
           {posts.map((post) => (
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="group p-6 sm:p-7 rounded-3xl glass-card flex flex-col justify-between hover:border-white/20 transition-all duration-300 relative overflow-hidden"
+              className="group p-5 sm:p-7 rounded-3xl glass-card flex flex-col justify-between hover:border-white/20 transition-all duration-300 relative overflow-hidden touch-manipulation"
             >
               <div>
                 {/* Meta Header */}

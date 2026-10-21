@@ -75,7 +75,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <div className="group relative rounded-3xl p-6 sm:p-7 glass-card flex flex-col justify-between overflow-hidden">
+    <div className="group relative rounded-3xl p-5 sm:p-7 glass-card flex flex-col justify-between overflow-hidden">
       {/* Background ambient gradient glow on hover */}
       <div
         className="absolute -top-24 -right-24 w-60 h-60 rounded-full blur-3xl opacity-0 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none"
@@ -176,14 +176,14 @@ export default function ProductCard({ product }: ProductCardProps) {
         )}
 
         {/* Action Links */}
-        <div className="flex items-center justify-between gap-3 pt-1">
+        <div className="flex items-center justify-between gap-2.5 pt-1 flex-wrap">
           <div className="flex items-center gap-2">
             {product.links?.github && (
               <a
                 href={product.links.github}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 active:bg-white/15 transition-colors touch-manipulation min-h-[38px]"
               >
                 <GithubIcon className="w-3.5 h-3.5" />
                 <span>源码</span>
@@ -194,7 +194,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 href={product.links.testFlight}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 px-2.5 py-1.5 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/20 transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 px-3 py-2 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 active:bg-indigo-500/25 border border-indigo-500/20 transition-colors touch-manipulation min-h-[38px]"
               >
                 <span>TestFlight</span>
                 <ExternalLink className="w-3 h-3" />
@@ -204,7 +204,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
           <a
             href={product.links?.demo || "#"}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-200 hover:text-white px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 border border-white/10 hover:border-white/25 transition-all shadow-sm"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-200 hover:text-white px-4 py-2 rounded-xl bg-gradient-to-r from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 border border-white/10 hover:border-white/25 active:scale-95 transition-all shadow-sm touch-manipulation min-h-[38px]"
           >
             <span>体验 / 详情</span>
             <ExternalLink className="w-3 h-3" />

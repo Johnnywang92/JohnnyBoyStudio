@@ -30,20 +30,20 @@ export default function BlogIndexPage() {
       {/* Top Floating Glass Navigation */}
       <Navbar />
 
-      <main className="flex-1 pt-32 pb-24">
+      <main className="flex-1 pt-24 sm:pt-32 pb-16 sm:pb-24">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header Banner */}
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF5A1F]/10 border border-[#FF5A1F]/20 text-[#FF5A1F] text-xs font-mono mb-4">
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF5A1F]/10 border border-[#FF5A1F]/20 text-[#FF5A1F] text-xs font-mono mb-3 sm:mb-4">
               <BookOpen className="w-3.5 h-3.5" />
               <span>JOHNNYBOY LOGS &amp; INSIGHTS</span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+            <h1 className="text-2xl sm:text-5xl font-extrabold tracking-tight text-white">
               工坊手记 · 思考与自造
             </h1>
 
-            <p className="mt-4 text-sm sm:text-base text-zinc-400 leading-relaxed">
+            <p className="mt-3 sm:mt-4 text-xs sm:text-base text-zinc-400 leading-relaxed px-2">
               不写套话，只记录从高频痛点出发的真实工具构建历程、
               <br className="hidden sm:inline" />
               现代 Vibecoding 实战心得与 macOS/iOS 原生开发思考。

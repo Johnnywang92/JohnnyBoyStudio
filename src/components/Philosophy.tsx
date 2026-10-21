@@ -21,27 +21,27 @@ export default function Philosophy() {
   };
 
   return (
-    <section id="philosophy" className="py-20 relative border-t border-white/5">
+    <section id="philosophy" className="py-14 sm:py-20 relative border-t border-white/5 content-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF5A1F]/10 border border-[#FF5A1F]/20 text-[#FF5A1F] text-xs font-mono mb-3">
             <Flame className="w-3.5 h-3.5" />
             <span>BUILT FOR MYSELF · VIBECODING CRAFT</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+          <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
             为什么而造？自用驱动的开发哲学
           </h2>
-          <p className="text-sm sm:text-base text-zinc-400 mt-3 leading-relaxed">
+          <p className="text-xs sm:text-base text-zinc-400 mt-2 sm:mt-3 leading-relaxed px-2">
             从自己日常使用最真实的痛点出发，用 Vibecoding 把灵感亲手打造成每天都想用的趁手工具。
           </p>
         </div>
 
         {/* 4 Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 lg:gap-8">
           {philosophyList.map((item, idx) => (
             <div
               key={idx}
-              className="group p-6 sm:p-8 rounded-3xl glass-card relative overflow-hidden flex flex-col justify-between"
+              className="group p-5 sm:p-8 rounded-3xl glass-card relative overflow-hidden flex flex-col justify-between"
             >
               <div>
                 <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/10 flex items-center justify-center mb-5 group-hover:scale-105 group-hover:border-white/20 transition-all duration-300">

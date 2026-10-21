@@ -1,5 +1,14 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  viewportFit: "cover",
+  themeColor: "#08080c",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://johnnyboystudio.com"),
@@ -42,9 +51,8 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <meta name="theme-color" content="#FF5A1F" />
       </head>
-      <body className="min-h-screen bg-[#08080a] text-zinc-100 antialiased selection:bg-[#FF5A1F]/30 selection:text-[#FF5A1F]">
+      <body className="min-h-screen bg-[#08080c] text-zinc-100 antialiased selection:bg-[#FF5A1F]/30 selection:text-[#FF5A1F]">
         {children}
       </body>
     </html>

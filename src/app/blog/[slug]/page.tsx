@@ -85,10 +85,10 @@ export default async function BlogPostPage({ params }: Props) {
       {/* Top Floating Glass Navigation */}
       <Navbar />
 
-      <main className="flex-1 pt-28 pb-24">
+      <main className="flex-1 pt-24 sm:pt-28 pb-16 sm:pb-24">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb Navigation */}
-          <nav className="flex items-center gap-1.5 text-xs text-zinc-500 mb-8 font-mono">
+          <nav className="flex items-center gap-1.5 text-xs text-zinc-500 mb-6 sm:mb-8 font-mono">
             <Link href="/" className="hover:text-zinc-300 transition-colors">
               首页
             </Link>
@@ -97,14 +97,14 @@ export default async function BlogPostPage({ params }: Props) {
               手记专栏
             </Link>
             <ChevronRight className="w-3.5 h-3.5" />
-            <span className="text-zinc-400 truncate max-w-[200px] sm:max-w-xs">
+            <span className="text-zinc-400 truncate max-w-[140px] sm:max-w-xs">
               {post.title}
             </span>
           </nav>
 
           {/* Article Header */}
-          <header className="mb-10 max-w-3xl">
-            <div className="flex flex-wrap items-center gap-2.5 mb-4">
+          <header className="mb-8 sm:mb-10 max-w-3xl">
+            <div className="flex flex-wrap items-center gap-2.5 mb-3 sm:mb-4">
               <span className="px-2.5 py-1 rounded-lg bg-[#FF5A1F]/15 border border-[#FF5A1F]/30 text-[#FF5A1F] text-xs font-semibold">
                 {post.category}
               </span>
@@ -126,12 +126,16 @@ export default async function BlogPostPage({ params }: Props) {
             </h1>
 
             {/* Author info & tags */}
-            <div className="mt-6 pt-5 border-t border-white/5 flex flex-wrap items-center justify-between gap-4">
+            <div className="mt-5 sm:mt-6 pt-4 sm:pt-5 border-t border-white/5 flex flex-wrap items-center justify-between gap-3 sm:gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl overflow-hidden bg-zinc-900 border border-white/10 p-0.5 flex items-center justify-center">
+                <div className="w-9 h-9 rounded-xl overflow-hidden bg-zinc-900 border border-white/10 p-0.5 flex items-center justify-center shrink-0">
                   <img
                     src="/brand/logo/logo-mark.svg"
                     alt={post.author}
+                    width={36}
+                    height={36}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover rounded-lg"
                   />
                 </div>
@@ -160,7 +164,7 @@ export default async function BlogPostPage({ params }: Props) {
             <article className="lg:col-span-8 min-w-0">
               {/* Summary Lead-in Card */}
               {post.summary && (
-                <div className="p-5 sm:p-6 rounded-2xl glass-card border-[#FF5A1F]/20 bg-[#FF5A1F]/[0.03] mb-8">
+                <div className="p-5 sm:p-6 rounded-2xl glass-card border-[#FF5A1F]/20 bg-[#FF5A1F]/[0.03] mb-6">
                   <div className="text-xs font-mono text-[#FF5A1F] uppercase tracking-wider mb-2 flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5" />
                     <span>核心摘要 · Summary</span>
@@ -170,6 +174,9 @@ export default async function BlogPostPage({ params }: Props) {
                   </p>
                 </div>
               )}
+
+              {/* Mobile Collapsible TOC */}
+              <TableOfContents headings={headings} mobileCollapsible />
 
               {/* Rendered Markdown Body */}
               <MarkdownRenderer content={post.content} />
@@ -184,6 +191,10 @@ export default async function BlogPostPage({ params }: Props) {
                     <img
                       src="/brand/logo/logo-mark.svg"
                       alt={studioInfo.name}
+                      width={56}
+                      height={56}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover rounded-xl"
                     />
                   </div>
