@@ -1,0 +1,78 @@
+"use client";
+
+import React from "react";
+import { studioInfo } from "@/data/studioData";
+import { ArrowUp, Heart, Terminal } from "lucide-react";
+
+export default function Footer() {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  return (
+    <footer className="py-12 border-t border-white/5 bg-zinc-950/40 text-xs text-zinc-500">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          {/* Brand Info */}
+          <div className="flex flex-col items-center md:items-start text-center md:text-left">
+            <div className="flex items-center gap-2 text-zinc-300 font-bold text-sm">
+              <span>{studioInfo.name}</span>
+              <span className="text-zinc-600">/</span>
+              <span className="text-[11px] font-mono text-zinc-500 font-normal">
+                Indie App Studio
+              </span>
+            </div>
+            <p className="mt-1 text-zinc-500">
+              Crafted with <Heart className="w-3 h-3 inline text-rose-500 fill-rose-500 mx-0.5" /> and modern Vibecoding.
+            </p>
+          </div>
+
+          {/* Center Links */}
+          <div className="flex items-center gap-6">
+            <a href="#products" className="hover:text-zinc-300 transition-colors">
+              精选作品
+            </a>
+            <a href="#philosophy" className="hover:text-zinc-300 transition-colors">
+              开发理念
+            </a>
+            <a href="#tech-stack" className="hover:text-zinc-300 transition-colors">
+              技术栈
+            </a>
+            <a
+              href={studioInfo.socials.github}
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-zinc-300 transition-colors"
+            >
+              GitHub
+            </a>
+          </div>
+
+          {/* Right Back to Top & Time */}
+          <div className="flex items-center gap-4">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.03] border border-white/5 font-mono text-[11px]">
+              <Terminal className="w-3 h-3 text-emerald-400" />
+              <span>v1.0.0 · 2026</span>
+            </div>
+
+            <button
+              onClick={scrollToTop}
+              className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white transition-colors"
+              title="返回顶部"
+              aria-label="Back to top"
+            >
+              <ArrowUp className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        <div className="mt-8 pt-6 border-t border-white/[0.03] text-center text-[11px] text-zinc-600 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <div>© {new Date().getFullYear()} JohnnyBoyStudio. All rights reserved.</div>
+          <div className="font-mono">
+            Quickpick · assistan01 · Ferry · wedding web
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
