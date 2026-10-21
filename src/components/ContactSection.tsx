@@ -10,6 +10,7 @@ import {
   Send,
   MessageSquare,
   Sparkles,
+  Command,
 } from "lucide-react";
 
 export default function ContactSection() {
@@ -56,8 +57,8 @@ export default function ContactSection() {
           <div className="p-7 sm:p-8 rounded-3xl glass-card flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-3.5 mb-5">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center font-bold text-lg text-white shadow-lg">
-                  JB
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-white shadow-lg">
+                  <Command className="w-6 h-6" />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-white">JohnnyBoy</h3>
