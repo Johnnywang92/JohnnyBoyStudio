@@ -1,21 +1,23 @@
 "use client";
 
 import React, { useState } from "react";
-import { products, Product } from "@/data/studioData";
+import { useLang } from "@/components/LanguageProvider";
+import { getProducts, Product } from "@/data/studioData";
 import ProductCard from "./ProductCard";
 import { Sparkles, Terminal } from "lucide-react";
 
 export default function ProductGrid() {
+  const { t, locale } = useLang();
   const [filter, setFilter] = useState<string>("ALL");
 
   const categories = [
-    { key: "ALL", label: "全部作品" },
-    { key: "macOS", label: "macOS 桌面" },
-    { key: "iOS", label: "iOS 移动" },
-    { key: "Web", label: "Web 交互" },
+    { key: "ALL", label: t("全部作品", "All") },
+    { key: "macOS", label: t("macOS 桌面", "macOS Desktop") },
+    { key: "iOS", label: t("iOS 移动", "iOS Mobile") },
+    { key: "Web", label: t("Web 交互", "Web") },
   ];
 
-  const filteredProducts = products.filter((p) => {
+  const filteredProducts = getProducts(locale).filter((p) => {
     if (filter === "ALL") return true;
     return p.platforms.includes(filter as Product["platforms"][number]);
   });
@@ -31,10 +33,10 @@ export default function ProductGrid() {
               <span>CRAFTED APPS &amp; PROJECTS</span>
             </div>
             <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
-              精选独立作品集
+              {t("精选独立作品集", "Featured Indie Works")}
             </h2>
             <p className="text-xs sm:text-base text-zinc-400 mt-2 max-w-xl">
-              探索 JohnnyBoyStudio 针对 macOS、iOS 以及现代 Web 深度打磨的原生产品。
+              {t("探索 JohnnyBoyStudio 针对 macOS、iOS 以及现代 Web 深度打磨的原生产品。", "Explore native products from JohnnyBoyStudio, polished for macOS, iOS and the modern Web.")}
             </p>
           </div>
 
@@ -69,10 +71,10 @@ export default function ProductGrid() {
                 <Terminal className="w-6 h-6" />
               </div>
               <h3 className="text-base sm:text-lg font-bold text-zinc-300 group-hover:text-white transition-colors">
-                下一个 Vibecoding 灵感正在孵化...
+                {t("下一个 Vibecoding 灵感正在孵化...", "The next Vibecoding idea is incubating...")}
               </h3>
               <p className="text-xs text-zinc-500 max-w-sm mx-auto mt-2 leading-relaxed">
-                更多基于 Swift 6、CoreML 本地模型与 VisionOS 交互的实验性项目正在开发中。欢迎提交灵感与协作建议。
+                {t("更多基于 Swift 6、CoreML 本地模型与 VisionOS 交互的实验性项目正在开发中。欢迎提交灵感与协作建议。", "More experimental projects built on Swift 6, CoreML local models and VisionOS interaction are underway. Ideas and collaboration suggestions welcome.")}
               </p>
             </div>
 

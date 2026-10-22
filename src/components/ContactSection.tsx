@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { studioInfo } from "@/data/studioData";
+import { useLang } from "@/components/LanguageProvider";
+import { getStudioInfo } from "@/data/studioData";
 import { GithubIcon, TwitterXIcon } from "./SocialIcons";
 import {
   Mail,
@@ -14,6 +15,8 @@ import {
 } from "lucide-react";
 
 export default function ContactSection() {
+  const { t, locale } = useLang();
+  const studioInfo = getStudioInfo(locale);
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(false);
   const [messageSent, setMessageSent] = useState(false);
@@ -39,6 +42,7 @@ export default function ContactSection() {
         body: JSON.stringify({
           email: userEmail.trim(),
           message: userMsg.trim(),
+          locale,
         }),
       });
 
@@ -48,8 +52,8 @@ export default function ContactSection() {
         setMessageSent(true);
         setFeedbackText(
           data.mock
-            ? "留言已成功送达后端处理队列！"
-            : "留言已成功投递至 Johnny 的 Gmail 邮箱！"
+            ? t("留言已成功送达后端处理队列！", "Your message has reached the backend queue!")
+            : t("留言已成功投递至 Johnny 的 Gmail 邮箱！", "Your message was delivered to Johnny's Gmail inbox!")
         );
         setUserMsg("");
         setUserEmail("");
@@ -58,10 +62,10 @@ export default function ContactSection() {
           setFeedbackText("");
         }, 5000);
       } else {
-        alert(data.error || "发送失败，请稍后重试");
+        alert(data.error || t("发送失败，请稍后重试", "Failed to send. Please try again later."));
       }
     } catch {
-      alert("网络连接异常，请直接点击左侧邮箱复制发送。");
+      alert(t("网络连接异常，请直接点击左侧邮箱复制发送。", "Network error. Please copy the email on the left and write to us directly."));
     } finally {
       setLoading(false);
     }
@@ -76,10 +80,10 @@ export default function ContactSection() {
             <span>LET&apos;S CONNECT &amp; COLLABORATE</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
-            联络与交流
+            {t("联络与交流", "Get in Touch")}
           </h2>
           <p className="text-xs sm:text-base text-zinc-400 mt-2 px-2">
-            无论是关于 QuickPick、assistan01、Ferry 的体验反馈，还是探讨 Vibecoding 灵感碰撞，随时欢迎畅聊。
+            {t("无论是关于 QuickPick、assistan01、Ferry 的体验反馈，还是探讨 Vibecoding 灵感碰撞，随时欢迎畅聊。", "Whether it's feedback on QuickPick, assistan01 or Ferry, or a Vibecoding brainstorm, feel free to chat anytime.")}
           </p>
         </div>
 
@@ -116,11 +120,11 @@ export default function ContactSection() {
                     <Mail className="w-4 h-4" />
                   </div>
                   <div className="truncate">
-                    <div className="text-[10px] text-zinc-500">工作室官方邮箱</div>
+                    <div className="text-[10px] text-zinc-500">{t("工作室官方邮箱", "Studio email")}</div>
                     <a
                       href={`mailto:${studioInfo.socials.email}`}
                       className="text-xs sm:text-sm font-mono text-zinc-200 hover:text-indigo-300 transition-colors truncate block"
-                      title="点击直接发送邮件"
+                      title={t("点击直接发送邮件", "Click to send an email")}
                     >
                       {studioInfo.socials.email}
                     </a>
@@ -134,12 +138,12 @@ export default function ContactSection() {
                   {copied ? (
                     <>
                       <Check className="w-3.5 h-3.5 text-emerald-400" />
-                      <span className="text-emerald-300">已复制</span>
+                      <span className="text-emerald-300">{t("已复制", "Copied")}</span>
                     </>
                   ) : (
                     <>
                       <Copy className="w-3.5 h-3.5" />
-                      <span>复制</span>
+                      <span>{t("复制", "Copy")}</span>
                     </>
                   )}
                 </button>
@@ -175,16 +179,16 @@ export default function ContactSection() {
             <div>
               <div className="flex items-center gap-2 text-white font-bold text-lg mb-2">
                 <Sparkles className="w-4 h-4 text-indigo-400" />
-                <span>快速留言板</span>
+                <span>{t("快速留言板", "Quick message")}</span>
               </div>
               <p className="text-xs text-zinc-400 mb-5">
-                直接留下你的想法或产品体验建议，消息将直达工作室：
+                {t("直接留下你的想法或产品体验建议，消息将直达工作室：", "Leave your thoughts or product feedback — it goes straight to the studio:")}
               </p>
 
               <form onSubmit={handleSendMessage} className="space-y-4">
                 <div>
                   <label className="block text-xs font-medium text-zinc-400 mb-1.5">
-                    你的称呼或邮箱
+                    {t("你的称呼或邮箱", "Your name or email")}
                   </label>
                   <input
                     type="text"
@@ -198,14 +202,14 @@ export default function ContactSection() {
 
                 <div>
                   <label className="block text-xs font-medium text-zinc-400 mb-1.5">
-                    想说的话 / 合作或建议
+                    {t("想说的话 / 合作或建议", "Message / collaboration or suggestions")}
                   </label>
                   <textarea
                     rows={4}
                     required
                     value={userMsg}
                     onChange={(e) => setUserMsg(e.target.value)}
-                    placeholder="分享你对 QuickPick、assistan01、Ferry 的体验期待或合作想法..."
+                    placeholder={t("分享你对 QuickPick、assistan01、Ferry 的体验期待或合作想法...", "Share your expectations for QuickPick, assistan01, Ferry, or collaboration ideas...")}
                     className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-900/90 border border-white/10 text-zinc-200 placeholder-zinc-600 text-base sm:text-xs focus:outline-none focus:border-indigo-500/50 transition-colors resize-none"
                   />
                 </div>
@@ -218,17 +222,17 @@ export default function ContactSection() {
                   {loading ? (
                     <>
                       <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                      <span>正在投递到 Johnny 的邮箱...</span>
+                      <span>{t("正在投递到 Johnny 的邮箱...", "Delivering to Johnny's inbox...")}</span>
                     </>
                   ) : messageSent ? (
                     <>
                       <Check className="w-4 h-4 text-emerald-300" />
-                      <span>{feedbackText || "已成功发送！"}</span>
+                      <span>{feedbackText || t("已成功发送！", "Sent successfully!")}</span>
                     </>
                   ) : (
                     <>
                       <Send className="w-3.5 h-3.5" />
-                      <span>发送即时留言至 Gmail</span>
+                      <span>{t("发送即时留言至 Gmail", "Send message to Gmail")}</span>
                     </>
                   )}
                 </button>
@@ -236,7 +240,7 @@ export default function ContactSection() {
             </div>
 
             <p className="text-[10px] text-zinc-500 mt-4 text-center font-mono">
-              纯净无干扰 · 隐私安全保障
+              {t("纯净无干扰 · 隐私安全保障", "Clean & distraction-free · Privacy protected")}
             </p>
           </div>
         </div>

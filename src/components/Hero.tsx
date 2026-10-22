@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { studioInfo } from "@/data/studioData";
+import { useLang } from "@/components/LanguageProvider";
+import { getStudioInfo } from "@/data/studioData";
 import ConfettiButton from "./ConfettiButton";
 import { GithubIcon } from "./SocialIcons";
 import {
@@ -13,41 +14,43 @@ import {
 } from "lucide-react";
 
 export default function Hero() {
+  const { t, locale } = useLang();
+  const studioInfo = getStudioInfo(locale);
   const [activeDockItem, setActiveDockItem] = useState<string | null>(null);
 
   const dockApps = [
     {
       id: "quickpick",
       name: "QuickPick",
-      tag: "专业摄影选片",
+      tag: t("专业摄影选片", "Pro photo culling"),
       icon: <Camera className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />,
       color: "from-amber-500/20 to-orange-500/20",
     },
     {
       id: "assistan01",
-      name: "小助",
-      tag: "离线生活助理",
+      name: t("小助", "Assistant"),
+      tag: t("离线生活助理", "Offline life assistant"),
       icon: <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-400" />,
       color: "from-indigo-500/20 to-purple-500/20",
     },
     {
       id: "ferry",
       name: "Ferry",
-      tag: "SFTP 客户端",
+      tag: t("SFTP 客户端", "SFTP client"),
       icon: <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />,
       color: "from-cyan-500/20 to-blue-500/20",
     },
     {
       id: "wedding",
-      name: "婚礼 RSVP",
-      tag: "电影数字请柬",
+      name: t("婚礼 RSVP", "Wedding RSVP"),
+      tag: t("电影数字请柬", "Cinematic invitation"),
       icon: <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-rose-400" />,
       color: "from-rose-500/20 to-pink-500/20",
     },
     {
       id: "vibecoding",
-      name: "工坊",
-      tag: "核心理念",
+      name: t("工坊", "Studio"),
+      tag: t("核心理念", "Philosophy"),
       icon: (
         <img
           src="/brand/logo/logo-mark.svg"
@@ -86,7 +89,7 @@ export default function Hero() {
           <span>JohnnyBoy</span>
           <span className="text-[#FF5A1F]">Studio</span>
           <span className="text-apple-gradient text-xl sm:text-3xl lg:text-5xl font-bold mt-2 sm:mt-3 block tracking-normal">
-            因自身所需而造，做真正顺手的专属应用
+            {t("因自身所需而造，做真正顺手的专属应用", "Built for my own needs — apps that fit like a glove")}
           </span>
         </h1>
 
@@ -101,7 +104,7 @@ export default function Hero() {
             href="#products"
             className="inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 rounded-2xl bg-white text-zinc-950 font-semibold text-xs sm:text-sm hover:bg-zinc-200 shadow-xl shadow-white/10 hover:shadow-white/20 transition-all duration-200 active:scale-95 touch-manipulation min-h-[44px]"
           >
-            <span>探索产品作品</span>
+            <span>{t("探索产品作品", "Explore my work")}</span>
             <ArrowDown className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </a>
 
@@ -150,7 +153,7 @@ export default function Hero() {
             ))}
           </div>
           <p className="text-[10px] sm:text-[11px] text-zinc-500 mt-2 font-mono">
-            macOS Dock 控制台 · 轻触直达作品详情
+            {t("macOS Dock 控制台 · 轻触直达作品详情", "macOS Dock console · tap to jump to details")}
           </p>
         </div>
 

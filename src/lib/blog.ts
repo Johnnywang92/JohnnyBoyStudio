@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { DEFAULT_LOCALE, type Locale } from "./i18n";
 
 export interface BlogPostMeta {
   slug: string;
@@ -124,7 +125,7 @@ function parseFrontmatter(rawContent: string): { data: Record<string, unknown>; 
 /**
  * Calculates estimated reading time for Chinese & English mixed text
  */
-function calculateReadingTime(text: string): { readingTime: string; wordCount: number } {
+function calculateReadingTime(text: string, locale: Locale = DEFAULT_LOCALE): { readingTime: string; wordCount: number } {
   // Strip code blocks and markdown formatting to count real words
   const cleanText = text
     .replace(/```[\s\S]*?```/g, "")
@@ -141,7 +142,7 @@ function calculateReadingTime(text: string): { readingTime: string; wordCount: n
   const minutes = Math.max(1, Math.ceil(chineseChars / 350 + englishWords / 200));
 
   return {
-    readingTime: `${minutes} 分钟阅读`,
+    readingTime: locale === "en" ? `${minutes} min read` : `${minutes} 分钟阅读`,
     wordCount: totalWords,
   };
 }
@@ -149,7 +150,7 @@ function calculateReadingTime(text: string): { readingTime: string; wordCount: n
 /**
  * Get all blog posts sorted by date descending
  */
-export function getAllPosts(): BlogPost[] {
+export function getAllPosts(locale: Locale = DEFAULT_LOCALE): BlogPost[] {
   if (!fs.existsSync(POSTS_DIRECTORY)) {
     return [];
   }
@@ -162,12 +163,21 @@ export function getAllPosts(): BlogPost[] {
       continue;
     }
 
+    // English translations live next to the source post as `<slug>.en.md`
+    if (/\.en\.md$/.test(fileName)) {
+      continue;
+    }
+
     const slug = fileName.replace(/\.md$/, "");
-    const fullPath = path.join(POSTS_DIRECTORY, fileName);
+    let fullPath = path.join(POSTS_DIRECTORY, fileName);
+    if (locale === "en") {
+      const enPath = path.join(POSTS_DIRECTORY, `${slug}.en.md`);
+      if (fs.existsSync(enPath)) fullPath = enPath;
+    }
     const fileContents = fs.readFileSync(fullPath, "utf8");
 
     const { data, content } = parseFrontmatter(fileContents);
-    const { readingTime, wordCount } = calculateReadingTime(content);
+    const { readingTime, wordCount } = calculateReadingTime(content, locale);
 
     // Normalize tags
     let tags: string[] = [];
@@ -183,7 +193,7 @@ export function getAllPosts(): BlogPost[] {
       date: data.date ? String(data.date) : new Date().toISOString().split("T")[0],
       summary: typeof data.summary === "string" ? data.summary : content.slice(0, 160).replace(/[#*`]/g, "").trim() + "...",
       tags,
-      category: typeof data.category === "string" ? data.category : "思考与手记",
+      category: typeof data.category === "string" ? data.category : locale === "en" ? "Notes & Thoughts" : "思考与手记",
       author: typeof data.author === "string" ? data.author : "JohnnyBoy",
       readingTime,
       wordCount,
@@ -200,16 +210,16 @@ export function getAllPosts(): BlogPost[] {
 /**
  * Get a single post by slug
  */
-export function getPostBySlug(slug: string): BlogPost | null {
-  const posts = getAllPosts();
+export function getPostBySlug(slug: string, locale: Locale = DEFAULT_LOCALE): BlogPost | null {
+  const posts = getAllPosts(locale);
   return posts.find((p) => p.slug === slug) || null;
 }
 
 /**
  * Get all unique tags with count
  */
-export function getAllTags(): { name: string; count: number }[] {
-  const posts = getAllPosts();
+export function getAllTags(locale: Locale = DEFAULT_LOCALE): { name: string; count: number }[] {
+  const posts = getAllPosts(locale);
   const tagCounts: Record<string, number> = {};
 
   for (const post of posts) {
@@ -226,8 +236,8 @@ export function getAllTags(): { name: string; count: number }[] {
 /**
  * Get all unique categories
  */
-export function getAllCategories(): string[] {
-  const posts = getAllPosts();
+export function getAllCategories(locale: Locale = DEFAULT_LOCALE): string[] {
+  const posts = getAllPosts(locale);
   const categories = new Set<string>();
   posts.forEach((p) => categories.add(p.category));
   return Array.from(categories);
@@ -236,8 +246,8 @@ export function getAllCategories(): string[] {
 /**
  * Get related posts for a given post
  */
-export function getRelatedPosts(currentSlug: string, tags: string[], limit = 2): BlogPost[] {
-  const posts = getAllPosts().filter((p) => p.slug !== currentSlug);
+export function getRelatedPosts(currentSlug: string, tags: string[], limit = 2, locale: Locale = DEFAULT_LOCALE): BlogPost[] {
+  const posts = getAllPosts(locale).filter((p) => p.slug !== currentSlug);
   if (!tags.length) return posts.slice(0, limit);
 
   // Score posts by number of shared tags

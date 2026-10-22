@@ -8,7 +8,9 @@ import MarkdownRenderer from "@/components/blog/MarkdownRenderer";
 import TableOfContents from "@/components/blog/TableOfContents";
 import PostDetailActions from "@/components/blog/PostDetailActions";
 import { getAllPosts, getPostBySlug, getRelatedPosts, extractHeadings } from "@/lib/blog";
-import { studioInfo } from "@/data/studioData";
+import { getStudioInfo } from "@/data/studioData";
+import { getLocale } from "@/lib/i18n-server";
+import { pick } from "@/lib/i18n";
 import { GithubIcon, TwitterXIcon } from "@/components/SocialIcons";
 import {
   Calendar,
@@ -32,16 +34,17 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const locale = await getLocale();
+  const post = getPostBySlug(slug, locale);
 
   if (!post) {
     return {
-      title: "文章未找到 | JohnnyBoyStudio",
+      title: pick(locale, "文章未找到 | JohnnyBoyStudio", "Post not found | JohnnyBoyStudio"),
     };
   }
 
   return {
-    title: `${post.title} | JohnnyBoyStudio 博客`,
+    title: `${post.title} | JohnnyBoyStudio ${pick(locale, "博客", "Blog")}`,
     description: post.summary,
     keywords: post.tags,
     openGraph: {
@@ -65,17 +68,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const locale = await getLocale();
+  const t = <T,>(zh: T, en: T) => pick(locale, zh, en);
+  const studioInfo = getStudioInfo(locale);
+  const post = getPostBySlug(slug, locale);
 
   if (!post) {
     notFound();
   }
 
   const headings = extractHeadings(post.content);
-  const relatedPosts = getRelatedPosts(post.slug, post.tags, 2);
+  const relatedPosts = getRelatedPosts(post.slug, post.tags, 2, locale);
 
   // Find previous and next posts
-  const allPosts = getAllPosts();
+  const allPosts = getAllPosts(locale);
   const currentIndex = allPosts.findIndex((p) => p.slug === slug);
   const nextPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
   const prevPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
@@ -90,11 +96,11 @@ export default async function BlogPostPage({ params }: Props) {
           {/* Breadcrumb Navigation */}
           <nav className="flex items-center gap-1.5 text-xs text-zinc-500 mb-6 sm:mb-8 font-mono">
             <Link href="/" className="hover:text-zinc-300 transition-colors">
-              首页
+              {t("首页", "Home")}
             </Link>
             <ChevronRight className="w-3.5 h-3.5" />
             <Link href="/blog" className="hover:text-zinc-300 transition-colors">
-              手记专栏
+              {t("手记专栏", "Journal")}
             </Link>
             <ChevronRight className="w-3.5 h-3.5" />
             <span className="text-zinc-400 truncate max-w-[140px] sm:max-w-xs">
@@ -167,7 +173,7 @@ export default async function BlogPostPage({ params }: Props) {
                 <div className="p-5 sm:p-6 rounded-2xl glass-card border-[#FF5A1F]/20 bg-[#FF5A1F]/[0.03] mb-6">
                   <div className="text-xs font-mono text-[#FF5A1F] uppercase tracking-wider mb-2 flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5" />
-                    <span>核心摘要 · Summary</span>
+                    <span>{t("核心摘要 · Summary", "Summary")}</span>
                   </div>
                   <p className="text-sm sm:text-base text-zinc-300 leading-relaxed font-normal">
                     {post.summary}
@@ -201,7 +207,7 @@ export default async function BlogPostPage({ params }: Props) {
                   <div className="flex-1">
                     <div className="flex flex-wrap items-center justify-center sm:justify-between gap-2">
                       <div className="font-bold text-white text-base">
-                        关于作者 · {post.author}
+                        {t("关于作者", "About the author")} · {post.author}
                       </div>
                       <div className="flex items-center gap-2">
                         <a
@@ -240,7 +246,7 @@ export default async function BlogPostPage({ params }: Props) {
                   >
                     <div className="text-[11px] font-mono text-zinc-500 mb-1 flex items-center gap-1">
                       <ArrowLeft className="w-3 h-3 group-hover:-translate-x-0.5 transition-transform" />
-                      <span>上一篇</span>
+                      <span>{t("上一篇", "Previous")}</span>
                     </div>
                     <div className="text-xs sm:text-sm font-semibold text-zinc-200 group-hover:text-[#FF5A1F] transition-colors line-clamp-1">
                       {prevPost.title}
@@ -248,7 +254,7 @@ export default async function BlogPostPage({ params }: Props) {
                   </Link>
                 ) : (
                   <div className="p-4 rounded-2xl border border-white/5 text-zinc-600 text-xs font-mono">
-                    已经是第一篇了
+                    {t("已经是第一篇了", "This is the first post")}
                   </div>
                 )}
 
@@ -258,7 +264,7 @@ export default async function BlogPostPage({ params }: Props) {
                     className="p-4 rounded-2xl glass-card hover:border-white/20 transition-all text-right group"
                   >
                     <div className="text-[11px] font-mono text-zinc-500 mb-1 flex items-center justify-end gap-1">
-                      <span>下一篇</span>
+                      <span>{t("下一篇", "Next")}</span>
                       <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
                     </div>
                     <div className="text-xs sm:text-sm font-semibold text-zinc-200 group-hover:text-[#FF5A1F] transition-colors line-clamp-1">
@@ -267,7 +273,7 @@ export default async function BlogPostPage({ params }: Props) {
                   </Link>
                 ) : (
                   <div className="p-4 rounded-2xl border border-white/5 text-zinc-600 text-xs font-mono text-right">
-                    已经是最新一篇了
+                    {t("已经是最新一篇了", "This is the latest post")}
                   </div>
                 )}
               </div>
@@ -282,7 +288,7 @@ export default async function BlogPostPage({ params }: Props) {
                 <div className="p-5 rounded-2xl glass-card space-y-3">
                   <div className="text-xs font-mono text-zinc-400 uppercase tracking-wider pb-2 border-b border-white/5 flex items-center gap-1.5 font-semibold">
                     <Sparkles className="w-3 h-3 text-amber-400" />
-                    <span>相关手记 · Related</span>
+                    <span>{t("相关手记 · Related", "Related")}</span>
                   </div>
 
                   <div className="space-y-3">
@@ -308,16 +314,16 @@ export default async function BlogPostPage({ params }: Props) {
               <div className="p-5 rounded-2xl glass-card bg-gradient-to-br from-zinc-900 to-zinc-950 border-white/10">
                 <div className="text-xs font-mono text-zinc-400 mb-1">JohnnyBoyStudio</div>
                 <div className="text-sm font-bold text-white mb-2">
-                  因自身所需而造的专属应用
+                  {t("因自身所需而造的专属应用", "Apps built for my own needs")}
                 </div>
                 <p className="text-xs text-zinc-400 leading-relaxed mb-4">
-                  每一个工具都源自真实需求，纯粹、利落、不将就。
+                  {t("每一个工具都源自真实需求，纯粹、利落、不将就。", "Every tool comes from a real need — pure, sharp, no compromise.")}
                 </p>
                 <Link
                   href="/#products"
                   className="inline-flex items-center gap-1.5 text-xs text-[#FF5A1F] hover:text-[#ff7847] font-semibold"
                 >
-                  <span>查看作品库</span>
+                  <span>{t("查看作品库", "View works")}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>

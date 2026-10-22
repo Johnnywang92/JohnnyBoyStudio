@@ -1,9 +1,11 @@
 "use client";
 
+import { useLang } from "@/components/LanguageProvider";
 import React, { useState } from "react";
 import { Check, Copy, Info, AlertTriangle, Lightbulb, Flame, ExternalLink } from "lucide-react";
 
 function CodeBlock({ code, language }: { code: string; language: string }) {
+  const { t } = useLang();
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -30,18 +32,18 @@ function CodeBlock({ code, language }: { code: string; language: string }) {
         <button
           onClick={handleCopy}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 active:bg-white/15 text-zinc-300 hover:text-white transition-all text-xs touch-manipulation min-h-[32px]"
-          title="复制全部代码"
-          aria-label="复制代码"
+          title={t("复制全部代码", "Copy all code")}
+          aria-label={t("复制代码", "Copy code")}
         >
           {copied ? (
             <>
               <Check className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="text-emerald-400 font-medium">已复制</span>
+              <span className="text-emerald-400 font-medium">{t("已复制", "Copied")}</span>
             </>
           ) : (
             <>
               <Copy className="w-3.5 h-3.5" />
-              <span>复制</span>
+              <span>{t("复制", "Copy")}</span>
             </>
           )}
         </button>
@@ -143,6 +145,7 @@ function renderInlineText(text: string): React.ReactNode {
 }
 
 export default function MarkdownRenderer({ content }: { content: string }) {
+  const { t } = useLang();
   const blocks: React.ReactNode[] = [];
   const lines = content.split(/\r?\n/);
   let i = 0;
@@ -197,28 +200,28 @@ export default function MarkdownRenderer({ content }: { content: string }) {
             border: "border-sky-500/30",
             bg: "bg-sky-500/10",
             icon: <Info className="w-5 h-5 text-sky-400 shrink-0" />,
-            title: "提示 / NOTE",
+            title: t("提示 / NOTE", "NOTE"),
             titleColor: "text-sky-300",
           },
           TIP: {
             border: "border-emerald-500/30",
             bg: "bg-emerald-500/10",
             icon: <Lightbulb className="w-5 h-5 text-emerald-400 shrink-0" />,
-            title: "心得 / TIP",
+            title: t("心得 / TIP", "TIP"),
             titleColor: "text-emerald-300",
           },
           WARNING: {
             border: "border-amber-500/30",
             bg: "bg-amber-500/10",
             icon: <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />,
-            title: "注意 / WARNING",
+            title: t("注意 / WARNING", "WARNING"),
             titleColor: "text-amber-300",
           },
           IMPORTANT: {
             border: "border-[#FF5A1F]/30",
             bg: "bg-[#FF5A1F]/10",
             icon: <Flame className="w-5 h-5 text-[#FF5A1F] shrink-0" />,
-            title: "核心原则 / IMPORTANT",
+            title: t("核心原则 / IMPORTANT", "IMPORTANT"),
             titleColor: "text-[#FF8554]",
           },
         }[calloutType];
@@ -342,7 +345,7 @@ export default function MarkdownRenderer({ content }: { content: string }) {
               <a
                 href={`#${id}`}
                 className="opacity-0 group-hover:opacity-100 text-[#FF5A1F] transition-opacity -ml-6 pr-2 select-none"
-                aria-label="跳转到此章节"
+                aria-label={t("跳转到此章节", "Jump to this section")}
               >
                 #
               </a>

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { HeadingItem } from "@/lib/blog";
+import { useLang } from "@/components/LanguageProvider";
 import { List, ChevronDown, ChevronUp } from "lucide-react";
 
 export default function TableOfContents({
@@ -11,6 +12,7 @@ export default function TableOfContents({
   headings: HeadingItem[];
   mobileCollapsible?: boolean;
 }) {
+  const { t } = useLang();
   const [activeId, setActiveId] = useState<string>("");
   const [expanded, setExpanded] = useState<boolean>(false);
 
@@ -53,7 +55,7 @@ export default function TableOfContents({
         >
           <div className="flex items-center gap-2">
             <List className="w-3.5 h-3.5 text-[#FF5A1F]" />
-            <span>文章目录导航 ({headings.length} 章节)</span>
+            <span>{t("文章目录导航", "Table of contents")} ({headings.length} {t("章节", "sections")})</span>
           </div>
           {expanded ? (
             <ChevronUp className="w-4 h-4 text-zinc-400" />
@@ -94,7 +96,7 @@ export default function TableOfContents({
     <nav className="p-5 rounded-2xl glass-card space-y-3 sticky top-28 max-h-[calc(100vh-140px)] overflow-y-auto">
       <div className="flex items-center gap-2 text-xs font-semibold text-zinc-300 tracking-wider uppercase pb-2 border-b border-white/5 font-mono">
         <List className="w-3.5 h-3.5 text-[#FF5A1F]" />
-        <span>目录导航 · TOC</span>
+        <span>{t("目录导航 · TOC", "TOC")}</span>
       </div>
 
       <ul className="space-y-1.5 text-xs">

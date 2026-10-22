@@ -1,12 +1,14 @@
 "use client";
 
 import React from "react";
+import { useLang } from "@/components/LanguageProvider";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { studioInfo } from "@/data/studioData";
 import { ArrowUp, Heart, Terminal } from "lucide-react";
 
 export default function Footer() {
+  const { t } = useLang();
   const pathname = usePathname();
 
   const scrollToTop = () => {
@@ -50,25 +52,25 @@ export default function Footer() {
               href={getResolvedHref("#products")}
               className="py-1 px-1.5 hover:text-zinc-300 transition-colors touch-manipulation min-h-[36px] flex items-center"
             >
-              精选作品
+              {t("精选作品", "Works")}
             </Link>
             <Link
               href={getResolvedHref("#philosophy")}
               className="py-1 px-1.5 hover:text-zinc-300 transition-colors touch-manipulation min-h-[36px] flex items-center"
             >
-              开发理念
+              {t("开发理念", "Philosophy")}
             </Link>
             <Link
               href="/blog"
               className="py-1 px-1.5 hover:text-white text-zinc-400 font-medium transition-colors touch-manipulation min-h-[36px] flex items-center"
             >
-              工坊手记
+              {t("工坊手记", "Journal")}
             </Link>
             <Link
               href={getResolvedHref("#tech-stack")}
               className="py-1 px-1.5 hover:text-zinc-300 transition-colors touch-manipulation min-h-[36px] flex items-center"
             >
-              技术栈
+              {t("技术栈", "Tech Stack")}
             </Link>
             <a
               href={studioInfo.socials.github}
@@ -98,7 +100,7 @@ export default function Footer() {
             <button
               onClick={scrollToTop}
               className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 active:bg-white/15 text-zinc-400 hover:text-white flex items-center justify-center transition-colors touch-manipulation"
-              title="返回顶部"
+              title={t("返回顶部", "Back to top")}
               aria-label="Back to top"
             >
               <ArrowUp className="w-4 h-4" />

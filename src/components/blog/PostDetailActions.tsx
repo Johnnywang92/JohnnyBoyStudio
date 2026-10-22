@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useLang } from "@/components/LanguageProvider";
 import { Copy, Check, ArrowLeft } from "lucide-react";
 import { TwitterXIcon } from "@/components/SocialIcons";
 import Link from "next/link";
@@ -10,6 +11,7 @@ interface PostDetailActionsProps {
 }
 
 export default function PostDetailActions({ title }: PostDetailActionsProps) {
+  const { t } = useLang();
   const [copied, setCopied] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -61,24 +63,24 @@ export default function PostDetailActions({ title }: PostDetailActionsProps) {
           className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-400 hover:text-white transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
-          <span>返回全部文章</span>
+          <span>{t("返回全部文章", "All posts")}</span>
         </Link>
 
         <div className="flex items-center gap-2">
           <button
             onClick={handleCopyLink}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-zinc-300 hover:text-white transition-all border border-white/5"
-            aria-label="复制文章链接"
+            aria-label={t("复制文章链接", "Copy post link")}
           >
             {copied ? (
               <>
                 <Check className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="text-emerald-400">链接已复制</span>
+                <span className="text-emerald-400">{t("链接已复制", "Link copied")}</span>
               </>
             ) : (
               <>
                 <Copy className="w-3.5 h-3.5" />
-                <span>复制链接</span>
+                <span>{t("复制链接", "Copy link")}</span>
               </>
             )}
           </button>
@@ -86,10 +88,10 @@ export default function PostDetailActions({ title }: PostDetailActionsProps) {
           <button
             onClick={handleShareTwitter}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-xs text-zinc-300 hover:text-white transition-all border border-white/5"
-            aria-label="分享到 X / Twitter"
+            aria-label={t("分享到 X / Twitter", "Share on X / Twitter")}
           >
             <TwitterXIcon className="w-3.5 h-3.5" />
-            <span>分享</span>
+            <span>{t("分享", "Share")}</span>
           </button>
         </div>
       </div>

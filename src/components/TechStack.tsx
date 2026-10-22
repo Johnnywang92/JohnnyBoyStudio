@@ -1,10 +1,12 @@
 "use client";
 
 import React from "react";
-import { techStackCategories } from "@/data/studioData";
+import { useLang } from "@/components/LanguageProvider";
+import { getTechStackCategories } from "@/data/studioData";
 import { Layers, Cpu, Code2, Network } from "lucide-react";
 
 export default function TechStack() {
+  const { t, locale } = useLang();
   const getCategoryIcon = (category: string) => {
     if (category.includes("Apple")) return <Cpu className="w-4 h-4 text-zinc-100" />;
     if (category.includes("Web")) return <Code2 className="w-4 h-4 text-cyan-400" />;
@@ -20,16 +22,16 @@ export default function TechStack() {
             <span>CORE TOOLCHAIN &amp; STACK</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
-            技术栈与工程武器库
+            {t("技术栈与工程武器库", "Tech Stack & Engineering Arsenal")}
           </h2>
           <p className="text-xs sm:text-base text-zinc-400 mt-2 sm:mt-3 leading-relaxed px-2">
-            以 Apple 现代化语言体系为基石，融合前沿 Web 响应式架构与底层网络通信。
+            {t("以 Apple 现代化语言体系为基石，融合前沿 Web 响应式架构与底层网络通信。", "Built on Apple's modern language ecosystem, blended with cutting-edge responsive Web architecture and low-level networking.")}
           </p>
         </div>
 
         {/* Categories Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
-          {techStackCategories.map((cat, i) => (
+          {getTechStackCategories(locale).map((cat, i) => (
             <div
               key={i}
               className="p-5 sm:p-6 rounded-3xl glass-card flex flex-col justify-between"

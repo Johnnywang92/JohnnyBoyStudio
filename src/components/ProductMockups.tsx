@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useLang } from "@/components/LanguageProvider";
 import {
   Sparkles,
   Smartphone,
@@ -27,6 +28,7 @@ import {
 } from "lucide-react";
 
 export function QuickpickMockup() {
+  const { t } = useLang();
   const [gridMode, setGridMode] = useState<"thirds" | "spiral" | "none">("thirds");
   const [lutEnabled, setLutEnabled] = useState(true);
   const [frameMode, setFrameMode] = useState(false);
@@ -48,14 +50,14 @@ export function QuickpickMockup() {
           <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
           <span className="text-[11px] text-zinc-400 ml-2 font-mono flex items-center gap-1 truncate max-w-[140px] sm:max-w-none">
             <Camera className="w-3 h-3 text-amber-400 shrink-0" />
-            <span className="truncate">QuickPick 极选 · DSC04892.ARW</span>
+            <span className="truncate">QuickPick{t(" 极选", "")} · DSC04892.ARW</span>
           </span>
         </div>
 
         <div className="flex items-center gap-1.5 text-[10px]">
           <span className="inline-flex items-center gap-1 text-emerald-400 bg-emerald-950/50 border border-emerald-500/20 px-2 py-0.5 rounded-full font-mono">
             <ShieldCheck className="w-3 h-3" />
-            <span>100% 只读安全</span>
+            <span>{t("100% 只读安全", "100% read-only")}</span>
           </span>
         </div>
       </div>
@@ -90,7 +92,7 @@ export function QuickpickMockup() {
               )}
               {selected && (
                 <span className="flex items-center gap-0.5 text-[9px] font-semibold bg-emerald-500 text-white px-1.5 py-0.5 rounded shadow">
-                  <CheckCircle2 className="w-2.5 h-2.5" /> 已选入
+                  <CheckCircle2 className="w-2.5 h-2.5" /> {t("已选入", "Picked")}
                 </span>
               )}
             </div>
@@ -138,14 +140,14 @@ export function QuickpickMockup() {
                 frameMode ? "text-stone-800" : "text-white/80"
               }`}
             >
-              {frameMode ? "JohnnyBoy Studio · Fine Art Frame" : "6100 万全画幅 RAW 细节无损预览"}
+              {frameMode ? "JohnnyBoy Studio · Fine Art Frame" : t("6100 万全画幅 RAW 细节无损预览", "61MP full-frame RAW, lossless detail preview")}
             </span>
             <div
               className={`text-[10px] mt-0.5 ${
                 frameMode ? "text-stone-500" : "text-zinc-400"
               }`}
             >
-              闭眼检测 0 · 锐度方差 98.4 (精准合焦)
+              {t("闭眼检测 0 · 锐度方差 98.4 (精准合焦)", "Closed eyes 0 · Sharpness variance 98.4 (in focus)")}
             </div>
           </div>
 
@@ -167,11 +169,11 @@ export function QuickpickMockup() {
                 ? "bg-amber-500/20 text-amber-300 border-amber-500/40"
                 : "bg-white/5 text-zinc-400 border-white/5 hover:bg-white/10"
             }`}
-            title="按 O 切换构图参考线"
+            title={t("按 O 切换构图参考线", "Press O to toggle composition guides")}
           >
             <Layers className="w-3 h-3" />
             <span>
-              构图线: {gridMode === "thirds" ? "三分法" : gridMode === "spiral" ? "黄金螺旋" : "关"}
+              {t("构图线", "Guides")}: {gridMode === "thirds" ? t("三分法", "Thirds") : gridMode === "spiral" ? t("黄金螺旋", "Golden spiral") : t("关", "Off")}
             </span>
           </button>
 
@@ -182,10 +184,10 @@ export function QuickpickMockup() {
                 ? "bg-white text-zinc-950 border-white font-semibold"
                 : "bg-white/5 text-zinc-400 border-white/5 hover:bg-white/10"
             }`}
-            title="按 E 切换艺术相框"
+            title={t("按 E 切换艺术相框", "Press E to toggle art frame")}
           >
             <Sliders className="w-3 h-3" />
-            <span>EXIF 相框</span>
+            <span>{t("EXIF 相框", "EXIF frame")}</span>
           </button>
 
           <button
@@ -195,7 +197,7 @@ export function QuickpickMockup() {
                 ? "bg-purple-500/20 text-purple-300 border-purple-500/40"
                 : "bg-white/5 text-zinc-400 border-white/5 hover:bg-white/10"
             }`}
-            title="按 L 开关 3D LUT"
+            title={t("按 L 开关 3D LUT", "Press L to toggle 3D LUT")}
           >
             <Film className="w-3 h-3" />
             <span>3D LUT</span>
@@ -209,14 +211,14 @@ export function QuickpickMockup() {
               ? "bg-emerald-600 text-white hover:bg-emerald-500"
               : "bg-zinc-800 text-zinc-400 hover:text-white"
           }`}
-          title="按 Space 选入或剔除"
+          title={t("按 Space 选入或剔除", "Press Space to pick or reject")}
         >
-          {selected ? "已保留 [Space]" : "剔除 [Space]"}
+          {selected ? t("已保留 [Space]", "Kept [Space]") : t("剔除 [Space]", "Rejected [Space]")}
         </button>
       </div>
 
       <div className="mt-2 text-[10px] text-zinc-500 flex items-center justify-between font-mono px-0.5">
-        <span>快捷键: [O] 构图 [E] 相框 [L] 调色 [Space] 挑选</span>
+        <span>{t("快捷键: [O] 构图 [E] 相框 [L] 调色 [Space] 挑选", "Shortcuts: [O] Guides [E] Frame [L] Grade [Space] Pick")}</span>
         <span className="text-amber-400/80">Tauri + Rust + Pixi.js</span>
       </div>
     </div>
@@ -224,6 +226,7 @@ export function QuickpickMockup() {
 }
 
 export function Assistan01Mockup() {
+  const { t } = useLang();
   const [islandExpanded, setIslandExpanded] = useState(false);
   const [packagePicked, setPackagePicked] = useState(false);
 
@@ -237,17 +240,17 @@ export function Assistan01Mockup() {
         <div className="flex items-center justify-between text-xs">
           <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-pulse" />
-            <span className="text-indigo-200 font-medium text-[11px] font-mono">小助 · Live Activity</span>
+            <span className="text-indigo-200 font-medium text-[11px] font-mono">{t("小助", "Assistant")} · Live Activity</span>
           </div>
 
           <div className="flex items-center gap-2">
             {!packagePicked ? (
               <span className="text-[10px] font-mono bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/30 flex items-center gap-1">
-                <Package className="w-2.5 h-2.5" /> 取件码 4-2-3088
+                <Package className="w-2.5 h-2.5" /> {t("取件码", "Pickup code")} 4-2-3088
               </span>
             ) : (
               <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1">
-                <CheckCircle2 className="w-2.5 h-2.5" /> 已取件销号
+                <CheckCircle2 className="w-2.5 h-2.5" /> {t("已取件销号", "Picked up")}
               </span>
             )}
           </div>
@@ -255,7 +258,7 @@ export function Assistan01Mockup() {
       </div>
 
       <div className="text-center mt-1 text-[10px] text-zinc-500">
-        轻触展开 / 折叠灵动岛（全场景免掏手机闭环）
+        {t("轻触展开 / 折叠灵动岛（全场景免掏手机闭环）", "Tap to expand / collapse the Dynamic Island (hands-free loop)")}
       </div>
 
       {/* Expanded Modules Grid */}
@@ -272,11 +275,11 @@ export function Assistan01Mockup() {
             </div>
             <div>
               <div className="text-xs font-semibold text-zinc-200 flex items-center gap-1.5">
-                <span>菜鸟驿站地理围栏到达</span>
-                <span className="text-[9px] text-zinc-500 bg-white/5 px-1 rounded">实时活动</span>
+                <span>{t("菜鸟驿站地理围栏到达", "Arrived at pickup point (geofence)")}</span>
+                <span className="text-[9px] text-zinc-500 bg-white/5 px-1 rounded">{t("实时活动", "Live")}</span>
               </div>
               <div className="text-[10px] text-zinc-400 font-mono mt-0.5">
-                丰巢/驿站取件码: <span className="text-amber-300 font-bold">4-2-3088</span> (顺丰速运)
+                {t("丰巢/驿站取件码", "Locker / station pickup code")}: <span className="text-amber-300 font-bold">4-2-3088</span> {t("(顺丰速运)", "(SF Express)")}
               </div>
             </div>
           </div>
@@ -289,7 +292,7 @@ export function Assistan01Mockup() {
                 : "bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold"
             }`}
           >
-            {packagePicked ? "撤销" : "抬腕已取"}
+            {packagePicked ? t("撤销", "Undo") : t("抬腕已取", "Picked up")}
           </button>
         </div>
 
@@ -299,26 +302,26 @@ export function Assistan01Mockup() {
           <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
             <div className="flex items-center justify-between text-zinc-400 text-[10px]">
               <span className="flex items-center gap-1 font-medium">
-                <Wallet className="w-3 h-3 text-emerald-400" /> 今日安心花
+                <Wallet className="w-3 h-3 text-emerald-400" /> {t("今日安心花", "Safe to spend today")}
               </span>
-              <span className="text-emerald-400 font-mono font-semibold">充裕</span>
+              <span className="text-emerald-400 font-mono font-semibold">{t("充裕", "Plenty")}</span>
             </div>
             <div className="text-sm font-bold text-zinc-100 font-mono mt-1">¥ 186.50</div>
-            <div className="text-[9px] text-zinc-500 mt-0.5">口语一句话记账自动扣减</div>
+            <div className="text-[9px] text-zinc-500 mt-0.5">{t("口语一句话记账自动扣减", "Spoken one-line expense auto-deducts")}</div>
           </div>
 
           {/* Offline ASR & Privacy Vault */}
           <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
             <div className="flex items-center justify-between text-zinc-400 text-[10px]">
               <span className="flex items-center gap-1 font-medium">
-                <Lock className="w-3 h-3 text-indigo-400" /> Face ID 保险箱
+                <Lock className="w-3 h-3 text-indigo-400" /> {t("Face ID 保险箱", "Face ID vault")}
               </span>
-              <span className="text-indigo-400 font-mono">已锁定</span>
+              <span className="text-indigo-400 font-mono">{t("已锁定", "Locked")}</span>
             </div>
             <div className="text-[11px] font-semibold text-zinc-200 mt-1 flex items-center gap-1">
-              <Mic className="w-3 h-3 text-pink-400" /> 悬浮离线语音球
+              <Mic className="w-3 h-3 text-pink-400" /> {t("悬浮离线语音球", "Offline voice orb")}
             </div>
-            <div className="text-[9px] text-zinc-500 mt-0.5">端侧 LlamaSwift 推理</div>
+            <div className="text-[9px] text-zinc-500 mt-0.5">{t("端侧 LlamaSwift 推理", "On-device LlamaSwift inference")}</div>
           </div>
         </div>
       </div>
@@ -326,15 +329,16 @@ export function Assistan01Mockup() {
       {/* Footer Info */}
       <div className="mt-2.5 flex items-center justify-between text-[10px] text-zinc-500 px-1 font-mono">
         <span className="flex items-center gap-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> iOS 18+ · 纯离线无网络依赖
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> iOS 18+ · {t("纯离线无网络依赖", "fully offline, no network needed")}
         </span>
-        <span>SwiftData 零泄漏</span>
+        <span>{t("SwiftData 零泄漏", "SwiftData, zero leakage")}</span>
       </div>
     </div>
   );
 }
 
 export function FerryMockup() {
+  const { t } = useLang();
   const [syncing, setSyncing] = useState(false);
   const [viewMode, setViewMode] = useState<"dual" | "diff">("dual");
 
@@ -344,10 +348,10 @@ export function FerryMockup() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-2 mb-2 border-b border-white/5 text-xs text-zinc-400 gap-1.5">
         <div className="flex items-center gap-1.5">
           <Server className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-          <span className="font-semibold text-zinc-200">Ferry · macOS SFTP/FTP 客户端</span>
+          <span className="font-semibold text-zinc-200">Ferry · {t("macOS SFTP/FTP 客户端", "macOS SFTP/FTP client")}</span>
         </div>
         <span className="text-[10px] text-cyan-400 bg-cyan-950/60 border border-cyan-800/40 px-2 py-0.5 rounded-full font-mono self-start sm:self-auto">
-          Swift 6 严格并发 · 零数据丢失
+          {t("Swift 6 严格并发 · 零数据丢失", "Swift 6 strict concurrency · zero data loss")}
         </span>
       </div>
 
@@ -361,7 +365,7 @@ export function FerryMockup() {
               : "text-zinc-500 hover:text-zinc-300"
           }`}
         >
-          AppKit 原生双栏文件树
+          {t("AppKit 原生双栏文件树", "AppKit native dual-pane file tree")}
         </button>
         <button
           onClick={() => setViewMode("diff")}
@@ -371,7 +375,7 @@ export function FerryMockup() {
               : "text-zinc-500 hover:text-zinc-300"
           }`}
         >
-          3-Way 同步与 DiffPlan 决策
+          {t("3-Way 同步与 DiffPlan 决策", "3-Way sync & DiffPlan decisions")}
         </button>
       </div>
 
@@ -383,7 +387,7 @@ export function FerryMockup() {
             <div className="p-2.5 rounded-xl bg-zinc-900/80 border border-white/5">
               <div className="flex items-center justify-between text-[10px] text-zinc-400 mb-1.5 pb-1 border-b border-white/5">
                 <span className="font-mono text-zinc-300 flex items-center gap-1">
-                  <Laptop className="w-3 h-3 text-cyan-400" /> 本地 Mac (AppKit)
+                  <Laptop className="w-3 h-3 text-cyan-400" /> {t("本地 Mac (AppKit)", "Local Mac (AppKit)")}
                 </span>
                 <span className="text-zinc-500 font-mono">~/workspace</span>
               </div>
@@ -398,7 +402,7 @@ export function FerryMockup() {
                   <span className="flex items-center gap-1">
                     <Folder className="w-2.5 h-2.5 text-amber-400" /> Assets/
                   </span>
-                  <span className="text-zinc-500">12项</span>
+                  <span className="text-zinc-500">{t("12项", "12 items")}</span>
                 </div>
               </div>
             </div>
@@ -407,7 +411,7 @@ export function FerryMockup() {
             <div className="p-2.5 rounded-xl bg-zinc-900/80 border border-white/5">
               <div className="flex items-center justify-between text-[10px] text-zinc-400 mb-1.5 pb-1 border-b border-white/5">
                 <span className="font-mono text-cyan-300 flex items-center gap-1">
-                  <Server className="w-3 h-3" /> 远端 Linux (SFTP)
+                  <Server className="w-3 h-3" /> {t("远端 Linux (SFTP)", "Remote Linux (SFTP)")}
                 </span>
                 <span className="text-zinc-500 font-mono">/var/www/prod</span>
               </div>
@@ -416,7 +420,7 @@ export function FerryMockup() {
                   <span className="flex items-center gap-1">
                     <CheckCircle2 className="w-2.5 h-2.5 text-emerald-400" /> release_v1.tar
                   </span>
-                  <span className="text-emerald-400">已就绪</span>
+                  <span className="text-emerald-400">{t("已就绪", "Ready")}</span>
                 </div>
                 <div className="flex items-center justify-between text-zinc-400 px-1.5 py-0.5">
                   <span className="flex items-center gap-1">
@@ -433,9 +437,9 @@ export function FerryMockup() {
             <div className="flex items-center justify-between text-[10px] text-zinc-400 mb-1 font-mono">
               <span className="flex items-center gap-1 text-cyan-300">
                 <Radio className="w-3 h-3 text-cyan-400 animate-pulse" />
-                <span>并发传输队列 (3/3) · 48.6 MB/s</span>
+                <span>{t("并发传输队列", "Concurrent queue")} (3/3) · 48.6 MB/s</span>
               </span>
-              <span className="text-emerald-400 font-semibold">Keychain 钥匙串已解密</span>
+              <span className="text-emerald-400 font-semibold">{t("Keychain 钥匙串已解密", "Keychain unlocked")}</span>
             </div>
             <div className="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
               <div className="bg-gradient-to-r from-cyan-400 to-blue-500 h-full w-4/5 rounded-full animate-pulse" />
@@ -446,22 +450,22 @@ export function FerryMockup() {
         /* DiffPlan Preview Simulator */
         <div className="p-2.5 rounded-xl bg-zinc-900/90 border border-white/10 my-2 text-xs font-mono">
           <div className="text-[10px] text-cyan-300 font-bold mb-2 flex items-center justify-between border-b border-white/5 pb-1">
-            <span>DiffPlan 审计快照 · 绝不静默覆盖</span>
-            <span className="text-zinc-500 font-normal">真值表判定已就绪</span>
+            <span>{t("DiffPlan 审计快照 · 绝不静默覆盖", "DiffPlan audit snapshot · never silently overwrites")}</span>
+            <span className="text-zinc-500 font-normal">{t("真值表判定已就绪", "Truth table ready")}</span>
           </div>
 
           <div className="space-y-1.5 text-[10px]">
             <div className="flex items-center justify-between p-1 rounded bg-emerald-950/30 border border-emerald-500/20 text-emerald-300">
-              <span>⬆️ 上行同步: config.json (本地较新)</span>
-              <span className="px-1.5 py-0.2 rounded bg-emerald-500/20">覆盖远端</span>
+              <span>⬆️ {t("上行同步", "Push")}: config.json {t("(本地较新)", "(local newer)")}</span>
+              <span className="px-1.5 py-0.2 rounded bg-emerald-500/20">{t("覆盖远端", "Overwrite remote")}</span>
             </div>
             <div className="flex items-center justify-between p-1 rounded bg-blue-950/30 border border-blue-500/20 text-blue-300">
-              <span>⬇️ 下行拉取: server_report.csv (远端新增)</span>
-              <span className="px-1.5 py-0.2 rounded bg-blue-500/20">下载入本地</span>
+              <span>⬇️ {t("下行拉取", "Pull")}: server_report.csv {t("(远端新增)", "(new on remote)")}</span>
+              <span className="px-1.5 py-0.2 rounded bg-blue-500/20">{t("下载入本地", "Download")}</span>
             </div>
             <div className="flex items-center justify-between p-1 rounded bg-amber-950/30 border border-amber-500/20 text-amber-300">
-              <span>⚠️ 冲突拦截: index.html (双端同时被修改)</span>
-              <span className="px-1.5 py-0.2 rounded bg-amber-500/20 font-bold">保留双份</span>
+              <span>⚠️ {t("冲突拦截", "Conflict")}: index.html {t("(双端同时被修改)", "(modified on both sides)")}</span>
+              <span className="px-1.5 py-0.2 rounded bg-amber-500/20 font-bold">{t("保留双份", "Keep both")}</span>
             </div>
           </div>
         </div>
@@ -475,7 +479,7 @@ export function FerryMockup() {
         }}
         className="mt-2 w-full py-1.5 rounded-lg bg-cyan-600/20 hover:bg-cyan-600/30 border border-cyan-500/30 text-cyan-300 text-xs font-medium flex items-center justify-center gap-1.5 transition-colors"
       >
-        <span>{syncing ? "严格防御传输中..." : "模拟并发传输 App.pkg 到远端"}</span>
+        <span>{syncing ? t("严格防御传输中...", "Defensive transfer in progress...") : t("模拟并发传输 App.pkg 到远端", "Simulate concurrent transfer of App.pkg to remote")}</span>
         <ArrowRight className={`w-3 h-3 ${syncing ? "translate-x-1" : ""}`} />
       </button>
     </div>
@@ -483,6 +487,7 @@ export function FerryMockup() {
 }
 
 export function WeddingMockup() {
+  const { t } = useLang();
   const [hearts, setHearts] = useState(36);
   const [liked, setLiked] = useState(false);
 
@@ -502,7 +507,7 @@ export function WeddingMockup() {
       <div className="flex items-center justify-between pb-2 border-b border-rose-500/10 text-xs">
         <span className="text-[10px] tracking-widest uppercase text-rose-300/90 font-serif flex items-center gap-1">
           <Ticket className="w-3 h-3 text-rose-400" />
-          <span>电影首映礼主题 RSVP 系统</span>
+          <span>{t("电影首映礼主题 RSVP 系统", "Movie premiere themed RSVP system")}</span>
         </span>
         <span className="text-[10px] text-amber-300 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-full font-mono">
           Vue 3 + Flask + PWA
@@ -513,13 +518,13 @@ export function WeddingMockup() {
       <div className="my-2.5 p-3 rounded-xl bg-rose-500/[0.04] border border-rose-500/20 flex items-center justify-between gap-3">
         <div>
           <div className="text-[10px] text-rose-300/80 font-serif">
-            PREMIERE TICKET · 专属电子票根
+            PREMIERE TICKET · {t("专属电子票根", "Personal e-ticket")}
           </div>
           <h4 className="text-sm font-serif font-bold text-rose-100 tracking-wide mt-0.5">
-            Johnny &amp; Grace · 浪漫首映礼
+            Johnny &amp; Grace · {t("浪漫首映礼", "Romantic premiere")}
           </h4>
           <p className="text-[10px] text-zinc-400 mt-1">
-            三幕自动轮播故事画廊 · 专属 QR 凭证
+            {t("三幕自动轮播故事画廊 · 专属 QR 凭证", "Three-act auto-carousel story gallery · personal QR pass")}
           </p>
         </div>
 
@@ -533,7 +538,7 @@ export function WeddingMockup() {
       <div className="flex items-center justify-between pt-1 text-xs">
         <div className="text-[10px] text-zinc-400 flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-          <span>时空胶囊云祝福墙 · Service Worker 离线守护</span>
+          <span>{t("时空胶囊云祝福墙 · Service Worker 离线守护", "Time-capsule wishes wall · Service Worker offline guard")}</span>
         </div>
         <button
           onClick={toggleHeart}

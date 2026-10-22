@@ -252,3 +252,31 @@ export const techStackCategories = [
     ],
   },
 ];
+
+// ---------------------------------------------------------------------------
+// Localization helpers (zh is the source language, en overlays on top)
+// ---------------------------------------------------------------------------
+import type { Locale } from "@/lib/i18n";
+import { studioInfoEn, productsEn, philosophyEn, techStackEn } from "./studioData.en";
+
+export function getStudioInfo(locale: Locale): StudioInfo {
+  return locale === "en" ? { ...studioInfo, ...studioInfoEn } : studioInfo;
+}
+
+export function getProducts(locale: Locale): Product[] {
+  if (locale !== "en") return products;
+  return products.map((p) => ({ ...p, ...productsEn[p.id] }));
+}
+
+export function getPhilosophyList(locale: Locale) {
+  if (locale !== "en") return philosophyList;
+  return philosophyList.map((item, i) => ({ ...item, ...philosophyEn[i] }));
+}
+
+export function getTechStackCategories(locale: Locale) {
+  if (locale !== "en") return techStackCategories;
+  return techStackCategories.map((cat, ci) => ({
+    category: techStackEn[ci].category,
+    items: cat.items.map((item, ii) => ({ ...item, ...techStackEn[ci].items[ii] })),
+  }));
+}

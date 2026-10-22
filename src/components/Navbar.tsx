@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useLang } from "@/components/LanguageProvider";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { studioInfo } from "@/data/studioData";
 import { GithubIcon, TwitterXIcon } from "./SocialIcons";
+import LanguageSwitcher from "./LanguageSwitcher";
 import {
   Menu,
   X,
@@ -17,6 +19,7 @@ import {
 } from "lucide-react";
 
 export default function Navbar() {
+  const { t } = useLang();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -42,16 +45,18 @@ export default function Navbar() {
   }, [mobileMenuOpen]);
 
   // Close mobile menu on route change
-  useEffect(() => {
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
     setMobileMenuOpen(false);
-  }, [pathname]);
+  }
 
   const navLinks = [
-    { label: "作品库", href: "#products", icon: <LayoutGrid className="w-4 h-4 text-amber-400" /> },
-    { label: "Vibecoding 理念", href: "#philosophy", icon: <Flame className="w-4 h-4 text-orange-400" /> },
-    { label: "工坊手记", href: "/blog", icon: <BookOpen className="w-4 h-4 text-indigo-400" /> },
-    { label: "技术栈", href: "#tech-stack", icon: <Cpu className="w-4 h-4 text-cyan-400" /> },
-    { label: "关于与联络", href: "#contact", icon: <Mail className="w-4 h-4 text-emerald-400" /> },
+    { label: t("作品库", "Works"), href: "#products", icon: <LayoutGrid className="w-4 h-4 text-amber-400" /> },
+    { label: t("Vibecoding 理念", "Philosophy"), href: "#philosophy", icon: <Flame className="w-4 h-4 text-orange-400" /> },
+    { label: t("工坊手记", "Journal"), href: "/blog", icon: <BookOpen className="w-4 h-4 text-indigo-400" /> },
+    { label: t("技术栈", "Tech Stack"), href: "#tech-stack", icon: <Cpu className="w-4 h-4 text-cyan-400" /> },
+    { label: t("关于与联络", "Contact"), href: "#contact", icon: <Mail className="w-4 h-4 text-emerald-400" /> },
   ];
 
   const getResolvedHref = (href: string) => {
@@ -135,27 +140,30 @@ export default function Navbar() {
               <TwitterXIcon className="w-4 h-4" />
             </a>
 
+            <LanguageSwitcher />
+
             <Link
               href={pathname === "/" ? "#contact" : "/#contact"}
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-semibold text-white transition-all shadow-sm active:scale-95 ml-1"
             >
               <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-              <span>交流合作</span>
+              <span>{t("交流合作", "Get in touch")}</span>
             </Link>
           </div>
 
           {/* Mobile Right Controls: Fast Contact & Hamburger */}
           <div className="flex sm:hidden items-center gap-1.5">
+            <LanguageSwitcher className="px-2 py-1.5" />
             <Link
               href={pathname === "/" ? "#contact" : "/#contact"}
               className="px-2.5 py-1.5 rounded-xl bg-white/10 text-[11px] font-semibold text-white border border-white/10 active:scale-95 transition-transform"
             >
-              合作
+              {t("合作", "Contact")}
             </Link>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="w-10 h-10 flex items-center justify-center rounded-xl text-zinc-300 hover:text-white active:bg-white/10 bg-white/5 border border-white/10 transition-all touch-manipulation"
-              aria-label="切换菜单"
+              aria-label={t("切换菜单", "Toggle menu")}
             >
               {mobileMenuOpen ? <X className="w-5 h-5 text-[#FF5A1F]" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -175,7 +183,7 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="fixed top-[max(4.5rem,calc(env(safe-area-inset-top)+3.5rem))] left-3 right-3 p-4 rounded-3xl glass-panel bg-zinc-950/98 border border-white/15 shadow-2xl flex flex-col gap-2 z-50 md:hidden animate-in fade-in slide-in-from-top-4 duration-200">
           <div className="text-[10px] font-mono uppercase tracking-wider text-zinc-500 px-3 pb-1 border-b border-white/5">
-            导航菜单 · NAVIGATION
+            {t("导航菜单 · NAVIGATION", "NAVIGATION")}
           </div>
 
           <div className="space-y-1 mt-1">
@@ -230,7 +238,7 @@ export default function Navbar() {
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#FF5A1F] text-xs font-bold text-white shadow-lg shadow-[#FF5A1F]/30 active:scale-95 transition-all"
             >
               <Sparkles className="w-3.5 h-3.5" />
-              <span>交流合作</span>
+              <span>{t("交流合作", "Get in touch")}</span>
             </Link>
           </div>
         </div>

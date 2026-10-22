@@ -1,10 +1,14 @@
 import React from "react";
 import Link from "next/link";
 import { getAllPosts } from "@/lib/blog";
+import { getLocale } from "@/lib/i18n-server";
+import { pick } from "@/lib/i18n";
 import { BookOpen, Calendar, Clock, ArrowRight } from "lucide-react";
 
-export default function LatestPosts() {
-  const posts = getAllPosts().slice(0, 3);
+export default async function LatestPosts() {
+  const locale = await getLocale();
+  const t = <T,>(zh: T, en: T) => pick(locale, zh, en);
+  const posts = getAllPosts(locale).slice(0, 3);
 
   if (posts.length === 0) {
     return null;
@@ -18,13 +22,13 @@ export default function LatestPosts() {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF5A1F]/10 border border-[#FF5A1F]/20 text-[#FF5A1F] text-xs font-mono mb-3">
               <BookOpen className="w-3.5 h-3.5" />
-              <span>LOGS &amp; INSIGHTS · 思考与手记</span>
+              <span>{t("LOGS & INSIGHTS · 思考与手记", "LOGS & INSIGHTS")}</span>
             </div>
             <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
-              工坊手记 · 思考与实践
+              {t("工坊手记 · 思考与实践", "Journal · Thoughts & Practice")}
             </h2>
             <p className="text-xs sm:text-base text-zinc-400 mt-2 max-w-xl">
-              记录从高频痛点出发的真实工具诞生历程、Vibecoding 结对心得与原生技术思考。
+              {t("记录从高频痛点出发的真实工具诞生历程、Vibecoding 结对心得与原生技术思考。", "The real story of building tools from my own pain points, Vibecoding pair-programming notes and native tech thoughts.")}
             </p>
           </div>
 
@@ -32,7 +36,7 @@ export default function LatestPosts() {
             href="/blog"
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 active:bg-white/15 border border-white/10 text-xs font-semibold text-white transition-all self-start md:self-auto group touch-manipulation min-h-[40px]"
           >
-            <span>查看全部文章</span>
+            <span>{t("查看全部文章", "View all posts")}</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
@@ -80,7 +84,7 @@ export default function LatestPosts() {
                 </div>
 
                 <div className="inline-flex items-center gap-1 text-xs text-[#FF5A1F] group-hover:translate-x-1 transition-transform font-medium">
-                  <span>阅读</span>
+                  <span>{t("阅读", "Read")}</span>
                   <ArrowRight className="w-3 h-3" />
                 </div>
               </div>

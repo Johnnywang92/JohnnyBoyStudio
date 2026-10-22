@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useLang } from "@/components/LanguageProvider";
 import { Product } from "@/data/studioData";
 import {
   QuickpickMockup,
@@ -28,6 +29,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const { t, locale } = useLang();
   const renderMockup = () => {
     switch (product.mockupType) {
       case "quickpick-workbench":
@@ -134,9 +136,11 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         </div>
 
-        <p className="text-xs text-zinc-500 font-mono italic mb-3">
-          {product.enTagline}
-        </p>
+        {locale !== "en" && (
+          <p className="text-xs text-zinc-500 font-mono italic mb-3">
+            {product.enTagline}
+          </p>
+        )}
 
         <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-5">
           {product.description}
@@ -186,7 +190,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 className="inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 active:bg-white/15 transition-colors touch-manipulation min-h-[38px]"
               >
                 <GithubIcon className="w-3.5 h-3.5" />
-                <span>源码</span>
+                <span>{t("源码", "Source")}</span>
               </a>
             )}
             {product.links?.testFlight && (
@@ -206,7 +210,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             href={product.links?.demo || "#"}
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-200 hover:text-white px-4 py-2 rounded-xl bg-gradient-to-r from-white/10 to-white/5 hover:from-white/20 hover:to-white/10 border border-white/10 hover:border-white/25 active:scale-95 transition-all shadow-sm touch-manipulation min-h-[38px]"
           >
-            <span>体验 / 详情</span>
+            <span>{t("体验 / 详情", "Try / Details")}</span>
             <ExternalLink className="w-3 h-3" />
           </a>
         </div>

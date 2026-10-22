@@ -1,10 +1,12 @@
 "use client";
 
 import React from "react";
-import { philosophyList } from "@/data/studioData";
+import { useLang } from "@/components/LanguageProvider";
+import { getPhilosophyList } from "@/data/studioData";
 import { Flame, Apple, Gauge, ShieldCheck, Sparkles } from "lucide-react";
 
 export default function Philosophy() {
+  const { t, locale } = useLang();
   const getIcon = (iconName: string) => {
     switch (iconName) {
       case "Flame":
@@ -29,16 +31,16 @@ export default function Philosophy() {
             <span>BUILT FOR MYSELF · VIBECODING CRAFT</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white">
-            为什么而造？自用驱动的开发哲学
+            {t("为什么而造？自用驱动的开发哲学", "Why build? A self-driven development philosophy")}
           </h2>
           <p className="text-xs sm:text-base text-zinc-400 mt-2 sm:mt-3 leading-relaxed px-2">
-            从自己日常使用最真实的痛点出发，用 Vibecoding 把灵感亲手打造成每天都想用的趁手工具。
+            {t("从自己日常使用最真实的痛点出发，用 Vibecoding 把灵感亲手打造成每天都想用的趁手工具。", "Starting from the most real pain points of my own daily use, I turn ideas by hand into tools I want to use every day, with Vibecoding.")}
           </p>
         </div>
 
         {/* 4 Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 lg:gap-8">
-          {philosophyList.map((item, idx) => (
+          {getPhilosophyList(locale).map((item, idx) => (
             <div
               key={idx}
               className="group p-5 sm:p-8 rounded-3xl glass-card relative overflow-hidden flex flex-col justify-between"

@@ -3,11 +3,11 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { name, email, message } = await req.json();
+    const { name, email, message, locale } = await req.json();
 
     if (!email || !message) {
       return NextResponse.json(
-        { error: "邮箱和留言内容不能为空" },
+        { error: locale === "en" ? "Email and message are required" : "邮箱和留言内容不能为空" },
         { status: 400 }
       );
     }
@@ -64,10 +64,10 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ success: true, data });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("API /api/contact error:", error);
     return NextResponse.json(
-      { error: error.message || "邮件服务投递失败，请稍后重试" },
+      { error: (error instanceof Error && error.message) || "邮件服务投递失败，请稍后重试" },
       { status: 500 }
     );
   }

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
+import { useLang } from "@/components/LanguageProvider";
 import Link from "next/link";
 import { BlogPostMeta } from "@/lib/blog";
 import {
@@ -25,6 +26,7 @@ export default function BlogListClient({
   tags,
   categories,
 }: BlogListClientProps) {
+  const { t } = useLang();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -85,14 +87,14 @@ export default function BlogListClient({
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="搜索文章标题、标签或关键字（如：Vibecoding、QuickPick、macOS）..."
+            placeholder={t("搜索文章标题、标签或关键字（如：Vibecoding、QuickPick、macOS）...", "Search titles, tags or keywords (e.g. Vibecoding, QuickPick, macOS)...")}
             className="w-full pl-11 pr-10 py-3 rounded-2xl bg-white/[0.04] border border-white/10 text-base sm:text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-[#FF5A1F]/50 focus:ring-1 focus:ring-[#FF5A1F]/50 transition-all"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery("")}
               className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white p-1"
-              aria-label="清除搜索"
+              aria-label={t("清除搜索", "Clear search")}
             >
               <X className="w-4 h-4" />
             </button>
@@ -112,7 +114,7 @@ export default function BlogListClient({
                 : "bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10 border border-white/5"
             }`}
           >
-            全部文章 ({posts.length})
+            {t("全部文章", "All posts")} ({posts.length})
           </button>
 
           {/* Categories */}
@@ -156,7 +158,7 @@ export default function BlogListClient({
               onClick={resetFilters}
               className="text-xs text-zinc-500 hover:text-[#FF5A1F] underline ml-auto py-1 transition-colors"
             >
-              清除所有筛选
+              {t("清除所有筛选", "Clear all filters")}
             </button>
           )}
         </div>
@@ -173,7 +175,7 @@ export default function BlogListClient({
             <div className="flex flex-wrap items-center gap-2.5 mb-4">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FF5A1F]/15 border border-[#FF5A1F]/30 text-[#FF5A1F] text-xs font-semibold">
                 <Flame className="w-3.5 h-3.5" />
-                <span>置顶精选</span>
+                <span>{t("置顶精选", "Featured")}</span>
               </span>
 
               <span className="px-2.5 py-0.5 rounded-md bg-white/5 text-zinc-400 text-xs font-mono">
@@ -213,7 +215,7 @@ export default function BlogListClient({
               </div>
 
               <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#FF5A1F] group-hover:text-[#ff7847]">
-                <span>阅读全文</span>
+                <span>{t("阅读全文", "Read more")}</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
@@ -274,7 +276,7 @@ export default function BlogListClient({
                 </div>
 
                 <div className="text-xs text-zinc-400 group-hover:text-white flex items-center gap-1 transition-colors">
-                  <span>阅读</span>
+                  <span>{t("阅读", "Read")}</span>
                   <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
@@ -285,15 +287,15 @@ export default function BlogListClient({
         /* Empty State */
         <div className="text-center py-20 p-8 rounded-3xl glass-card">
           <FileText className="w-12 h-12 text-zinc-600 mx-auto mb-4" />
-          <h3 className="text-lg font-bold text-white mb-2">未找到匹配的文章</h3>
+          <h3 className="text-lg font-bold text-white mb-2">{t("未找到匹配的文章", "No matching posts")}</h3>
           <p className="text-sm text-zinc-400 max-w-md mx-auto mb-6">
-            没有找到与 “{searchQuery || selectedTag || selectedCategory}” 相关的文章。可以尝试更换关键词或清除筛选。
+            {t("没有找到与", "No posts found for")} “{searchQuery || selectedTag || selectedCategory}” {t("相关的文章。可以尝试更换关键词或清除筛选。", ". Try different keywords or clear the filters.")}
           </p>
           <button
             onClick={resetFilters}
             className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition-all"
           >
-            重置所有筛选
+            {t("重置所有筛选", "Reset all filters")}
           </button>
         </div>
       )}
