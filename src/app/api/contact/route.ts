@@ -38,7 +38,7 @@ export async function POST(req: Request) {
       replyTo: email,
       subject: `[JohnnyBoyStudio 新留言] 来自 ${name || email}`,
       html: `
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #27272a; border-radius: 16px; background: #0c0c10; color: #f4f4f5;">
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #27272a; border-radius: 16px; background: #0c0c10; color: #f4f4f5;">
           <div style="background: linear-gradient(135deg, #FF5A1F 0%, #ff7a45 100%); color: #ffffff; padding: 14px 20px; border-radius: 12px; font-weight: bold; font-size: 16px; display: flex; align-items: center; justify-content: space-between;">
             <span>JohnnyBoyStudio 收到新留言 </span>
           </div>

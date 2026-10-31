@@ -19,6 +19,7 @@ export interface Product {
     demo?: string;
     github?: string;
   };
+  caseStudySlug?: string;
   mockupType: "mac-menubar" | "ios-island" | "transfer-radar" | "wedding-card" | "quickpick-workbench";
 }
 
@@ -70,7 +71,7 @@ export const products: Product[] = [
     tagline: "专业摄影师本地极速选片与构图调色工作台",
     enTagline: "High-speed local photo curation, composition & grading studio",
     description:
-      "专为摄影师、修图师与影像爱好者打造的 macOS 极速选片与交付工具。零上传、100% 原片只读安全，毫秒级 RAW 原生解码，集智能闭眼/虚焦筛查漏斗、5 大摄影构图线、相机 EXIF 艺术相框与 3D LUT 胶片影调于一体。",
+      "专为摄影师、修图师与影像爱好者打造的 macOS 极速选片与交付工具。零上传、100% 原片只读安全，毫秒级 RAW 原生解码，集智能闭眼/虚焦筛查漏斗、Pixi.js v8 经典构图线、Cinema 沉浸看片模式、相机 EXIF 艺术相框与 3D LUT 胶片影调于一体。",
     platforms: ["macOS"],
     category: "macOS 影像生产力",
     status: "Featured",
@@ -80,13 +81,14 @@ export const products: Product[] = [
     iconName: "Camera",
     features: [
       "⚡ 废片一键粉碎漏斗：闭眼检测、严重脱焦与连拍冗余劣选 AI 智能筛查",
-      "📐 5 大摄影构图线：三分法 / 黄金螺旋 / 动态对称（Pixi.js v8 硬件加速）",
-      "🎨 相机 EXIF 艺术相框：6 大高审美模板、原创摄影徽标与一键智能调光",
+      "📐 5 大摄影构图线：三分法 / 黄金螺旋 / 动态对称（Pixi.js v8 硬件加速保持锐利）",
+      "🎬 Cinema 全屏沉浸看片模式：一键纯黑隐去工具栏，专注光影与细节质感",
+      "🎨 相机 EXIF 艺术相框：6 大高审美模板、原创摄影徽标、智能调光与 Cmd+C 高清图复制",
       "🎞️ 3D LUT 胶片电影级调色：内置柯达/富士/莱卡黑白，支持自定义 .cube 导入",
       "🔒 100% 原片只读安全：本地 SQLite 记录，绝不修改、覆盖或破坏原始底片",
     ],
     metrics: [
-      { label: "架构", value: "Tauri + Rust" },
+      { label: "底层架构", value: "Tauri + Rust" },
       { label: "渲染引擎", value: "Pixi.js v8 / GPU" },
       { label: "底片安全", value: "100% 只读" },
     ],
@@ -94,6 +96,7 @@ export const products: Product[] = [
       github: "https://github.com/Johnnywang92/QuickPick",
       demo: "https://github.com/Johnnywang92/QuickPick/releases",
     },
+    caseStudySlug: "quickpick-local-first-architecture",
     mockupType: "quickpick-workbench",
   },
   {
@@ -102,7 +105,7 @@ export const products: Product[] = [
     tagline: "完全运行在 iPhone 本地的全能离线生活助理",
     enTagline: "Private, local-first ambient lifestyle assistant for iOS 18+",
     description:
-      "围绕「待办排期、一句话记账、快递取件、证件保险箱、离线语音对话」等高频场景，串联成免掏手机的生活闭环。数据全存本机，支持端侧离线语音识别与端侧 LLM（LlamaSwift GGUF），并通过灵动岛实时活动（Live Activities）、桌面小组件与 Apple Watch 带来沉浸腕上操作。",
+      "围绕「万能速记 Omnibox、餐饮记账与热量联动、饮水折算、待办排期、取件上岛、证件保险箱」等全域生活场景，串联成免掏手机的端侧闭环。数据 100% 存本机，内置原生 llama.xcframework（Metal GPU 加速）与 Qwen3 本地大模型，打通灵动岛实时活动（Live Activities）、桌面交互小组件与 Apple Watch 智能叠放。",
     platforms: ["iOS"],
     category: "iOS 本地生活助理",
     status: "Beta",
@@ -111,21 +114,23 @@ export const products: Product[] = [
     bgGlow: "rgba(129, 140, 248, 0.18)",
     iconName: "Sparkles",
     features: [
-      "🏝️ 灵动岛 Live Activities：取件码实时上岛与锁屏、手表抬腕「已取件」即销号",
-      "🎙️ 悬浮离线语音球：离线 ASR 语音识别 + 统一意图路由，无需联网对话处理",
-      "💰 一句话口语化记账：口语金额自适应归一化，动态「今日安心花」额度控制",
-      "🔒 Face ID 硬件级安全：证件保险箱与本地加密密码库，100% 数据只存本机",
-      "🧠 端侧本地 LLM 推理：支持 LlamaSwift 本地 GGUF 运行与局域网 Ollama 联动",
+      "🌐 Omnibox 全域 16 类生活万能入口：文字/语音/截图多模态输入，端侧 GBNF 文法与 16 标签意图路由，自动分流待办、账目、饮水、收纳、习惯与档案",
+      "💧 饮水追踪与多饮品折算：咖啡/奶茶/茶饮按水合系数精准折算实际补水量，双向同步 Apple 健康（HealthKit）",
+      "🥗 餐饮记账自动推测热量：多菜照片端侧热量估算与百分比调节，记账自动关联食物库与热量同步，智能纠偏防虚增",
+      "🏝️ 灵动岛 Live Activities 闭环：取件码与行程倒计时实时上岛，锁屏通栏大按钮与 Apple Watch 智能叠放抬腕一键销号",
+      "🧠 原生 Metal GPU 端侧大模型：内置 llama.xcframework，升级支持 Qwen3 等本地 GGUF 高性能离线推理与局域网 Ollama",
+      "🔒 硬件级隐私与离线保险箱：Face ID 证件保险箱、PBKDF2 加密密码库与 PIN 导出备份，100% 数据绝不上云",
     ],
     metrics: [
       { label: "系统要求", value: "iOS 18.0+" },
-      { label: "数据架构", value: "SwiftUI + SwiftData" },
-      { label: "端侧智能", value: "LlamaSwift GGUF" },
+      { label: "端侧智能", value: "Metal GGUF / Qwen3" },
+      { label: "数据安全", value: "SwiftData 本地加密" },
     ],
     links: {
       github: "https://github.com/Johnnywang92/assistant-01",
       demo: "https://github.com/Johnnywang92/assistant-01",
     },
+    caseStudySlug: "assistant-01-on-device-ai",
     mockupType: "ios-island",
   },
   {
@@ -134,7 +139,7 @@ export const products: Product[] = [
     tagline: "专为 macOS 设计的现代化高韧性 SFTP / FTP 双栏客户端",
     enTagline: "Modern, high-resilience dual-pane SFTP / FTP / FTPS client for macOS",
     description:
-      "遵循 Apple 现代化设计哲学的高性能文件传输工具。以“核心零 C 依赖、传输严格防御、用户数据零丢失”为准则，采用 Swift 6 严格并发架构打造。深度融合 AppKit 原生高性能双栏列表与 SwiftUI 现代界面，内置钥匙串密钥管理、弹性并发传输队列与 3-Way 三方同步 DiffPlan 引擎。",
+      "遵循 Apple 现代化设计哲学的高性能文件传输工具。以“核心零 C 依赖、传输严格防御、用户数据零丢失”为准则，采用 Swift 6 严格并发架构打造。全新 1.0.0-beta.2 引入多连接标签栏、RelayEngine 服务器直传工作台、双向独立限速与定时计划任务，保障关键资产传输坚不可摧。",
     platforms: ["macOS"],
     category: "macOS 专业网络工具",
     status: "Featured",
@@ -144,20 +149,22 @@ export const products: Product[] = [
     iconName: "Compass",
     features: [
       "⚡ Swift 6 严格并发架构：多任务并发传输队列与单任务异常隔离，零数据竞争",
-      "🔐 全模式连接认证：SFTP (内联 libssh2+OpenSSL3) + FTPS (TLS 1.3)，Keychain 与 ssh-agent",
-      "📂 AppKit+SwiftUI 双栈融合：双栏原生极速文件树、完整拖拽回写与空格 Quick Look 预览",
+      "🗂️ 多会话连接标签栏（Tabs）：多服务器会话独立并发管理，自由平铺切分",
+      "🚀 RelayEngine 服务器直传工作台：跨服务器流式中继直传，无需本地磁盘中转",
       "🔄 3-Way 三方同步与 DiffPlan：真值表冲突拦截，可视化决断上行/下行，绝不静默覆盖",
-      "🛡️ 弹性传输引擎：断点续传、置信度自检、1s/2s/4s 指数退避重试与崩溃防抖自愈",
+      "⏱️ 弹性流控与定时任务：双向独立带宽限速、夜间定时计划传输、指数退避自动重试",
+      "📂 Finder 双向拖拽矩阵：支持延迟下载 Promise、完整拖拽回写与空格 Quick Look 预览",
     ],
     metrics: [
       { label: "系统要求", value: "macOS 15+" },
       { label: "并发架构", value: "Swift 6 Strict" },
-      { label: "核心准则", value: "零数据丢失" },
+      { label: "当前版本", value: "1.0.0-beta.2" },
     ],
     links: {
       github: "https://github.com/Johnnywang92/Ferry",
-      demo: "https://github.com/Johnnywang92/Ferry",
+      demo: "https://github.com/Johnnywang92/Ferry/releases",
     },
+    caseStudySlug: "ferry-swift6-resilient-file-transfer",
     mockupType: "transfer-radar",
   },
   {
@@ -166,7 +173,7 @@ export const products: Product[] = [
     tagline: "电影首映礼主题互动邀请函 & 电子票根回执系统",
     enTagline: "Cinematic premiere wedding invitation, RSVP & memory wall",
     description:
-      "以电影首映礼为设计灵感的定制化数字邀请函与宾客互动系统。包含三幕双图自动轮播故事画廊、本地生成专属电子票根 QR 码、时空胶囊云祝福墙与 Service Worker 离线网络防护。",
+      "以电影首映礼为设计灵感的定制化数字邀请函与宾客互动系统。包含三幕双图自动轮播故事画廊、本地生成专属电子票根 QR 码、婚房现场大屏投影模式 (TV Slideshow)、时空胶囊云祝福墙与 Service Worker 离线网络防护。",
     platforms: ["Web", "iOS"],
     category: "电影主题浪漫定制",
     status: "Featured",
@@ -176,18 +183,19 @@ export const products: Product[] = [
     iconName: "Heart",
     features: [
       "🎬 电影首映礼沉浸长卷：三幕双图电影质感画卷故事线与首映礼美学",
+      "📺 现场大屏投影模式 (TV Slideshow)：婚房大屏多图轮播与实时来宾祝福墙互动",
       "🎟️ 专属电影电子票根：浏览器本地生成个性化 QR 凭证，支持微信分享",
       "💌 密闭式云祝福墙：来宾上传照片留言，婚期日定时拆阅与审核管理",
       "📶 Service Worker 离线防护：弱网断网静态缓存，网络恢复自动重传",
     ],
     metrics: [
       { label: "前端架构", value: "Vue 3 SPA" },
-      { label: "后端服务", value: "Flask + SQLite" },
+      { label: "现场大屏", value: "TV Slideshow" },
       { label: "离线特性", value: "PWA ServiceWorker" },
     ],
     links: {
       github: "https://github.com/Johnnywang92",
-      demo: "#",
+      demo: "https://github.com/Johnnywang92",
     },
     mockupType: "wedding-card",
   },

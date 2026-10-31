@@ -25,6 +25,9 @@ import {
   QrCode,
   Radio,
   FileCode,
+  Droplets,
+  Utensils,
+  Cpu,
 } from "lucide-react";
 
 export function QuickpickMockup() {
@@ -229,6 +232,8 @@ export function Assistan01Mockup() {
   const { t } = useLang();
   const [islandExpanded, setIslandExpanded] = useState(false);
   const [packagePicked, setPackagePicked] = useState(false);
+  const [activeTab, setActiveTab] = useState<"ambient" | "omnibox">("ambient");
+  const [omniboxExecuted, setOmniboxExecuted] = useState(false);
 
   return (
     <div className="w-full bg-zinc-950/90 rounded-2xl border border-white/10 p-3.5 shadow-2xl backdrop-blur-xl select-none">
@@ -257,81 +262,173 @@ export function Assistan01Mockup() {
         </div>
       </div>
 
-      <div className="text-center mt-1 text-[10px] text-zinc-500">
-        {t("轻触展开 / 折叠灵动岛（全场景免掏手机闭环）", "Tap to expand / collapse the Dynamic Island (hands-free loop)")}
+      <div className="flex items-center justify-between mt-2.5 mb-1.5 px-0.5">
+        <div className="text-[10px] text-zinc-500">
+          {t("免掏手机腕上闭环 · 端侧完全离线", "Hands-free wrist loop · 100% on-device")}
+        </div>
+        {/* Scenario Switch Tabs */}
+        <div className="flex items-center gap-1 bg-white/[0.04] p-0.5 rounded-lg border border-white/5 text-[10px]">
+          <button
+            onClick={() => setActiveTab("ambient")}
+            className={`px-2 py-0.5 rounded-md transition-all ${
+              activeTab === "ambient"
+                ? "bg-indigo-500/20 text-indigo-300 font-medium border border-indigo-500/30"
+                : "text-zinc-500 hover:text-zinc-300"
+            }`}
+          >
+            {t("灵动岛闭环", "Dynamic Island")}
+          </button>
+          <button
+            onClick={() => setActiveTab("omnibox")}
+            className={`px-2 py-0.5 rounded-md transition-all flex items-center gap-1 ${
+              activeTab === "omnibox"
+                ? "bg-purple-500/20 text-purple-300 font-medium border border-purple-500/30"
+                : "text-zinc-500 hover:text-zinc-300"
+            }`}
+          >
+            <span>Omnibox 16合1</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          </button>
+        </div>
       </div>
 
       {/* Expanded Modules Grid */}
-      <div
-        className={`mt-2.5 space-y-2 transition-all duration-300 ${
-          islandExpanded ? "scale-100 opacity-100" : "scale-98 opacity-95"
-        }`}
-      >
-        {/* Module 1: Package Live Activity */}
-        <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
-              <Package className="w-4 h-4" />
-            </div>
-            <div>
-              <div className="text-xs font-semibold text-zinc-200 flex items-center gap-1.5">
-                <span>{t("菜鸟驿站地理围栏到达", "Arrived at pickup point (geofence)")}</span>
-                <span className="text-[9px] text-zinc-500 bg-white/5 px-1 rounded">{t("实时活动", "Live")}</span>
+      <div className="mt-1 space-y-2 transition-all duration-300">
+        {activeTab === "ambient" ? (
+          <>
+            {/* Module 1: Package Live Activity */}
+            <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+                  <Package className="w-4 h-4" />
+                </div>
+                <div>
+                  <div className="text-xs font-semibold text-zinc-200 flex items-center gap-1.5">
+                    <span>{t("菜鸟驿站地理围栏到达", "Arrived at pickup point (geofence)")}</span>
+                    <span className="text-[9px] text-zinc-500 bg-white/5 px-1 rounded">{t("实时活动", "Live")}</span>
+                  </div>
+                  <div className="text-[10px] text-zinc-400 font-mono mt-0.5">
+                    {t("丰巢/驿站取件码", "Locker / station pickup code")}: <span className="text-amber-300 font-bold">4-2-3088</span> {t("(顺丰速运)", "(SF Express)")}
+                  </div>
+                </div>
               </div>
-              <div className="text-[10px] text-zinc-400 font-mono mt-0.5">
-                {t("丰巢/驿站取件码", "Locker / station pickup code")}: <span className="text-amber-300 font-bold">4-2-3088</span> {t("(顺丰速运)", "(SF Express)")}
+
+              <button
+                onClick={() => setPackagePicked(!packagePicked)}
+                className={`px-2 py-1 rounded-md text-[10px] font-medium transition-all ${
+                  packagePicked
+                    ? "bg-zinc-800 text-zinc-400"
+                    : "bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold"
+                }`}
+              >
+                {packagePicked ? t("撤销", "Undo") : t("抬腕已取", "Picked up")}
+              </button>
+            </div>
+
+            {/* Module 2: Budget & Voice Assistant */}
+            <div className="grid grid-cols-2 gap-2">
+              {/* Wallet */}
+              <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                <div className="flex items-center justify-between text-zinc-400 text-[10px]">
+                  <span className="flex items-center gap-1 font-medium">
+                    <Wallet className="w-3 h-3 text-emerald-400" /> {t("今日安心花", "Safe to spend today")}
+                  </span>
+                  <span className="text-emerald-400 font-mono font-semibold">{t("充裕", "Plenty")}</span>
+                </div>
+                <div className="text-sm font-bold text-zinc-100 font-mono mt-1">¥ 186.50</div>
+                <div className="text-[9px] text-zinc-500 mt-0.5">{t("口语一句话记账自动扣减", "Spoken one-line expense auto-deducts")}</div>
+              </div>
+
+              {/* Offline ASR & Privacy Vault */}
+              <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+                <div className="flex items-center justify-between text-zinc-400 text-[10px]">
+                  <span className="flex items-center gap-1 font-medium">
+                    <Lock className="w-3 h-3 text-indigo-400" /> {t("Face ID 保险箱", "Face ID vault")}
+                  </span>
+                  <span className="text-indigo-400 font-mono">{t("已锁定", "Locked")}</span>
+                </div>
+                <div className="text-[11px] font-semibold text-zinc-200 mt-1 flex items-center gap-1">
+                  <Mic className="w-3 h-3 text-pink-400" /> {t("悬浮离线语音球", "Offline voice orb")}
+                </div>
+                <div className="text-[9px] text-zinc-500 mt-0.5">{t("长按即说 · 意图秒级分流", "Hold to speak · instant intent routing")}</div>
               </div>
             </div>
-          </div>
-
-          <button
-            onClick={() => setPackagePicked(!packagePicked)}
-            className={`px-2 py-1 rounded-md text-[10px] font-medium transition-all ${
-              packagePicked
-                ? "bg-zinc-800 text-zinc-400"
-                : "bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold"
-            }`}
-          >
-            {packagePicked ? t("撤销", "Undo") : t("抬腕已取", "Picked up")}
-          </button>
-        </div>
-
-        {/* Module 2: Budget & Voice Assistant */}
-        <div className="grid grid-cols-2 gap-2">
-          {/* Wallet */}
-          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
-            <div className="flex items-center justify-between text-zinc-400 text-[10px]">
-              <span className="flex items-center gap-1 font-medium">
-                <Wallet className="w-3 h-3 text-emerald-400" /> {t("今日安心花", "Safe to spend today")}
+          </>
+        ) : (
+          /* Omnibox 16-in-1 & Health/Water Demo */
+          <div className="space-y-2">
+            {/* Omnibox Input Pill */}
+            <div className="p-2 rounded-xl bg-purple-950/20 border border-purple-500/20 flex items-center justify-between text-xs">
+              <div className="flex items-center gap-2 text-zinc-200">
+                <div className="w-5 h-5 rounded-md bg-purple-500/20 flex items-center justify-center text-purple-300">
+                  <Sparkles className="w-3 h-3" />
+                </div>
+                <span className="text-[11px] font-mono text-purple-200">
+                  {t("“喝了杯大杯冰拿铁 28块，提醒明天上午开会”", "\"Iced latte $5.5, remind me meeting tomorrow\"")}
+                </span>
+              </div>
+              <span className="text-[9px] font-mono bg-purple-500/30 text-purple-300 px-1.5 py-0.5 rounded">
+                16-Intent GBNF
               </span>
-              <span className="text-emerald-400 font-mono font-semibold">{t("充裕", "Plenty")}</span>
             </div>
-            <div className="text-sm font-bold text-zinc-100 font-mono mt-1">¥ 186.50</div>
-            <div className="text-[9px] text-zinc-500 mt-0.5">{t("口语一句话记账自动扣减", "Spoken one-line expense auto-deducts")}</div>
-          </div>
 
-          {/* Offline ASR & Privacy Vault */}
-          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
-            <div className="flex items-center justify-between text-zinc-400 text-[10px]">
-              <span className="flex items-center gap-1 font-medium">
-                <Lock className="w-3 h-3 text-indigo-400" /> {t("Face ID 保险箱", "Face ID vault")}
-              </span>
-              <span className="text-indigo-400 font-mono">{t("已锁定", "Locked")}</span>
+            {/* Split Actions */}
+            <div className="grid grid-cols-2 gap-2 text-[10px]">
+              {/* Expense & Calorie Linked */}
+              <div className="p-2 rounded-xl bg-white/[0.03] border border-white/5">
+                <div className="flex items-center justify-between text-zinc-400">
+                  <span className="flex items-center gap-1 font-medium text-amber-300">
+                    <Utensils className="w-3 h-3" /> {t("餐饮记账与热量联动", "Meal & Calorie Sync")}
+                  </span>
+                </div>
+                <div className="text-xs font-semibold text-zinc-200 font-mono mt-1">¥ 28.00 · ~180 kcal</div>
+                <div className="text-[9px] text-zinc-500 mt-0.5">
+                  {t("大杯拿铁热量自动推测并绑定", "Auto-estimated & linked with expense")}
+                </div>
+              </div>
+
+              {/* Hydration Tracker */}
+              <div className="p-2 rounded-xl bg-white/[0.03] border border-white/5">
+                <div className="flex items-center justify-between text-zinc-400">
+                  <span className="flex items-center gap-1 font-medium text-sky-300">
+                    <Droplets className="w-3 h-3" /> {t("饮水水合系数折算", "Hydration Conversion")}
+                  </span>
+                </div>
+                <div className="text-xs font-semibold text-zinc-200 font-mono mt-1">450ml × 0.85 = 382ml</div>
+                <div className="text-[9px] text-zinc-500 mt-0.5">
+                  {t("咖啡饮水折算 · 双向同步健康", "Coffee hydration · syncs Apple Health")}
+                </div>
+              </div>
             </div>
-            <div className="text-[11px] font-semibold text-zinc-200 mt-1 flex items-center gap-1">
-              <Mic className="w-3 h-3 text-pink-400" /> {t("悬浮离线语音球", "Offline voice orb")}
+
+            {/* Action Bar */}
+            <div className="p-1.5 px-2.5 rounded-lg bg-white/[0.02] border border-white/5 flex items-center justify-between text-[10px]">
+              <div className="flex items-center gap-1.5 text-zinc-400">
+                <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                <span>{t("待办排期已就绪：明日 09:30 会议", "Schedule ready: Tomorrow 09:30 Meeting")}</span>
+              </div>
+              <button
+                onClick={() => setOmniboxExecuted(!omniboxExecuted)}
+                className={`px-2 py-0.5 rounded text-[10px] font-medium transition-all ${
+                  omniboxExecuted
+                    ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
+                    : "bg-purple-600 hover:bg-purple-500 text-white font-semibold"
+                }`}
+              >
+                {omniboxExecuted ? t("✓ 已全部入库", "✓ Logged") : t("一键智能入库", "One-Tap Log")}
+              </button>
             </div>
-            <div className="text-[9px] text-zinc-500 mt-0.5">{t("端侧 LlamaSwift 推理", "On-device LlamaSwift inference")}</div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Footer Info */}
       <div className="mt-2.5 flex items-center justify-between text-[10px] text-zinc-500 px-1 font-mono">
         <span className="flex items-center gap-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> iOS 18+ · {t("纯离线无网络依赖", "fully offline, no network needed")}
+          <Cpu className="w-3 h-3 text-indigo-400" />
+          <span>llama.xcframework · Metal GPU · Qwen3</span>
         </span>
-        <span>{t("SwiftData 零泄漏", "SwiftData, zero leakage")}</span>
+        <span className="text-zinc-400">{t("SwiftData 纯本地零泄漏", "SwiftData 100% On-Device")}</span>
       </div>
     </div>
   );

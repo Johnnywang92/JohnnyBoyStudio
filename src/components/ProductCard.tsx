@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { useLang } from "@/components/LanguageProvider";
 import { Product } from "@/data/studioData";
 import {
@@ -21,6 +22,7 @@ import {
   Compass,
   Heart,
   Camera,
+  BookOpen,
 } from "lucide-react";
 
 interface ProductCardProps {
@@ -181,7 +183,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         {/* Action Links */}
         <div className="flex items-center justify-between gap-2.5 pt-1 flex-wrap">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             {product.links?.github && (
               <a
                 href={product.links.github}
@@ -192,6 +194,15 @@ export default function ProductCard({ product }: ProductCardProps) {
                 <GithubIcon className="w-3.5 h-3.5" />
                 <span>{t("源码", "Source")}</span>
               </a>
+            )}
+            {product.caseStudySlug && (
+              <Link
+                href={`/blog/${product.caseStudySlug}`}
+                className="inline-flex items-center gap-1.5 text-xs text-amber-300 hover:text-amber-200 px-3 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 active:bg-amber-500/25 border border-amber-500/20 transition-colors touch-manipulation min-h-[38px]"
+              >
+                <BookOpen className="w-3.5 h-3.5" />
+                <span>{t("深度手记", "Case Study")}</span>
+              </Link>
             )}
             {product.links?.testFlight && (
               <a
