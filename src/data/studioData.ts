@@ -4,7 +4,7 @@ export interface Product {
   tagline: string;
   enTagline: string;
   description: string;
-  platforms: ("macOS" | "iOS" | "Web" | "iPadOS")[];
+  platforms: ("macOS" | "iOS" | "watchOS" | "Web" | "iPadOS")[];
   category: string;
   status: "Live" | "Beta" | "Featured" | "Preview";
   statusColor: string;
@@ -102,29 +102,29 @@ export const products: Product[] = [
   {
     id: "assistan01",
     name: "小助（Assistant）",
-    tagline: "完全运行在 iPhone 本地的全能离线生活助理",
-    enTagline: "Private, local-first ambient lifestyle assistant for iOS 18+",
+    tagline: "完全运行在 iPhone 与 Apple Watch 本地的全能离线生活与身心助理",
+    enTagline: "100% On-Device AI, Watch Companion & Mind-Body Life Assistant for iOS 18+ & watchOS 11+",
     description:
-      "围绕「万能速记 Omnibox、餐饮记账与热量联动、饮水折算、待办排期、取件上岛、证件保险箱」等全域生活场景，串联成免掏手机的端侧闭环。数据 100% 存本机，内置原生 llama.xcframework（Metal GPU 加速）与 Qwen3 本地大模型，打通灵动岛实时活动（Live Activities）、桌面交互小组件与 Apple Watch 智能叠放。",
-    platforms: ["iOS"],
-    category: "iOS 本地生活助理",
-    status: "Beta",
+      "围绕「Omnibox 万能速记、待办四段式日程、记账与待结算核销、饮食宏量营养与饮水折算、身心双指数与情绪三线共振、多段块级语音备忘、取件/出门/行程腕上闭环、证件密码保险箱」打造的全场景端侧助理。数据 100% 存本机，内置原生 llama.xcframework（Metal GPU 加速 Qwen3 与 Qwen3-VL 视觉多模态推理），配备独立 Apple Watch 伴生应用、灵动岛实时活动、面对面碰一碰互联与 WebDAV 端到端加密同步。",
+    platforms: ["iOS", "watchOS"],
+    category: "iOS + watchOS 端侧全能助理",
+    status: "Featured",
     statusColor: "indigo",
     accentColor: "from-indigo-500 via-purple-500 to-pink-500",
     bgGlow: "rgba(129, 140, 248, 0.18)",
     iconName: "Sparkles",
     features: [
-      "🌐 Omnibox 全域 16 类生活万能入口：文字/语音/截图多模态输入，端侧 GBNF 文法与 16 标签意图路由，自动分流待办、账目、饮水、收纳、习惯与档案",
-      "💧 饮水追踪与多饮品折算：咖啡/奶茶/茶饮按水合系数精准折算实际补水量，双向同步 Apple 健康（HealthKit）",
-      "🥗 餐饮记账自动推测热量：多菜照片端侧热量估算与百分比调节，记账自动关联食物库与热量同步，智能纠偏防虚增",
-      "🏝️ 灵动岛 Live Activities 闭环：取件码与行程倒计时实时上岛，锁屏通栏大按钮与 Apple Watch 智能叠放抬腕一键销号",
-      "🧠 原生 Metal GPU 端侧大模型：内置 llama.xcframework，升级支持 Qwen3 等本地 GGUF 高性能离线推理与局域网 Ollama",
-      "🔒 硬件级隐私与离线保险箱：Face ID 证件保险箱、PBKDF2 加密密码库与 PIN 导出备份，100% 数据绝不上云",
+      "⌚ 独立 Apple Watch 伴生应用 + 灵动岛闭环：抬腕完成快递销号、出门防丢逐项清点、高铁/航班护航、服药习惯打卡与语音速记，双端乐观状态重放与幂等对账",
+      "🧠 Metal GPU 端侧语言 + 视觉多模态大模型：内置 llama.xcframework，支持 Qwen3 与 Qwen3-VL-2B（mtmd 视觉编码）离线推理、GBNF 16 类意图约束与局域网 Ollama",
+      "💚 健康双指数与心理情绪三通道共振：融合 HRV/静息心率/睡眠分期实时推断「活力指数」与「身心愉悦指数」，配齐 10 秒情绪微记录、PHQ-9/GAD-7 筛查与 7/14/30 天三线共振图",
+      "🥗 饮食宏量营养、饮水折算与安心花记账：支持克数/烹饪系数热量与碳水/蛋白/脂肪估算、咖啡奶茶水合系数折算（同步 HealthKit）、订单截图识别及待结算/AA 款项隔离核销",
+      "🎙️ 多段块级图文备忘录与全域拼音搜索：录音中断续录、离线 ASR 自动切分为可混排图文的块级笔记并支持高清长图导出；内置 Bigram 倒排索引 + 拼音毫秒级全域检索",
+      "🔒 硬件级隐私、碰一碰互联与 WebDAV 加密备份：Face ID 证件裁切保险箱、面对面离线碰一碰传清单/AA 账单，以及 PBKDF2（31万轮）+ AES-256-GCM 私有云/NAS 备份",
     ],
     metrics: [
-      { label: "系统要求", value: "iOS 18.0+" },
-      { label: "端侧智能", value: "Metal GGUF / Qwen3" },
-      { label: "数据安全", value: "SwiftData 本地加密" },
+      { label: "双端架构", value: "iOS 18 + watchOS 11" },
+      { label: "端侧多模态", value: "Qwen3 + VL (Metal)" },
+      { label: "质量门禁", value: "SwiftData V12 · 1100+ 单测" },
     ],
     links: {
       github: "https://github.com/Johnnywang92/assistant-01",

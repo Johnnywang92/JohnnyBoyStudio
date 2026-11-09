@@ -17,6 +17,7 @@ import {
   Apple,
   Globe,
   Smartphone,
+  Watch,
   Sparkles,
   Zap,
   Compass,
@@ -54,6 +55,8 @@ export default function ProductCard({ product }: ProductCardProps) {
         return <Apple className="w-3.5 h-3.5" />;
       case "iOS":
         return <Smartphone className="w-3.5 h-3.5" />;
+      case "watchOS":
+        return <Watch className="w-3.5 h-3.5" />;
       case "Web":
         return <Globe className="w-3.5 h-3.5" />;
       default:

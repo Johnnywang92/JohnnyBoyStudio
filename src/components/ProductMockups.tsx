@@ -426,9 +426,9 @@ export function Assistan01Mockup() {
       <div className="mt-2.5 flex items-center justify-between text-[10px] text-zinc-500 px-1 font-mono">
         <span className="flex items-center gap-1">
           <Cpu className="w-3 h-3 text-indigo-400" />
-          <span>llama.xcframework · Metal GPU · Qwen3</span>
+          <span>llama.xcframework · Metal · Qwen3 + VL</span>
         </span>
-        <span className="text-zinc-400">{t("SwiftData 纯本地零泄漏", "SwiftData 100% On-Device")}</span>
+        <span className="text-zinc-400">{t("iPhone + Watch 纯本地", "iPhone + Watch On-Device")}</span>
       </div>
     </div>
   );

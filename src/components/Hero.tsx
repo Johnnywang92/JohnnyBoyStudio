@@ -29,7 +29,7 @@ export default function Hero() {
     {
       id: "assistan01",
       name: t("小助", "Assistant"),
-      tag: t("离线生活助理", "Offline life assistant"),
+      tag: t("iPhone + Watch 端侧助理", "iPhone + Watch AI assistant"),
       icon: <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-400" />,
       color: "from-indigo-500/20 to-purple-500/20",
     },

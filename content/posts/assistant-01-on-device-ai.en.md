@@ -80,6 +80,20 @@ ID cards, passports, bank info, and private notes reside inside an encrypted Swi
 
 ---
 
+## November 2026 Update: From iPhone Assistant to iPhone + Watch Mind-Body Assistant
+
+Since the last post, Assistant has gone through 70+ more commits. The biggest changes:
+
+- **Dedicated Apple Watch companion app**: no longer just borrowing the Smart Stack. The Watch can now dismiss parcels, tick through the departure checklist, escort train/flight trips, check in meds and habits, log water and mood, and capture by voice. Watch actions apply optimistically and are reconciled idempotently by command ID once the iPhone persists them — nothing is lost while offline.
+- **On-device vision-language model**: alongside Qwen3 text models, **Qwen3-VL-2B** (language model + mmproj vision encoder) now runs locally through llama.cpp's mtmd pipeline, paving the way for photo-based calorie estimation. Parts are downloaded and verified individually, and can only be deleted as a whole bundle to avoid half-installed models.
+- **Health Dual-Index & mental state**: real-time Vitality and Pleasure indices from HRV, resting HR, sleep stages and activity, plus 10-second mood check-ins (mood / energy / stress), PHQ-9 / GAD-7 screening and a 7/14/30-day three-line emotional resonance chart.
+- **Diet & ledger upgrades**: calorie estimation with gram/piece conversion, cooking coefficients and carb/protein/fat macros; pending-settlement items kept out of the safe-to-spend budget, AA splits, custom budget cycles, and Taobao/JD order screenshot recognition.
+- **Block-based voice memos**: resumable multi-segment recordings, transcribed into rich text/image blocks with high-res long-image export.
+- **Global search & sharing**: a custom Bigram inverted index with Pinyin search; offline face-to-face "bump" sharing for to-do lists and AA bills; WebDAV / NAS backups encrypted client-side with PBKDF2 (310k rounds) + AES-256-GCM.
+- **Engineering quality**: SwiftData has evolved to a V12 versioned migration plan, AssistantCore now has 1,100+ unit tests, and CI runs seven static gates plus a pre-push hook.
+
+---
+
 ## Conclusion: Build What You Love to Use Daily
 
 Assistant is the direct fruit of **Vibecoding**: ignoring bloated commercial business models, and focusing purely on eliminating friction in everyday life. Pure, offline, and snappy — turning the iPhone into a truly secure personal second brain.
