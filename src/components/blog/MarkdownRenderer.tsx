@@ -391,21 +391,68 @@ export default function MarkdownRenderer({ content }: { content: string }) {
     // Images: ![alt](url)
     const imgMatch = line.trim().match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
     if (imgMatch) {
+      // Check if next lines are also images to render side-by-side grid
+      const imageItems: { alt: string; src: string }[] = [{ alt: imgMatch[1], src: imgMatch[2] }];
+      let nextIdx = i + 1;
+      while (nextIdx < lines.length) {
+        const nextLine = lines[nextIdx].trim();
+        if (!nextLine) {
+          nextIdx++;
+          continue;
+        }
+        const nextImgMatch = nextLine.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+        if (nextImgMatch) {
+          imageItems.push({ alt: nextImgMatch[1], src: nextImgMatch[2] });
+          nextIdx++;
+        } else {
+          break;
+        }
+      }
+
+      if (imageItems.length > 1) {
+        blocks.push(
+          <div key={`block-${blockKey++}`} className="my-8">
+            <div className={`grid grid-cols-1 ${imageItems.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"} gap-4`}>
+              {imageItems.map((item, imgIdx) => (
+                <div key={imgIdx} className="flex flex-col items-center">
+                  <div className="rounded-2xl overflow-hidden border border-white/10 bg-black/40 shadow-2xl p-2 w-full flex items-center justify-center">
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      loading="lazy"
+                      decoding="async"
+                      className="max-h-[500px] w-auto h-auto rounded-xl object-contain shadow-lg"
+                    />
+                  </div>
+                  {item.alt && (
+                    <span className="text-center text-xs text-zinc-500 mt-2 font-mono">
+                      {item.alt}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+        i = nextIdx;
+        continue;
+      }
+
       const alt = imgMatch[1];
       const src = imgMatch[2];
       blocks.push(
         <figure key={`block-${blockKey++}`} className="my-8">
-          <div className="rounded-2xl overflow-hidden border border-white/10 bg-black/40 shadow-2xl">
+          <div className="rounded-2xl overflow-hidden border border-white/10 bg-black/40 shadow-2xl flex items-center justify-center p-2 sm:p-4">
             <img
               src={src}
               alt={alt}
               loading="lazy"
               decoding="async"
-              className="w-full h-auto object-cover max-h-[500px]"
+              className="max-h-[520px] w-auto h-auto rounded-xl object-contain shadow-lg"
             />
           </div>
           {alt && (
-            <figcaption className="text-center text-xs text-zinc-500 mt-2 font-mono">
+            <figcaption className="text-center text-xs text-zinc-500 mt-2.5 font-mono">
               {alt}
             </figcaption>
           )}

@@ -1,19 +1,20 @@
 ---
-title: "Assistant (小助): Building a 100% On-Device Offline AI & Ambient Loop on iPhone"
-date: "2026-10-31"
-summary: "Most life assistants and expense trackers require constant network uploads and tedious UI taps. Here is how I built an on-device Qwen3 assistant for iOS 18 powered by Metal GPU, completing daily routines hands-free via a 16-in-1 Omnibox and Dynamic Island."
-tags: ["iOS", "assistant-01", "SwiftUI", "OnDeviceAI", "Metal", "DynamicIsland"]
+title: "Assistant (小助): Building a 100% On-Device Offline AI & Ambient Loop on iPhone and Apple Watch"
+date: "2026-11-09"
+summary: "Most lifestyle and expense apps require constant cloud uploads or force you to hop across 4-5 fragmented tools. Here is how I built an on-device multi-modal AI assistant for iOS 18 & watchOS 11 powered by Metal GPU, completing daily routines hands-free."
+tags: ["iOS", "watchOS", "assistant-01", "SwiftUI", "OnDeviceAI", "Metal", "Vibecoding"]
 category: "Product Notes"
 author: "JohnnyBoy"
 featured: true
+cover: "/blog/assistant/home.jpg"
 ---
 
-## Why I Need a 100% On-Device Offline Lifestyle Assistant
+## Why I Built a 100% On-Device Offline Life Assistant
 
-As an avid iPhone user, my daily high-frequency micro-tasks were scattered everywhere:
+As an avid iPhone and Apple Watch user, my daily micro-tasks were scattered everywhere:
 - When a courier sends a pickup code, I had to dig through SMS or WeChat while walking;
 - After a 450ml Americano or a quick meal, I wanted to quickly log the cost, calories, and hydration;
-- Random errands popped up during the day that needed scheduling at night;
+- Before stepping out the door, the OCD kicks in: do I have my keys, badges, and IDs?
 - Sensitive photos of IDs or private credentials should never be uploaded to any commercial cloud.
 
 Mainstream apps suffer from two major flaws:
@@ -27,73 +28,78 @@ So I built a personal, hacker-grade offline assistant tailored strictly for my o
 ## Core Architecture & Technical Evolution
 
 ```
-┌────────────────────────────────────────────────────────┐
-│                   iOS 18+ Ambient UI                   │
-│  Dynamic Island Live Activities │ Widgets │ Watch Stack│
-└───────────────────────────▲────────────────────────────┘
-                            │ (Instant status feedback)
-┌───────────────────────────┴────────────────────────────┐
-│              Omnibox 16-in-1 Multi-Modal Intake         │
-│   Text Input   │   Floating Offline Voice Ball   │ OCR │
-└───────────────────────────┬────────────────────────────┘
-                            │ (GBNF structured routing)
-┌───────────────────────────▼────────────────────────────┐
-│              Inference Engine Registry                 │
-│   Native llama.xcframework   │    LAN Ollama Backend   │
-│   (Metal GPU / Qwen3 GGUF)   │    (Local Wi-Fi port)   │
-└───────────────────────────┬────────────────────────────┘
-                            │
-┌───────────────────────────▼────────────────────────────┐
-│          SwiftData + Keychain Local Storage            │
-│  To-dos & Deadlines │ Meals & Calories │ HealthKit Sync│
-└────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                    iOS 18 + watchOS 11 Dual-Device UI            │
+│   Dedicated Apple Watch App  │  Dynamic Island  │  Widgets     │
+└────────────────────────────────▲────────────────────────────────┘
+                                 │ (Optimistic replay & idempotent sync)
+┌────────────────────────────────┴────────────────────────────────┐
+│                   Omnibox 16-in-1 Multi-Modal Intake            │
+│      Text Input   │   Floating Voice Orb   │   Receipt OCR      │
+└────────────────────────────────┬────────────────────────────────┘
+                                 │ (Strict GBNF grammars)
+┌────────────────────────────────▼────────────────────────────────┐
+│                    On-Device Inference Registry                 │
+│      Native llama.xcframework    │       Qwen3-VL-2B (mtmd)     │
+│   (Metal GPU / Qwen3 GGUF)       │    (LLM + Vision Encoder)    │
+└────────────────────────────────┬────────────────────────────────┘
+                                 │
+┌────────────────────────────────▼────────────────────────────────┐
+│                  SwiftData V12 + Keychain Hardened Local Store  │
+│   Schedules  │  Nutrients & Water  │  Dual Index  │  Face ID    │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
-### 1. Native Metal GPU Acceleration & On-Device Qwen3
-Early iterations relied on simple heuristic rules, but complex colloquial phrasing (e.g. *"Had beef noodles with Wang for 32 bucks, remind me to submit reimbursement tomorrow morning"*) quickly broke rigid parsers.
+### 1. Metal GPU Acceleration & On-Device Vision (Qwen3 + VL)
+Early iterations relied on simple heuristic rules, but complex colloquial phrasing quickly broke rigid parsers.
 
-In the October 2026 update, the inference pipeline was completely overhauled:
+In the late 2026 update, the inference pipeline was completely overhauled:
 - **Embedded `llama.xcframework`**: Directly taps into Apple Silicon's Metal GPU and Unified Memory to run quantized **Qwen3 GGUF** models offline;
 - **GBNF Grammar Constraints**: Strict grammar-based sampling constrains open-ended LLM tokens into 16 validated JSON schema intents, eliminating hallucinations at the root;
-- **Dual-Engine Registry**: Runs 100% locally on iPhone, while seamlessly delegating to a Mac/NAS Ollama backend when connected to the home Wi-Fi network.
+- **On-Device Vision (Qwen3-VL-2B)**: Runs language models alongside `mmproj` vision encoders to estimate meal calories and nutrients completely offline.
 
 ---
 
 ## 5 Practical Loops for Real-World Scenarios
 
-### 1. Omnibox 16-in-1 Multi-Modal Quick Logging
-No need to pick a category first. Whether typing a sentence, holding the floating voice ball, or snapping a picture:
-- **To-dos**: Extracts deadlines and priority automatically;
-- **Meals & Calories**: Food photos trigger on-device calorie estimation with percentage sliders, linked directly to financial records;
-- **Physical Storage**: Notes where emergency keys or passbooks are kept.
+### 1. Daily Focus & Seamless Expense Tracking
 
-### 2. Hydration Tracking with Coefficient Conversion
-Many water trackers count raw milliliters. In Assistant:
-- Drinking a 450ml Americano automatically converts to `382ml` of net hydration using a `0.85` hydration coefficient;
-- Bi-directional sync with Apple HealthKit writes back active hydration without manual input.
+When designing the Home and Expense tabs, I deliberately cut out cognitive noise:
+- **Home "What to do right now"**: Instead of overwhelming you with 50 to-dos, the home screen spotlights the single most crucial task at the current moment, backed by an interactive **Day Timeline**;
+- **"Safe to Spend" & Workday Savings**: After deducting fixed commitments from monthly budgets, it computes a daily spend allowance. Weekday savings roll over into the weekend pool.
 
-### 3. Dynamic Island Live Activities: Hands-Free Wrist Triage
-When entering the pickup geofence, locker codes appear on the Dynamic Island. Walking past the locker, a single tap on the Apple Watch or lock screen marks it "Picked Up" and archives the task.
+![Home: Day Timeline & Immediate Focus](/blog/assistant/home.jpg)
+![Expenses: Safe to Spend & Budget Rhythm](/blog/assistant/expense.jpg)
 
-### 4. Hardware-Secured Face ID Vault
-ID cards, passports, bank info, and private notes reside inside an encrypted SwiftData store. Protected by the Secure Enclave and Face ID biometrics, with encrypted PIN export for local backup.
+### 2. Life Vault: 17 Ambient Modules as Your Second Brain
 
----
+Stop dividing life management across 5 different apps. Assistant comes with a consolidated **Life Vault**:
+- **8 Core Asset Tiles**: Life milestones, Face ID credential vault, offline passwords, item holding cost & warranty, departure checklist, and vehicle notes;
+- **Dynamic Frequency Sorting**: 17 sub-modules dynamically float to the top based on real-world usage frequency.
 
-## November 2026 Update: From iPhone Assistant to iPhone + Watch Mind-Body Assistant
+![Life Vault: 17 Categorized Modules & Dynamic Ranking](/blog/assistant/vault.jpg)
 
-Since the last post, Assistant has gone through 70+ more commits. The biggest changes:
+### 3. Dedicated Apple Watch App: Hands-Free Wrist Triage
 
-- **Dedicated Apple Watch companion app**: no longer just borrowing the Smart Stack. The Watch can now dismiss parcels, tick through the departure checklist, escort train/flight trips, check in meds and habits, log water and mood, and capture by voice. Watch actions apply optimistically and are reconciled idempotently by command ID once the iPhone persists them — nothing is lost while offline.
-- **On-device vision-language model**: alongside Qwen3 text models, **Qwen3-VL-2B** (language model + mmproj vision encoder) now runs locally through llama.cpp's mtmd pipeline, paving the way for photo-based calorie estimation. Parts are downloaded and verified individually, and can only be deleted as a whole bundle to avoid half-installed models.
-- **Health Dual-Index & mental state**: real-time Vitality and Pleasure indices from HRV, resting HR, sleep stages and activity, plus 10-second mood check-ins (mood / energy / stress), PHQ-9 / GAD-7 screening and a 7/14/30-day three-line emotional resonance chart.
-- **Diet & ledger upgrades**: calorie estimation with gram/piece conversion, cooking coefficients and carb/protein/fat macros; pending-settlement items kept out of the safe-to-spend budget, AA splits, custom budget cycles, and Taobao/JD order screenshot recognition.
-- **Block-based voice memos**: resumable multi-segment recordings, transcribed into rich text/image blocks with high-res long-image export.
-- **Global search & sharing**: a custom Bigram inverted index with Pinyin search; offline face-to-face "bump" sharing for to-do lists and AA bills; WebDAV / NAS backups encrypted client-side with PBKDF2 (310k rounds) + AES-256-GCM.
-- **Engineering quality**: SwiftData has evolved to a V12 versioned migration plan, AssistantCore now has 1,100+ unit tests, and CI runs seven static gates plus a pre-push hook.
+Assistant features a native **watchOS 11 companion app** communicating via idempotent Command Envelopes:
+- **Pickup Codes on Wrist**: Near the locker geofence, pickup codes pop up on the watch screen. Hands full with packages? Tap "Picked up" on your wrist to dismiss;
+- **Departure Checklist**: Check off keys, wallet, badges on wrist or lock screen with red dots on essentials;
+- **Optimistic Offline Sync**: Action items while away from your phone; everything reconciles cleanly once reconnected.
+
+### 4. Block-Based Voice Memos & Peer-to-Peer Bump Sharing
+
+Capturing thoughts is no longer just dry audio files:
+- **Segmented Block Memos**: Hold the voice orb anywhere, pause and resume anytime; on-device ASR breaks transcripts into editable text & image blocks exportable as high-res long cards;
+- **Offline Bump Sharing**: Bump two iPhones together to transfer to-do lists or split bills offline without cloud intermediaries;
+- **Hardened WebDAV NAS Backup**: Client-side **PBKDF2 (310k rounds) + AES-256-GCM** encryption ensures data remains uncrackable even on public networks.
+
+![Voice Memos: Segmented Transcripts & Audio Slices](/blog/assistant/memo.jpg)
+![Settings: Offline Bump Sharing & Customization](/blog/assistant/settings.jpg)
 
 ---
 
 ## Conclusion: Build What You Love to Use Daily
 
-Assistant is the direct fruit of **Vibecoding**: ignoring bloated commercial business models, and focusing purely on eliminating friction in everyday life. Pure, offline, and snappy — turning the iPhone into a truly secure personal second brain.
+Assistant is the direct fruit of **Vibecoding**: 12 iterations of schema migrations and over 1,100 automated pure-logic tests.
+
+No subscription popups, no surveillance trackers — just laser focus on eliminating daily friction. Pure, offline, and snappy — turning the iPhone and Apple Watch into a truly secure personal second brain.
