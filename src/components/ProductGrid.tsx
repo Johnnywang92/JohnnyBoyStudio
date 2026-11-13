@@ -15,6 +15,7 @@ export default function ProductGrid() {
     { key: "macOS", label: t("macOS 桌面", "macOS Desktop") },
     { key: "iOS", label: t("iOS 移动", "iOS Mobile") },
     { key: "Web", label: t("Web 交互", "Web") },
+    { key: "IoT", label: t("IoT 边缘感知", "IoT & Edge") },
   ];
 
   const filteredProducts = getProducts(locale).filter((p) => {

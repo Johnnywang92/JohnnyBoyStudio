@@ -7,7 +7,7 @@ export const studioInfoEn: Pick<StudioInfo, "badge" | "tagline" | "subTagline" |
     "Not chasing the market, just fixing my own daily pain points. With modern Vibecoding and a hacker's hands-on spirit, I craft sharp, snappy, no-compromise tools for my own Mac and iPhone.",
   bio: "I'm JohnnyBoy. Every app here — photo culling and grading, a life assistant, file transfer, or a romantic keepsake — started from a real need (and a bit of perfectionism) of my own. With AI pair programming and Vibecoding, I turn ideas into native tools I use every single day.",
   stats: [
-    { label: "Active personal projects", value: "4+" },
+    { label: "Active personal projects", value: "5+" },
     { label: "Daily drivers", value: "Mac & iPhone" },
     { label: "Philosophy", value: "Vibecoding" },
     { label: "Core principle", value: "Love it myself first" },
@@ -73,6 +73,26 @@ export const productsEn: Record<string, Partial<Product>> = {
       { label: "Requires", value: "macOS 15+" },
       { label: "Concurrency", value: "Swift 6 Strict" },
       { label: "Release", value: "1.0.0-beta.2" },
+    ],
+  },
+  safehalo: {
+    name: "SafeHalo",
+    tagline: "Passive fall detection & active safety guard using Wi-Fi CSI & mmWave radar",
+    description:
+      "A zero-wearable, privacy-first invisible safety guard designed for solitary elders and home safety. Leveraging legacy Wi-Fi routers and low-cost ESP32-S3 edge probes to capture Wi-Fi CSI (Channel State Information) micro-Doppler perturbations, fused with mmWave radar spatial diversity, SafeHalo executes a four-stage closed-loop: 'Impact → Stationary → Unanswered Audio-Visual Inquiry → Emergency Alert'. Features multi-day auto-baseline learning, a zero-cargo-dependency Rust daemon, WeChat Mini Program misfire calibration, and Home Assistant MQTT integration.",
+    category: "IoT · Spatial Sensing & Active Safety",
+    features: [
+      "📶 Wi-Fi CSI contactless spatial sensing: leverages legacy routers & ESP32-S3 probes to analyze channel state information — zero wearables, zero cameras, 100% private",
+      "🛡️ 4-stage closed-loop escalation: 'Impact → Stationary → Unanswered Inquiry → Alert', eliminating spurious triggers like dropped cups or flopping onto a sofa",
+      "📡 Dual-mode mmWave radar fusion: integrates LD2410 / LD2450 radar micro-motion energy & distance gates to conquer deadzones and multipath noise",
+      "📈 Multi-day auto-baseline calibration: continuously adapts to household routines and furniture shifts, auto-tuning channel variance over time",
+      "🦀 Ultra-light Rust daemon: zero Cargo external dependencies, static musl binary for 24/7 rock-solid execution on OpenWrt and Raspberry Pi",
+      "🔔 Full-link alerting: built-in Web audit console, WeChat Mini Program alerts, PushPlus, and Home Assistant MQTT Auto-Discovery",
+    ],
+    metrics: [
+      { label: "Status", value: "In Dev (Phase 1 & 2)" },
+      { label: "Hardware entry", value: "Legacy Wi-Fi + ESP32" },
+      { label: "Sensing mode", value: "CSI + mmWave dual-fusion" },
     ],
   },
   "wedding-web": {
@@ -146,6 +166,7 @@ export const techStackEn = [
     category: "Engineering & Networking",
     items: [
       { desc: "100% read-only safety and SQLite local sandbox" },
+      { desc: "Channel state micro-Doppler & mmWave spatial sensing" },
       { desc: "Low-latency near-field and LAN device communication" },
       { desc: "Cross-app pipelines and system-level integration" },
     ],

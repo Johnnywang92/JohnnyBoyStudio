@@ -9,6 +9,7 @@ import {
   Assistan01Mockup,
   FerryMockup,
   WeddingMockup,
+  SafeHaloMockup,
 } from "./ProductMockups";
 import { GithubIcon } from "./SocialIcons";
 import {
@@ -24,6 +25,9 @@ import {
   Heart,
   Camera,
   BookOpen,
+  ShieldAlert,
+  Terminal,
+  Radio,
 } from "lucide-react";
 
 interface ProductCardProps {
@@ -44,6 +48,8 @@ export default function ProductCard({ product }: ProductCardProps) {
         return <FerryMockup />;
       case "wedding-card":
         return <WeddingMockup />;
+      case "safehalo-radar":
+        return <SafeHaloMockup />;
       default:
         return null;
     }
@@ -59,6 +65,10 @@ export default function ProductCard({ product }: ProductCardProps) {
         return <Watch className="w-3.5 h-3.5" />;
       case "Web":
         return <Globe className="w-3.5 h-3.5" />;
+      case "IoT":
+        return <Radio className="w-3.5 h-3.5" />;
+      case "Linux":
+        return <Terminal className="w-3.5 h-3.5" />;
       default:
         return <Apple className="w-3.5 h-3.5" />;
     }
@@ -76,6 +86,8 @@ export default function ProductCard({ product }: ProductCardProps) {
         return <Compass className="w-5 h-5 text-cyan-400" />;
       case "Heart":
         return <Heart className="w-5 h-5 text-rose-400" />;
+      case "ShieldAlert":
+        return <ShieldAlert className="w-5 h-5 text-emerald-400" />;
       default:
         return <Sparkles className="w-5 h-5 text-indigo-400" />;
     }
@@ -113,17 +125,24 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
 
           {/* Status Badge */}
-          <span
-            className={`text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full border ${
-              product.status === "Featured"
-                ? "bg-amber-500/10 text-amber-300 border-amber-500/30"
-                : product.status === "Live"
-                ? "bg-emerald-500/10 text-emerald-300 border-emerald-500/30"
-                : "bg-indigo-500/10 text-indigo-300 border-indigo-500/30"
-            }`}
-          >
-            ● {product.status}
-          </span>
+          {product.status === "In Dev" ? (
+            <span className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full border bg-amber-500/10 text-amber-300 border-amber-500/30 flex items-center gap-1.5 font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+              <span>{t("开发中", "In Dev")}</span>
+            </span>
+          ) : (
+            <span
+              className={`text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full border ${
+                product.status === "Featured"
+                  ? "bg-amber-500/10 text-amber-300 border-amber-500/30"
+                  : product.status === "Live"
+                  ? "bg-emerald-500/10 text-emerald-300 border-emerald-500/30"
+                  : "bg-indigo-500/10 text-indigo-300 border-indigo-500/30"
+              }`}
+            >
+              ● {product.status}
+            </span>
+          )}
         </div>
 
         {/* Title & Taglines */}

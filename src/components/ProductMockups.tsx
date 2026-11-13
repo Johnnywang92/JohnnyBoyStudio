@@ -28,6 +28,10 @@ import {
   Droplets,
   Utensils,
   Cpu,
+  Activity,
+  Wifi,
+  ShieldAlert,
+  BellRing,
 } from "lucide-react";
 
 export function QuickpickMockup() {
@@ -648,6 +652,256 @@ export function WeddingMockup() {
           <Heart className={`w-3 h-3 ${liked ? "fill-white" : ""}`} />
           <span>{hearts}</span>
         </button>
+      </div>
+    </div>
+  );
+}
+
+export function SafeHaloMockup() {
+  const { t } = useLang();
+  const [tab, setTab] = useState<"csi" | "escalation">("csi");
+  const [alertStage, setAlertStage] = useState<number>(0);
+  const [isSimulating, setIsSimulating] = useState(false);
+
+  const simulateFall = () => {
+    if (isSimulating) return;
+    setIsSimulating(true);
+    setAlertStage(1);
+    setTimeout(() => {
+      setAlertStage(2);
+      setTimeout(() => {
+        setAlertStage(3);
+        setTimeout(() => {
+          setAlertStage(4);
+          setIsSimulating(false);
+        }, 1400);
+      }, 1200);
+    }, 1000);
+  };
+
+  const resetSimulation = () => {
+    setAlertStage(0);
+    setIsSimulating(false);
+  };
+
+  const subcarrierAmplitudes =
+    alertStage === 1
+      ? [85, 92, 78, 95, 90, 84, 98, 76, 88, 94, 91, 87, 96, 82, 89, 93]
+      : alertStage === 2
+      ? [22, 19, 21, 23, 20, 18, 22, 21, 19, 20, 22, 18, 21, 23, 20, 21]
+      : alertStage >= 3
+      ? [24, 28, 26, 25, 23, 27, 25, 24, 26, 25, 27, 24, 25, 26, 24, 25]
+      : [42, 58, 35, 62, 48, 70, 52, 45, 66, 50, 60, 44, 55, 68, 49, 57];
+
+  return (
+    <div className="w-full bg-zinc-950/95 rounded-2xl border border-emerald-500/20 p-3 sm:p-3.5 shadow-2xl backdrop-blur-xl font-sans select-none text-xs">
+      {/* Top Header */}
+      <div className="flex flex-wrap items-center justify-between pb-2 mb-2 border-b border-white/5 gap-2">
+        <div className="flex items-center gap-1.5">
+          <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+          <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
+          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+          <span className="text-[11px] text-zinc-300 ml-2 font-mono flex items-center gap-1.5 truncate max-w-[170px] sm:max-w-none">
+            <Radio className="w-3 h-3 text-emerald-400 shrink-0" />
+            <span className="truncate">SafeHalo · ESP32-S3 @ 921600</span>
+          </span>
+        </div>
+
+        <div className="flex items-center gap-1.5 text-[10px]">
+          <span className="inline-flex items-center gap-1 text-emerald-400 bg-emerald-950/50 border border-emerald-500/30 px-2 py-0.5 rounded-full font-mono">
+            <ShieldCheck className="w-3 h-3" />
+            <span>{t("零摄像头 · 纯物理微动", "Zero Camera · Micro-Doppler")}</span>
+          </span>
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div className="flex items-center gap-1 mb-2">
+        <button
+          onClick={() => setTab("csi")}
+          className={`px-2.5 py-1 rounded-md text-[10px] font-medium transition-all ${
+            tab === "csi"
+              ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-semibold"
+              : "text-zinc-500 hover:text-zinc-300"
+          }`}
+        >
+          {t("CSI 微多普勒与微动谱图", "CSI Micro-Doppler & Spectrum")}
+        </button>
+        <button
+          onClick={() => setTab("escalation")}
+          className={`px-2.5 py-1 rounded-md text-[10px] font-medium transition-all ${
+            tab === "escalation"
+              ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-semibold"
+              : "text-zinc-500 hover:text-zinc-300"
+          }`}
+        >
+          {t("四段式闭环拦截状态机", "4-Stage Escalation Machine")}
+        </button>
+      </div>
+
+      {tab === "csi" ? (
+        <div className="p-3 rounded-xl bg-zinc-900/90 border border-white/5 space-y-2.5">
+          <div className="flex items-center justify-between text-[10px] font-mono">
+            <span className="flex items-center gap-1.5 text-zinc-300">
+              <Activity className="w-3 h-3 text-emerald-400 animate-pulse" />
+              <span>Wi-Fi HT20 (2.4GHz 信道 6 · 50Hz)</span>
+            </span>
+            <span
+              className={`font-semibold px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] ${
+                alertStage === 1
+                  ? "bg-rose-500/20 text-rose-300 border border-rose-500/40 animate-pulse"
+                  : alertStage === 2
+                  ? "bg-amber-500/20 text-amber-300 border border-amber-500/40"
+                  : alertStage >= 3
+                  ? "bg-red-500/30 text-red-200 border border-red-500/50"
+                  : "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+              }`}
+            >
+              {alertStage === 0
+                ? t("正常活动 (Moving)", "Active / Normal")
+                : alertStage === 1
+                ? t("冲击峰值突变 +8.4G", "Impact Spike +8.4G")
+                : alertStage === 2
+                ? t("倒地静默检测中 (Stationary)", "Ground Stationary")
+                : alertStage === 3
+                ? t("声光质询无应答 (Inquiring)", "Inquiry Unanswered")
+                : t("紧急推送触发 (Alert Dispatched)", "Emergency Alerted")}
+            </span>
+          </div>
+
+          {/* Subcarrier Spectrum Bars */}
+          <div className="h-16 flex items-end gap-1 px-1 py-1 bg-black/40 rounded-lg border border-white/5 overflow-hidden">
+            {subcarrierAmplitudes.map((val, idx) => (
+              <div
+                key={idx}
+                className="flex-1 flex flex-col justify-end items-center h-full"
+              >
+                <div
+                  className={`w-full rounded-t transition-all duration-300 ${
+                    alertStage === 1
+                      ? "bg-gradient-to-t from-rose-600 to-amber-400"
+                      : alertStage === 2
+                      ? "bg-gradient-to-t from-amber-600/70 to-amber-300/70"
+                      : alertStage >= 3
+                      ? "bg-gradient-to-t from-rose-600 to-rose-400"
+                      : "bg-gradient-to-t from-emerald-600/80 via-teal-500/70 to-cyan-400/90"
+                  }`}
+                  style={{ height: `${val}%` }}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Radar Dual-Mode Fusion */}
+          <div className="grid grid-cols-2 gap-2 text-[10px] font-mono">
+            <div className="p-2 rounded-lg bg-white/[0.02] border border-white/5 flex items-center justify-between">
+              <span className="text-zinc-400 flex items-center gap-1">
+                <Wifi className="w-3 h-3 text-cyan-400" />
+                <span>CSI SNR</span>
+              </span>
+              <span className="text-zinc-200 font-semibold">28.4 dB</span>
+            </div>
+            <div className="p-2 rounded-lg bg-white/[0.02] border border-white/5 flex items-center justify-between">
+              <span className="text-zinc-400 flex items-center gap-1">
+                <Cpu className="w-3 h-3 text-emerald-400" />
+                <span>LD2410 雷达</span>
+              </span>
+              <span className="text-emerald-300 font-semibold">2.1m · 能量74</span>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="p-3 rounded-xl bg-zinc-900/90 border border-white/5 space-y-2">
+          <div className="text-[10px] text-zinc-400 font-mono flex items-center justify-between pb-1 border-b border-white/5">
+            <span>{t("四段式误报拦截逻辑", "4-Stage Anti-Misfire Escalation")}</span>
+            <span className="text-emerald-400">{t("误报拦截率 > 99%", "Spurious filter > 99%")}</span>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-[10px] font-mono">
+            <div
+              className={`p-2 rounded-lg border transition-all ${
+                alertStage >= 1
+                  ? "bg-rose-500/20 border-rose-500/50 text-rose-200 font-bold"
+                  : "bg-white/[0.02] border-white/5 text-zinc-500"
+              }`}
+            >
+              <div>1. {t("冲击突变", "Impact")}</div>
+              <div className="text-[9px] text-zinc-400 font-normal mt-0.5">{t("方差骤升跨门限", "Variance spike")}</div>
+            </div>
+
+            <div
+              className={`p-2 rounded-lg border transition-all ${
+                alertStage >= 2
+                  ? "bg-amber-500/20 border-amber-500/50 text-amber-200 font-bold"
+                  : "bg-white/[0.02] border-white/5 text-zinc-500"
+              }`}
+            >
+              <div>2. {t("持续静止", "Stationary")}</div>
+              <div className="text-[9px] text-zinc-400 font-normal mt-0.5">{t("低频静默 > 3s", "Silence > 3s")}</div>
+            </div>
+
+            <div
+              className={`p-2 rounded-lg border transition-all ${
+                alertStage >= 3
+                  ? "bg-orange-500/20 border-orange-500/50 text-orange-200 font-bold"
+                  : "bg-white/[0.02] border-white/5 text-zinc-500"
+              }`}
+            >
+              <div>3. {t("声光质询", "Inquiry")}</div>
+              <div className="text-[9px] text-zinc-400 font-normal mt-0.5">{t("15s 语音无应答", "Voice unanswered")}</div>
+            </div>
+
+            <div
+              className={`p-2 rounded-lg border transition-all ${
+                alertStage >= 4
+                  ? "bg-red-500/30 border-red-500/60 text-red-200 font-bold"
+                  : "bg-white/[0.02] border-white/5 text-zinc-500"
+              }`}
+            >
+              <div>4. {t("紧急告警", "Alert")}</div>
+              <div className="text-[9px] text-zinc-400 font-normal mt-0.5">{t("微信 / HA 推送", "WeChat / HA push")}</div>
+            </div>
+          </div>
+
+          <div className="p-2 rounded-lg bg-black/40 border border-white/5 text-[10px] text-zinc-400 font-mono flex items-center justify-between">
+            <span className="flex items-center gap-1 text-zinc-300">
+              <BellRing className="w-3 h-3 text-amber-400" />
+              <span>{t("联动下游：Home Assistant + 微信小程序", "Downstream: Home Assistant + WeChat")}</span>
+            </span>
+            <span className="text-emerald-400">{t("自动基线校准", "Auto-calibrated")}</span>
+          </div>
+        </div>
+      )}
+
+      {/* Action Buttons */}
+      <div className="mt-2.5 flex items-center gap-2">
+        <button
+          onClick={simulateFall}
+          disabled={isSimulating || alertStage > 0}
+          className={`flex-1 py-1.5 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition-colors border ${
+            alertStage > 0
+              ? "bg-zinc-800/60 border-zinc-700/50 text-zinc-400 cursor-not-allowed"
+              : "bg-emerald-600/20 hover:bg-emerald-600/30 border-emerald-500/40 text-emerald-300 cursor-pointer"
+          }`}
+        >
+          <Activity className="w-3.5 h-3.5" />
+          <span>
+            {isSimulating
+              ? t("跌倒事件演练流转中...", "Fall simulation running...")
+              : alertStage > 0
+              ? t("跌倒闭环触发完毕", "Fall loop complete")
+              : t("模拟触发跌倒事件闭环", "Simulate fall event loop")}
+          </span>
+        </button>
+
+        {alertStage > 0 && (
+          <button
+            onClick={resetSimulation}
+            className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-300 text-xs font-medium transition-colors cursor-pointer"
+          >
+            {t("重置", "Reset")}
+          </button>
+        )}
       </div>
     </div>
   );

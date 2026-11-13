@@ -11,6 +11,7 @@ import {
   Camera,
   Compass,
   Heart,
+  ShieldAlert,
 } from "lucide-react";
 
 export default function Hero() {
@@ -39,6 +40,13 @@ export default function Hero() {
       tag: t("SFTP 客户端", "SFTP client"),
       icon: <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />,
       color: "from-cyan-500/20 to-blue-500/20",
+    },
+    {
+      id: "safehalo",
+      name: "SafeHalo",
+      tag: t("无感跌倒守护 (开发中)", "Fall guard (In Dev)"),
+      icon: <ShieldAlert className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />,
+      color: "from-emerald-500/20 to-teal-500/20",
     },
     {
       id: "wedding",

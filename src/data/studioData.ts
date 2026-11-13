@@ -4,9 +4,9 @@ export interface Product {
   tagline: string;
   enTagline: string;
   description: string;
-  platforms: ("macOS" | "iOS" | "watchOS" | "Web" | "iPadOS")[];
+  platforms: ("macOS" | "iOS" | "watchOS" | "Web" | "iPadOS" | "Linux" | "IoT")[];
   category: string;
-  status: "Live" | "Beta" | "Featured" | "Preview";
+  status: "Live" | "Beta" | "Featured" | "Preview" | "In Dev";
   statusColor: string;
   accentColor: string; // gradient classes
   bgGlow: string;
@@ -20,7 +20,7 @@ export interface Product {
     github?: string;
   };
   caseStudySlug?: string;
-  mockupType: "mac-menubar" | "ios-island" | "transfer-radar" | "wedding-card" | "quickpick-workbench";
+  mockupType: "mac-menubar" | "ios-island" | "transfer-radar" | "wedding-card" | "quickpick-workbench" | "safehalo-radar";
 }
 
 export interface StudioInfo {
@@ -57,7 +57,7 @@ export const studioInfo: StudioInfo = {
     email: "johnny.boy.1km@gmail.com",
   },
   stats: [
-    { label: "活跃自用项目", value: "4+" },
+    { label: "活跃自用项目", value: "5+" },
     { label: "日常主力机", value: "Mac & iPhone" },
     { label: "开发哲学", value: "Vibecoding" },
     { label: "核心原则", value: "自己先用爽" },
@@ -168,6 +168,39 @@ export const products: Product[] = [
     mockupType: "transfer-radar",
   },
   {
+    id: "safehalo",
+    name: "SafeHalo",
+    tagline: "基于 Wi-Fi CSI 空间微动感知与毫米波雷达的低成本无感跌倒守护系统",
+    enTagline: "Passive fall detection & active safety guard using Wi-Fi CSI & mmWave radar",
+    description:
+      "专为独居老人与居家安全打造的零穿戴、零摄像头隐形守护系统。利用旧路由器与极低成本 ESP32-S3 边缘探针提取 Wi-Fi CSI（信道状态信息）微多普勒扰动，结合毫米波雷达双模空间分集融合算法，实现「冲击 → 静止 → 声光质询无应答 → 紧急通知」四段式闭环预警。具备多日基线自动学习、低内存 Rust 独立守护进程、微信小程序误报靶向调参及 Home Assistant 联动生态。",
+    platforms: ["Web", "macOS", "Linux", "IoT"],
+    category: "IoT 空间感知与主动安全",
+    status: "In Dev",
+    statusColor: "amber",
+    accentColor: "from-emerald-400 via-teal-500 to-cyan-600",
+    bgGlow: "rgba(16, 185, 129, 0.18)",
+    iconName: "ShieldAlert",
+    features: [
+      "📶 Wi-Fi CSI 无感空间感知：利用旧路由器与 ESP32-S3 探针提取信道状态信息，无需穿戴任何设备、零摄像头隐私侵犯",
+      "🛡️ 四段式闭环拦截机制：「冲击 → 静止 → 声光质询无应答 → 告警推送」，多重过滤打翻水杯、剧烈躺倒等偶发误报",
+      "📡 毫米波雷达空间分集双模融合：融合 LD2410 / LD2450 / MR60FDA1 雷达微动能量与距离门，消除盲区与多径干扰",
+      "📈 多日环境基线自动校准：自动学习住户作息与家具变动微扰动，动态跟踪信道稳态方差，越用越准",
+      "🦀 极低内存 Rust 独立常驻服务：零 Cargo 外部依赖纯 Rust + musl 静态二进制，可在 OpenWrt / 树莓派低算力边缘设备 7×24h 稳定常驻",
+      "🔔 全链路多端协同：内置 Web 审计控制台、微信小程序订阅消息推送、PushPlus 及 Home Assistant MQTT Auto-Discovery",
+    ],
+    metrics: [
+      { label: "当前状态", value: "开发中 (阶段 1 & 2)" },
+      { label: "硬件门槛", value: "旧路由器 + ESP32" },
+      { label: "检测架构", value: "CSI + 毫米波双模" },
+    ],
+    links: {
+      github: "https://github.com/Johnnywang92/SafeHalo",
+      demo: "https://github.com/Johnnywang92/SafeHalo",
+    },
+    mockupType: "safehalo-radar",
+  },
+  {
     id: "wedding-web",
     name: "首映礼婚礼 RSVP 系统",
     tagline: "电影首映礼主题互动邀请函 & 电子票根回执系统",
@@ -255,6 +288,7 @@ export const techStackCategories = [
     category: "工程与网络底层",
     items: [
       { name: "Local-First Storage", desc: "100% 只读安全与 SQLite 本地沙盒" },
+      { name: "IoT & Wi-Fi CSI", desc: "信道状态微多普勒与毫米波空间感知" },
       { name: "P2P & WebSocket", desc: "近场与局域低延迟设备通信" },
       { name: "Shortcuts & IPC", desc: "跨 App 管道与系统级联动" },
     ],
